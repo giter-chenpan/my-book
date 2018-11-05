@@ -1,0 +1,23 @@
+{
+  "name": "my-book",
+  "version": "1.0.0",
+  "description": "搭建自己个人线上博客用,基于node与vue的实现前后端分离，数据库使用MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j3812549/my-book.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j3812549/my-book/issues"
+  },
+  "homepage": "https://github.com/j3812549/my-book#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.3.9"
+  }
+}
