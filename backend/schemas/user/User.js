@@ -9,7 +9,8 @@ let UserSchema = new Schema({
     user_password: String,
     user_time: Date,
     user_notice: Number,
-    user_role: Number
+    user_role: Number,
+    user_token: String
 })
 
 module.exports = UserSchema

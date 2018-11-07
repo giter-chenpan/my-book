@@ -9,7 +9,7 @@ let app = express()
 app.use(bodyParser.urlencoded({
     extended: true
 }))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) => {
     if (!err) {
@@ -20,6 +20,7 @@ mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) =
 })
 
 let UserModel = require('./models/user')
+let { Updatetoken } =require('./utile//token')
 // 新建用户
 let { NewUserDao } = require('./dao/user')
 let { FindUserIdDao } = require('./dao/user')
@@ -69,7 +70,14 @@ app.post('/api/loginuser', (req, res) => {
         if (!err) {
             LoginUserDao(UserModel, user, function(err, docs) {
                 if (!err) {
-                    res.send({code: 200, token:uuidv1()})
+                    user["user_token"] = uuidv1()
+                    Updatetoken(UserModel, user, (err, docs) => {
+                        if (!err) {
+                            res.send({ code: 200, token:user.user_token })
+                        } else {
+                            res.send(err)
+                        }
+                    })
                 } else {
                     res.send(err)
                 }
