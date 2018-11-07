@@ -20,7 +20,8 @@ mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) =
 })
 
 let UserModel = require('./models/user')
-let { Updatetoken } =require('./utile//token')
+let { Findtoken } = require('./utile/token')
+let { Updatetoken } = require('./utile/token')
 // 新建用户
 let { NewUserDao } = require('./dao/user')
 let { FindUserIdDao } = require('./dao/user')
@@ -87,6 +88,19 @@ app.post('/api/loginuser', (req, res) => {
         }
     })
 })
+
+let TitleModel = require('./models/title')
+app.post('/api/newtitle', (req, res) => {
+    if (req.headers.tiancai9token) {
+        let token = req.headers.tiancai9token
+        Findtoken(UserModel, { user_token: token }, (err, docs) => {
+            res.send(docs)
+        })
+    } else {
+        res.send({err: 400, data: '登录失效，请重新登录'} )
+    }
+})
+// 添加文章
 
 app.listen(port, (err) => {
     if (!err) {
