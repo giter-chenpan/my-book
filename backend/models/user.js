@@ -1,5 +1,5 @@
 let mongoose = require('mongoose')
-let CitySchema = require('../schemas/user')
-let City = mongoose.model('City', CitySchema)
+let UserSchema = require('../schemas/user/User')
+let UserModel = mongoose.model('users', UserSchema)
 
-module.exports = City
+module.exports = UserModel
