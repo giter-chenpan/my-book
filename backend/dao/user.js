@@ -21,11 +21,7 @@ exports.NewUserDao = function (model, conditions, callback) {
 // 注册id效验
 exports.FindUserIdDao = function (model, conditions, callback) {
     model.find({ "user_id": conditions.user_id }, (err, docs) => {
-        if (!err) {
-            callback(err,docs)
-        } else {
-            callback(err,docs)
-        }
+        callback(err,docs)
     })
 }
 
@@ -37,5 +33,12 @@ exports.FindUserNameDao = function (model, conditions, callback) {
         } else {
             callback(err,docs)
         }
+    })
+}
+
+// 用户登录
+exports.LoginUserDao = function (model, conditions, callback) {
+    model.find(conditions, (err, docs) => {
+        callback(err,docs)
     })
 }

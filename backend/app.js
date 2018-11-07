@@ -3,6 +3,7 @@ let config = require('./bind/config')
 let port = config.port || 3000
 let mongoose = require('mongoose')
 var bodyParser = require('body-parser')
+let uuidv1 = require('uuid/v1')
 let app = express()
 
 app.use(bodyParser.urlencoded({
@@ -60,6 +61,24 @@ app.post('/api/newuser', (req, res) => {
     }
 })
 
+// 用户登录
+let { LoginUserDao } = require('./dao/user')
+app.post('/api/loginuser', (req, res) => {
+    let user = req.body
+    FindUserIdDao(UserModel, user, function(err, docs) {
+        if (!err) {
+            LoginUserDao(UserModel, user, function(err, docs) {
+                if (!err) {
+                    res.send({code: 200, token:uuidv1()})
+                } else {
+                    res.send(err)
+                }
+            })
+        } else {
+            res.send(err)
+        }
+    })
+})
 
 app.listen(port, (err) => {
     if (!err) {
