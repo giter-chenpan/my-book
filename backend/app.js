@@ -98,22 +98,26 @@ app.post('/api/newtitle', (req, res) => {
         let title = req.body
         Findtoken(UserModel, { user_token: token }, (err, docs) => {
             if (!err) {
-                title["user_id"] = docs[0].user_id
-                NewTitleDao(TitleModel, title, (err) => {
-                    if (!err) {
-                        console.log('创建文章成功' + title)
-                        res.send({ code: 200, data: '创建文章成功'})
-                    } else {
-                        console.log(err)
-                        res.send({ code: 400, data: '创建文章失败'})
-                    }
-                })
+                if (docs.length !== 0) {
+                    title["user_id"] = docs[0].user_id
+                    NewTitleDao(TitleModel, title, (err) => {
+                        if (!err) {
+                            console.log('创建文章成功' + title)
+                            res.send({ code: 200, data: '创建文章成功'})
+                        } else {
+                            console.log(err)
+                            res.send({ code: 400, data: '创建文章失败'})
+                        }
+                    })
+                } else {
+                    es.send({ code: 402, data: '登录失效，请重新登录'})
+                }
             } else {
                 res.send(err)
             }
         })
     } else {
-        res.send({err: 400, data: '登录失效，请重新登录'} )
+        res.send({code: 402, data: '登录失效，请重新登录'} )
     }
 })
 
@@ -125,9 +129,44 @@ app.get('/api/findtitle', (req, res) => {
         if (!err) {
             res.send(docs)
         } else {
+            console.log('获取文章失败' + err)
             res.send(err)
         }
     })
+})
+
+// 修改文章
+let { UpdateTitleDao } = require('./dao/title')
+app.post('/api/updatetitle', (req, res) => {
+    if (req.headers.tiancai9token) {
+        let token = req.headers.tiancai9token
+        Findtoken(UserModel, { user_token: token }, (err, docs) => {
+            if (!err) {
+                if (docs.length !== 0) {
+                    let body = req.body
+                    body["user_id"] = docs[0].user_id
+                    UpdateTitleDao(TitleModel, body, (err, docs) => {
+                        if (!err) {
+                            if (docs.n == 1) {
+                                res.send({ code: 200, data: '文章修改成功'})
+                            } else {
+                                res.send({ code:402, data: '身份认证失效，请重新登录' })
+                            }
+                        } else {
+                            console.log('文章修改失败' + err)
+                            res.send({ code: 400, data: '修改失败' })
+                        }
+                    })                    
+                } else {
+                    res.send({ code: 402, data: '登录失效，请重新登录' })
+                }
+            } else {
+                res.send(err)
+            }
+        })
+    } else {
+        res.send({ code: 402, data: '登录失效，请重新登录' })
+    }
 })
 
 app.listen(port, (err) => {

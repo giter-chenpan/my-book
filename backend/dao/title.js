@@ -25,6 +25,7 @@ exports.FindTitleDao = function (model, conditions, callback) {
     model.find(conditions, {
         _id: 0,
         user_id: 1,
+        title_uid: 1,
         title_title: 1,
         title_description: 1,
         title_type: 1,
@@ -35,8 +36,18 @@ exports.FindTitleDao = function (model, conditions, callback) {
         limit: pageSize,
         sort: { "_id": -1 }
     }, (err, docs) => {
-        console.log(err)
-        console.log(docs)
         callback(err, docs)
+    })
+}
+
+// 修改文章
+exports.UpdateTitleDao = function (modle, conditions, callback) {
+    let title_uid = conditions.title_uid
+    let user_id = conditions.user_id
+    conditions["title_time"] = myDate
+    delete conditions["title_uid"]
+    delete conditions["user_id"]
+    modle.updateMany({ title_uid: title_uid, user_id: user_id }, { $set: conditions }, (err, docs) => {
+        callback(err,docs)
     })
 }
