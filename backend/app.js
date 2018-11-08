@@ -197,8 +197,10 @@ app.get('/api/removetitle', (req, res) => {
             res.send(err)
         }
     })
-    
 })
+
+// 新增评论
+let { CommentsModel } = require('./models/comments')
 
 app.listen(port, (err) => {
     if (!err) {
