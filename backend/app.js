@@ -90,17 +90,31 @@ app.post('/api/loginuser', (req, res) => {
 })
 
 let TitleModel = require('./models/title')
+let { NewTitleDao } =require('./dao/title')
+// 添加文章
 app.post('/api/newtitle', (req, res) => {
     if (req.headers.tiancai9token) {
         let token = req.headers.tiancai9token
+        let title = req.body
         Findtoken(UserModel, { user_token: token }, (err, docs) => {
-            res.send(docs)
+            if (!err) {
+                title["user_id"] = docs[0].user_id
+                console.log(title)
+                NewTitleDao(TitleModel, title, (err) => {
+                    if (!err) {
+                        res.send({ code: 200, data: '创建文章成功'})
+                    } else {
+                        res.send({ code: 400, data: '创建文章失败'})
+                    }
+                })
+            } else {
+                res.send(err)
+            }
         })
     } else {
         res.send({err: 400, data: '登录失效，请重新登录'} )
     }
 })
-// 添加文章
 
 app.listen(port, (err) => {
     if (!err) {
