@@ -169,6 +169,37 @@ app.post('/api/updatetitle', (req, res) => {
     }
 })
 
+// 删除文章
+let { RemoveTitleDao } = require('./dao/title')
+app.get('/api/removetitle', (req, res) => {
+    let token = req.headers.tiancai9token
+    Findtoken(UserModel, { user_token: token}, (err, docs) => {
+        if (!err) {
+            if (docs.length !== 0) {
+                let query = req.query
+                query["user_id"] = docs[0].user_id
+                RemoveTitleDao(TitleModel, query, (err, docs) => {
+                    if (!err) {
+                        if (docs.n == 1) {
+                            res.send({ code:200, data: '文章删除成功' })
+                        } else {
+                            res.send({ code:402, data: '身份认证失败,请重新登录' })
+                        }
+                    } else {
+                        console.log('文章删除失败' + err)
+                        res.send({ code:400, data: '删除失败' })
+                    }
+                })
+            } else {
+                res.send({ code: 402, data: '登录失效，请重新登录' })
+            }
+        } else {
+            res.send(err)
+        }
+    })
+    
+})
+
 app.listen(port, (err) => {
     if (!err) {
         console.log('服务器的端口为：' + port)

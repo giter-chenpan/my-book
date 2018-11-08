@@ -41,13 +41,21 @@ exports.FindTitleDao = function (model, conditions, callback) {
 }
 
 // 修改文章
-exports.UpdateTitleDao = function (modle, conditions, callback) {
+exports.UpdateTitleDao = function (model, conditions, callback) {
     let title_uid = conditions.title_uid
     let user_id = conditions.user_id
     conditions["title_time"] = myDate
     delete conditions["title_uid"]
     delete conditions["user_id"]
-    modle.updateMany({ title_uid: title_uid, user_id: user_id }, { $set: conditions }, (err, docs) => {
+    model.updateMany({ title_uid: title_uid, user_id: user_id }, { $set: conditions }, (err, docs) => {
+        callback(err,docs)
+    })
+}
+
+// 删除文章
+exports.RemoveTitleDao = function (model, conditions, callback) {
+    console.log(conditions)
+    model.deleteMany({ title_uid: conditions.title_uid, user_id: conditions.user_id }, (err, docs) => {
         callback(err,docs)
     })
 }
