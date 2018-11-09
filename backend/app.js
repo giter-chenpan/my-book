@@ -226,6 +226,32 @@ app.post('/api/newcomments', (req, res) => {
         }
     })
 })
+let ReplyModel = require('./models/Reply')
+// 新增回复
+let { NewReplyDao } = require('./dao/reply')
+app.post('/api/newreply', (req, res) => {
+    let body = req.body
+    let token = req.headers.tiancai9token
+    Findtoken(UserModel, { user_token: token }, (err, docs) => {
+        if (!err) {
+            if (docs.length !== 0) {
+                body["reply_id"] = docs[0].user_id
+                NewReplyDao(ReplyModel, body, (err) => {
+                    if (!err) {
+                        res.send({ code: 200, data: '回复成功' })
+                    } else {
+                        console.log('回复内容失败' + err )
+                        res.send({ code: 402, data: '回复失败' })
+                    }
+                })
+            } else {
+                res.send({ code: 402, data: '身份验证失败，请重新登录' })
+            }
+        } else {
+            res.send({ code: 402, data: '登录失效，请重新登录' })
+        }
+    })
+})
 
 
 app.listen(port, (err) => {
