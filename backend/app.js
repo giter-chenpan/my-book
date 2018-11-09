@@ -199,8 +199,34 @@ app.get('/api/removetitle', (req, res) => {
     })
 })
 
+let CommentsModel = require('./models/comments')
 // 新增评论
-let { CommentsModel } = require('./models/comments')
+let { NewComments } = require('./dao/comments')
+app.post('/api/newcomments', (req, res) => {
+    let token = req.headers.tiancai9token
+    let body = req.body
+    Findtoken(UserModel, { user_token: token }, (err, docs) => {
+        if (!err) {
+            if (docs.length !== 0) {
+                body["user_uid"] = docs[0].user_id
+                NewComments(CommentsModel, body, (err) => {
+                    if (!err) {
+                        res.send({ code:200, data: '新增评论成功' })
+                    } else {
+                        console.log('新增评论失败' + err)
+                        res.send({ code:400, data: '新增评论失败' })
+                    }
+                })
+            } else {
+                res.send({ code: 402, data: '登录失效，请重新登录' })
+            }
+        } else {
+            console.log('新增评论失败' + err)
+            res.send(err)
+        }
+    })
+})
+
 
 app.listen(port, (err) => {
     if (!err) {

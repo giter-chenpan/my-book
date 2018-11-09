@@ -8,7 +8,7 @@ exports.NewUserDao = function (model, conditions, callback) {
     conditions["user_notice"] = 0
     conditions["user_role"] = 0
     conditions["user_token"] = '0000'
-        model.create(conditions, (err, res) => {
+        model.create(conditions, (err) => {
         if (!err) {
             console.log('注册用户成功')
             callback()
