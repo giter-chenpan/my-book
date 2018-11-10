@@ -201,15 +201,15 @@ app.get('/api/removetitle', (req, res) => {
 
 let CommentsModel = require('./models/comments')
 // 新增评论
-let { NewComments } = require('./dao/comments')
+let { NewCommentsDao } = require('./dao/comments')
 app.post('/api/newcomments', (req, res) => {
     let token = req.headers.tiancai9token
     let body = req.body
     Findtoken(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             if (docs.length !== 0) {
-                body["user_uid"] = docs[0].user_id
-                NewComments(CommentsModel, body, (err) => {
+                body["user_id"] = docs[0].user_id
+                NewCommentsDao(CommentsModel, body, (err) => {
                     if (!err) {
                         res.send({ code:200, data: '新增评论成功' })
                     } else {
@@ -249,6 +249,61 @@ app.post('/api/newreply', (req, res) => {
             }
         } else {
             res.send({ code: 402, data: '登录失效，请重新登录' })
+        }
+    })
+})
+
+// 获取评论和回复
+let { FindCommentsDao } = require('./dao/comments')
+let { FindReplyDao } = require('./dao/reply')
+app.get('/api/findcomments', (req, res) => {
+    let query = req.query
+    // console.log(query)
+    FindCommentsDao(CommentsModel, query, (err, docs) => {
+        if (!err) {
+            if (docs.length !== 0) {
+                let commentsObj = docs
+                let replyAry = []
+                let commentsAry = []
+                for (let i = 0; i < commentsObj.length; i++) {
+                    FindReplyDao(ReplyModel, { comments_uid: commentsObj[i]._doc.comments_uid }, (err, docs) => {
+                        if (!err) {
+                            if (docs.length !== 0) {
+                                for (let j = 0; j < docs.length;  j++) {
+                                    replyAry.push(docs[j]._doc)
+                                    if (j == docs.length - 1) {
+                                        commentsObj[i]._doc["reply"] = replyAry
+                                        replyAry = []
+                                        commentsAry.push(commentsObj[i]._doc)
+                                        // console.log(i)
+                                        // if (i == commentsObj.length - 1) {
+                                        //     res.send(commentsAry)
+                                        // }
+                                    }
+                                }
+                            } else {
+                                if (i == commentsObj.length - 1) {
+                                    console.log('获取评论失败' + err)
+                                    res.send({ code: 400, data: '获取评论失败' })
+                                }
+                            }
+                        } else {
+                            if (i == commentsObj.length - 1) {
+                                console.log('获取评论失败' + err)
+                                res.send({ code: 400, data: '获取评论失败' })
+                            }
+                        }
+                    })
+                }
+                setTimeout( function Res () {
+                    res.send(commentsAry)
+                }, 500)
+            } else {
+                res.send({ code: 400, data: '文章的评论为空' })
+            }
+        } else {
+            console.log('获取评论失败' + err)
+            res.send({ code:400, data:'获取评论失败' })
         }
     })
 })

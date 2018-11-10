@@ -32,8 +32,8 @@ exports.FindTitleDao = function (model, conditions, callback) {
         title_time: 1,
         title_status: 1
     }, {
-        skip: pagenum,
-        limit: pageSize,
+        skip: (pagenum-1)*pageSize || 0,
+        limit: pageSize || 10,
         sort: { "_id": -1 }
     }, (err, docs) => {
         callback(err, docs)
