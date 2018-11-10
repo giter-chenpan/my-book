@@ -43,3 +43,10 @@ exports.LoginUserDao = function (model, conditions, callback) {
         callback(err,docs)
     })
 }
+
+// 用户登出
+exports.LogoutUserDao = function (model, conditions, callback) {
+    model.updateMany(conditions, {$set: {user_token: '0001' }}, (err, docs) => {
+        callback(err, docs)
+    })
+}

@@ -89,6 +89,24 @@ app.post('/api/loginuser', (req, res) => {
     })
 })
 
+// 用户登出
+let { LogoutUserDao } = require('./dao/user')
+app.get('/api/userlogout', (req, res) => {
+    let token = req.headers.tiancai9token
+    LogoutUserDao(UserModel, { user_token: token }, (err, docs) => {
+        if (!err) {
+            if (docs.n == 1) {
+                res.send({ code: 200, data: '登出成功' })
+            } else {
+                res.send({ code: 402, data: '身份验证失效，请重新登录' })
+            }
+        } else {
+            console.log('登录失败' + err )
+            res.send({ code:400, data: '登出失败，请稍后重试' })
+        }
+    })
+})
+
 let TitleModel = require('./models/title')
 // 新增文章
 let { NewTitleDao } =require('./dao/title')
