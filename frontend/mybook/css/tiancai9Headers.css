@@ -1,0 +1,50 @@
+.menu {
+    z-index: 3;
+    margin: 0;
+    width: 100%;
+    padding: 0.8rem;
+    /* height: 1.6rem; */
+    /* background-image: url('./img/yuzhoumiku.png');
+    background-repeat:no-repeat; */
+    background-color: rgb(64, 158, 255);
+    /* background-color: rgb(120 , 85, 69); */
+    color: white;
+    position: fixed;
+    top: 0;
+    transition: padding 0.45s;
+    overflow: hidden;
+}
+.menu-mylogo {
+    position: absolute;
+    width: 4rem;
+    top: .2rem;
+    transition: width 0.45s;
+}
+.menu-mylogo-logo {
+    float: left;
+    font-size: .8rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 1px solid white;
+    border-radius: 50% 50%;
+    text-align: center;
+    transition: width  0.45s;
+    transition: height 0.45s;
+}
+.menu-mylogo-title {
+    font-size: .4rem;
+    line-height: 1.2rem;
+    text-indent: .4rem;
+    transition: line-height 0.45s;
+    transition: text-indent 0.45s;
+}
+.menu-user {
+    position: absolute;
+    top: .5rem;
+    right: 0;
+    transition: top 0.45s;
+}
+.menu-user li {
+    float: left;
+    margin: .2rem;
+}
