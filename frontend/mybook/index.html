@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>逍遥君の博客</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/reset.css">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<style>
+    .content {
+        width: 100%;
+        height: 100%;
+        /* background-color: black; */
+    }
+    .content-title {
+        width: 70%;
+        /* height: 100%; */
+        float: left;
+        /* background-color: green */
+    }
+    .content-type {
+        width: 30%;
+        height: 100%;
+        float: right;
+    }
+    .content-title-content {
+        width: 80%;
+        min-width: 12rem;
+        height: 2.5rem;
+        margin: 0.4rem;
+        padding: 0.2rem;
+        border-radius: 0.04rem;
+        background-color:white;
+        text-align: left;
+        box-shadow: 2px 3px 8px #888888;
+        position: relative;
+    }
+    .content-title-content-img {
+        width: 2rem;
+        height: 2rem;
+        overflow: hidden;
+        /* margin-bottom: 2rem; */
+    }
+    .content-title-content-tilte {
+        font-weight: bold;
+        font-size: 0.3rem;
+        width: 75%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.8;
+        color: #3d3d3d;
+        margin-bottom: 0.1rem;
+        /* background-image: -webkit-linear-gradient(bottom, rgb(141, 14, 99), rgb(20, 11, 255));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; */
+        /* background-image: linear-gradient(150deg, #F97794 10%, #623AA2 100%) */
+    }
+    .content-title-content-tilte:hover {
+        opacity: 1;
+    }
+    .givefont-img {
+        color: red;
+        padding: 0 0.1rem 0 0.2rem;
+        position: relative;
+        top: 0.05rem;
+    }
+    .givefont-font {
+        font-size: 0.25rem;
+        color: #666;
+    }
+    .content-title-content-content {
+        color: rgba(0,0,0,.5);
+        height: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2;
+        padding-top: 0.2rem;
+    }
+    .content-title-content-img:hover img {
+        transform: scale(1.2);
+        -webkit-transform: scale(1.2); /*Safari 和 Chrome*/
+        -moz-transform: scale(1.2); /*Firefox*/
+        -ms-transform: scale(1.2); /*IE9*/
+        -o-transform: scale(1.2); /*Opera*/
+    }
+    .content-title-content-img2 {
+        transition-duration:0.5s;
+        width: 100%;
+        position: relative;
+        top: 0.2rem;
+    }
+    .pagination-main {
+        width: 100%;
+        float: left;
+        margin-left: 6.8%
+    }
+    .pagination>li>a{
+        margin-right: 0.1rem;
+    }
+    .content-title-content-view {
+        position: absolute;
+        z-index: 2;
+        right: -0.02rem;
+        background-color: rgb(64, 158, 255);
+        border: 1px solid rgb(64, 158, 255);
+        border-radius: 0.4rem 0 0 0.4rem;
+        width: 10%;
+        min-width: 1rem;
+        max-width: 1.5rem;
+        box-shadow: 0.02rem 0.02rem 0.01rem rgb(69, 81, 93);
+    }
+    .viewfonticon {
+        color: #666;
+        position: relative;
+        left: 0.15rem;
+        top: 0.02rem;
+        font-size: 0.2rem;
+    }
+    .toview-font {
+        position: relative;
+        left: 0.13rem;
+        font-size: 0.2rem;
+        color: white;
+    }
+    .content-title-content-date {
+        position: absolute;
+        top:0.8rem;
+        z-index: 2;
+        right: -0.02rem;
+        background-color: #f56c6c;
+        border: 1px solid #f56c6c;
+        border-radius: 0.4rem 0 0 0.4rem;
+        width: 10%;
+        min-width: 1rem;
+        max-width: 1.5rem;
+        box-shadow: 0.02rem 0.02rem 0.01rem rgb(69, 81, 93);
+    }
+    .content-type-div {
+        margin: 0.4rem;
+        width: 80%;
+        padding-bottom: 0.6rem;
+        border-radius: 0.2rem;
+        background-color: white;
+        opacity: 0.9;
+        box-shadow: 2px 3px 8px #888888;
+    }
+    .content-type-div-title {
+        padding: 0.2rem;
+        padding-bottom: 0.1rem;
+        border-bottom: 1px solid #666;
+        font-size: 0.5rem;
+        font-weight: bold;
+        color: #333333c5
+        /* box-shadow: 0.1px 0.3px 1px rgb(64, 158, 255);
+        background-image: -webkit-linear-gradient(bottom, 150deg, #0396FF 100%, #ABDCFF  10%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(150deg, #0396FF 100%, #ABDCFF  10%) */
+    }
+    .content-type-div-title-conter {
+        width: 80%;
+        margin-left: 0.7rem;
+        padding: 0.07rem;
+        font-size: 0.3rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-bottom: 1px dotted #afafaf;
+        /* background-image: -webkit-linear-gradient(bottom, 150deg, #0396FF 100%, #ABDCFF  10%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(150deg, #0396FF 100%, #ABDCFF  10%)       */
+    }
+    .content-type-div-title-conter:hover {
+        color: red !important
+    }
+    .content-type-div-title-icon {
+        width: 0.4rem;
+    }
+    .content-type-button {
+        width: 80%;
+        margin: 0.4rem;
+    }
+    .content-type-button-newtitle {
+        /* border-color: rgb(92, 184, 92); */
+        border-color: #409eff;
+        background-color: #409eff;
+        color: white;
+        width: 100%;
+        box-shadow: 1px 1px 8px #409eff;
+        padding: 0.24rem 0rem;
+    }
+    .content-type-button-newtitle:focus:hover {
+        color: white;
+    }
+    .content-type-button-newtitle:focus {
+        color: white;
+        box-shadow: 0;
+        /* border-color: rgb(92, 184, 92); */
+    }
+    .btn:hover {
+        color: white;
+    }
+    .menu {
+        margin: 0;
+        width: 100%;
+        height: 1.6rem;
+        /* height: 1.2rem; */
+        /* background-image: url('./img/yuzhoumiku.png');
+        background-repeat:no-repeat; */
+        background-color: rgb(64, 158, 255);
+        /* background-color: rgb(120 , 85, 69); */
+        color: white;
+        position: relative;
+        top: 0;
+    }
+    .menu-mylogo {
+        position: absolute;
+        width: 4rem;
+        top: .2rem;
+    }
+    .menu-mylogo-logo {
+        float: left;
+        font-size: .8rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        border: 1px solid white;
+        border-radius: 50% 50%;
+        text-align: center;
+    }
+    .menu-mylogo-title {
+        font-size: .4rem;
+        line-height: 1.2rem;
+        text-indent: .4rem;
+    }
+    .menu-user {
+        position: absolute;
+        top: .5rem;
+        right: 0;
+    }
+    .menu-user li {
+        float: left;
+        margin: .2rem;
+    }
+</style>
+
+<body>
+    <!-- menu -->
+    <menu class="menu">
+        <div class="menu-mylogo">
+            <div class="menu-mylogo-logo">
+                9
+            </div>
+            <div class="menu-mylogo-title">逍遥君の小屋</div>
+        </div>
+        <div class="menu-user">
+            <ul>
+                <li>首页</li>
+                <li>登录</li>
+                <!-- <li>个人中心</li> -->
+            </ul>
+        </div>
+    </menu>
+    <!-- content -->
+    <div class="content">
+        <div align="center" class="content-title">
+            <div id="content">
+                <!-- <div class="content-title-content">
+                    <span class="content-title-content-view">
+                        <i class="viewfonticon glyphicon glyphicon-eye-open"></i>
+                        <span class="toview-font">9999</span>
+                    </span>
+                    <span class="content-title-content-date">
+                        <span style="left:0.2rem" class="toview-font">1小时</span>
+                    </span>
+                    <a href="http://www.baidu.com" target="black">
+                        <div class="content-title-content-img" style="width:20%;float:left">
+                                <img class="content-title-content-img2"src="http://blog-ran.3w.net579.com/wp-content/themes/lolimeow/assets/images/rand/rand (10).jpg" />
+                        </div>
+                    </a>
+                    <div style="height:100%;max-width: 80%;float: left;padding-left: 0.35rem;">
+                        <a href="http://www.baidu.com" target="black">
+                            <p class="content-title-content-tilte">世界上的不幸，都是因为我的无能而造成的。所以，你有资格怨恨我。</p>
+                        </a>
+                        <span class="label label-success">Vue</span>
+                        <span>
+                            <i class="givefont-img glyphicon glyphicon-thumbs-up" ></i>
+                            <font class="givefont-font">20</font>
+                        </span>
+                        <p class="content-title-content-content">吾非中二，那只是愚蠢的人类对我妄加攻击，这一切都是机关的阴谋。世界受到如何的诅咒才会如此分崩离析？人们的基因被如何污染才会如此痛不欲生？为了修正最初的错误的因果吾诞生于世，吾之武器为，十二次元观测炮。吾，大晨未来在此命令，全世界，臣服于吾！！！！吾之名为dark frame master，反抗吾的人将会被漆黑烈焰燃烧殆尽！！！！臣服吾的人能目睹吾的光辉，是汝等的荣幸。哼！庆幸吧，能得到王的庇佑。</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <!-- 分类 -->
+        <div align="left" class="content-type">
+            <div class="content-type-button">
+                <button id="newtitle" type="button" class="content-type-button-newtitle btn">发个帖子</button>
+            </div>
+            <div class="content-type-div">
+                <ul>
+                    <li>
+                        <dl>
+                            <p class="content-type-div-title">分类</p>
+                            <dd style="color: #080808" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542115777644&di=f6262a3f6aea8a1a82bd776bb3000dc5&imgtype=0&src=http%3A%2F%2Fimgup02.fanw8.com%2Ffanw8%2F2018-10%2F06%2F17%2F15388164088921_1.jpg" />
+                                我全要
+                            </dd>
+                            <dd style="color: #1c6132" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="https://www.vue-js.com/public/images/vue.png" />
+                                Vue
+                            </dd>
+                            <dd style="color: rgb(8, 104, 171)" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="http://img1.imgtn.bdimg.com/it/u=2246466669,1889722492&fm=26&gp=0.jpg" />
+                                jQuery
+                            </dd>
+                            <dd style="color: rgb(221, 27, 22)" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3325718519,2192247856&fm=58&bpow=700&bpoh=400" />
+                                Angular
+                            </dd>
+                            <dd style="color: rgb(119, 225, 253)" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="http://img2.imgtn.bdimg.com/it/u=2892425053,888953533&fm=26&gp=0.jpg" />
+                                React
+                            </dd>
+                            <dd style="color: rgb(140, 200, 76)" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3401268567,2977119306&fm=26&gp=0.jpg" />
+                                JavaScript
+                            </dd>
+                            <dd style="color: rgb(64, 158, 255)" class="content-type-div-title-conter">
+                                <img class="content-type-div-title-icon" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1713559875,4061313262&fm=27&gp=0.jpg" />
+                                其他
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 分页 -->
+        <div id="pagination" class="pagination-main">
+            <!-- <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                    <a class="pagination-top" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    </li>
+                    <li><a class="pagination-a">1</a></li>
+                    <li><a class="pagination-a">2</a></li>
+                    <li>
+                        <a class="pagination-end" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    </li>
+                </ul>
+            </nav> -->
+        </div>        
+    </div>
+</body>
+<script src="./js/IfPC.js"></script>
+<script src="./js/canvasbackground.js"></script>
+<script src="./js/result.js"></script>
+<script>
+    $(document).ready(function () {
+        // 根据窗口显示侧边栏
+        IfwindosWidth()
+        // 请求文章
+        if (location.href.indexOf('pageNum=') !== -1){
+            var pageNum = location.href.substring(location.href.indexOf('pageNum=') + 8, location.href.length)
+            getTitle(pageNum, 10)
+        } else {
+            getTitle(1, 10)
+        }
+        // 发个帖子
+        $('#newtitle').click(function() {
+            window.open('./views/newtitle.html')
+        })
+    })
+
+    function IfwindosWidth () {
+        var Wheight = $(window).width()
+        if (Wheight < 930) {
+            $('.content-type').css('display', "none")
+        }
+    }
+
+    function resizehandler () {
+        var Wheight = $(window).width()
+        if (Wheight < 930) {
+            $('.content-type').css('display', "none")
+            $('.content-title').css('width', "100%")
+            $('.content-title-content').css('width', "88%")
+        } else {
+            $('.content-type').css('display', "block")
+            $('.content-title').css('width', "70%")
+            $('.content-title-content').css('width', "80%")
+        }
+    }
+    function throttle(method,delay){
+        var timer=null;
+        return function(){
+            var context=this, args=arguments;
+            clearTimeout(timer);
+            timer=setTimeout(function(){
+                method.apply(context,args);
+            },delay);
+        }
+    }
+    function getTitle (pageNum, pageSize) {
+        $.get(url + 'api/findtitle',{
+        pageSize: pageSize,
+        pageNum: pageNum
+        }, function(res) {
+            if (!res.code){
+                res = JSON.parse(res)
+            }
+            if (res.code == 200) {
+                $('#content').empty()
+                var data = res.data
+                var temp = ''
+                for(var i=0;i<data.length;i++) {
+                    // 根据分类显示不同的标签
+                    var label = colorLabel(data[i].title_type)
+                    temp += `<div class="content-title-content">
+                                <span class="content-title-content-view">
+                                    <i class="viewfonticon glyphicon glyphicon-eye-open"></i>
+                                    <span class="toview-font">9999</span>
+                                </span>
+                                <span class="content-title-content-date">
+                                    <span style="left:0.2rem" class="toview-font">1小时</span>
+                                </span>
+                                <a href="http://www.baidu.com" target="black">
+                                    <div class="content-title-content-img" style="width:20%;float:left">
+                                            <img class="content-title-content-img2"src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=566970707,2753790260&fm=27&gp=0.jpg" />
+                                    </div>
+                                </a>
+                                <div style="height:100%;max-width: 80%;float: left;padding-left: 0.35rem;">
+                                    <a href="http://www.baidu.com" target="black">
+                                        <p class="content-title-content-tilte">世界上的不幸，都是因为我的无能而造成的。所以，你有资格怨恨我。</p>
+                                    </a>
+                                    <span class="label label-warning">Vue</span>
+                                    <span>
+                                        <i class="givefont-img glyphicon glyphicon-thumbs-up" ></i>
+                                        <font class="givefont-font">20</font>
+                                    </span>
+                                    <p class="content-title-content-content">吾非中二，那只是愚蠢的人类对我妄加攻击，这一切都是机关的阴谋。世界受到如何的诅咒才会如此分崩离析？人们的基因被如何污染才会如此痛不欲生？为了修正最初的错误的因果吾诞生于世，吾之武器为，十二次元观测炮。吾，大晨未来在此命令，全世界，臣服于吾！！！！吾之名为dark frame master，反抗吾的人将会被漆黑烈焰燃烧殆尽！！！！臣服吾的人能目睹吾的光辉，是汝等的荣幸。哼！庆幸吧，能得到王的庇佑。</p>
+                                </div>
+                            </div>`
+                }
+                $('#content').append(temp)
+                // 判断是否为移动端来调整页面样式
+                IfPC()
+                // 根据currentPage显示分页
+                var total = Math.ceil(Number(res.total)/Number(pageSize))
+                var currentPage = Number(res.currentPage)
+                var spick = location.href.indexOf('?') 
+                var localhostUrl = location.href.substring(0, spick) + '?'
+                var pageTemp = ''
+                    pageTemp += `
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                <a href="`+localhostUrl+`pageNum=1" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                                </li>`
+                if (currentPage - 5>= 0 && currentPage + 4 < total) {
+                    pageTemp += `
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 4)+`">`+(currentPage - 4) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 3)+`">`+(currentPage - 3) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 2)+`">`+(currentPage - 2) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 1)+`">`+(currentPage - 1) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+currentPage+`">`+currentPage+`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 1)+`">`+(currentPage + 1) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 2)+`">`+(currentPage + 2) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 3)+`">`+(currentPage + 3) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 4)+`">`+(currentPage + 4) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 5)+`">`+(currentPage + 5) +`</a></li>
+                                `
+                } else if(currentPage - 5 <= 0) {
+                    for (var i=1;i<11;i++) {
+                        pageTemp +=`
+                                <li><a href="`+localhostUrl+`pageNum=`+i+`">`+i+`</a></li>
+                        `
+                    }
+                } else if(currentPage + 5 >= total) {
+                    for (var i=total-9;i<total + 1;i++) {
+                        pageTemp +=`
+                                <li><a href="`+localhostUrl+`pageNum=`+i+`">`+i+`</a></li>
+                        `
+                    }      
+                }
+                    pageTemp +=`<li>
+                                    <a href="`+localhostUrl+`pageNum=`+total+`" class="pagination-end" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        `
+                    $('#pagination').append(pageTemp)
+            } else {
+                alert('获取列表失败，请刷新重试')
+            }
+        })
+    }
+    function IfPC () {
+        if (browserRedirect() !== 'pc') {
+            $('.content-type').css('display', "none")
+            $('.content-title').css('width', "100%")
+            $('.content-title-content').css('width', "88%")
+            $('.content-title-content').css('min-width', "4rem")
+            $('.content-title-content-content').css('margin-left', "-1.5rem")
+            CanvasBackground()
+        } else {
+            CanvasBackground()
+            // 监听窗口大小
+            window.onresize = throttle(resizehandler,50)
+        }
+    }
+    function colorLabel (title_type) {
+        switch (title_type)
+        {
+            case 'Vue':
+                return 'label-success'
+                break;
+            case 'jQuery':
+                return 'label-primary'
+                break;
+            case 'React':
+                return 'label-info'
+                break;
+            case 'Angular':
+                return 'label-danger'
+                break;
+            case 'JavaScript':
+                return 'label-warning'
+            case '其他':
+                return 'label-default'
+
+        }
+    }
+
+</script>
+</html>

@@ -18,25 +18,31 @@ exports.NewTitleDao = function (model, conditions, callback) {
 
 // 查找文章
 exports.FindTitleDao = function (model, conditions, callback) {
-    if (conditions.pagenum) { var pagenum = conditions.pagenum }
-    if (conditions.pageSize) { var pageSize = conditions.pageSize }
+    let pageNums = conditions.pageNum
+    let pageNum = (conditions.pageNum - 1) * conditions.pageSize
     delete conditions["pageSize"]
-    delete conditions["pagenum"]
-    model.find(conditions, {
-        _id: 0,
-        user_id: 1,
-        title_uid: 1,
-        title_title: 1,
-        title_description: 1,
-        title_type: 1,
-        title_time: 1,
-        title_status: 1
-    }, {
-        skip: (pagenum-1)*pageSize || 0,
-        limit: pageSize || 10,
-        sort: { "_id": -1 }
-    }, (err, docs) => {
-        callback(err, docs)
+    delete conditions["pageNum"]
+    model.countDocuments({}, (err, count) => {
+        if (!err) {
+            model.find(conditions, {
+                _id: 0,
+                user_id: 1,
+                title_uid: 1,
+                title_title: 1,
+                title_description: 1,
+                title_type: 1,
+                title_time: 1,
+                title_status: 1
+            }, {
+                skip:  pageNum || 0,
+                limit: conditions.pageSize || 10,
+                sort: { "_id": -1 }
+            }, (err, docs) => {
+                callback(err, docs, { total:count, pageNum: Number(pageNums) })
+            })           
+        } else {
+            callback(err)
+        }
     })
 }
 

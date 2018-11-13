@@ -142,10 +142,16 @@ app.post('/api/newtitle', (req, res) => {
 // 获取文章
 let { FindTitleDao } = require('./dao/title')
 app.get('/api/findtitle', (req, res) => {
+    // 解决跨域问题
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.setHeader("X-Powered-By",' 3.2.1');
+    res.setHeader("Content-Type", "text/html");
     let query = req.query
-    FindTitleDao(TitleModel, query, (err, docs) => {
+    FindTitleDao(TitleModel, query, (err, docs, page) => {
         if (!err) {
-            res.send(docs)
+            res.send({ code: 200, data: docs, total: page.total, currentPage: page.pageNum })
         } else {
             console.log('获取文章失败' + err)
             res.send(err)
@@ -216,6 +222,11 @@ app.get('/api/removetitle', (req, res) => {
         }
     })
 })
+
+// // 点赞文章
+// app.get('/api/givetitle', (req, res) => {
+    
+// })
 
 let CommentsModel = require('./models/comments')
 // 新增评论
