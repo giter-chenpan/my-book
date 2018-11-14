@@ -59,6 +59,7 @@ a {
 	background: transparent;
 	text-decoration: none;
 	-webkit-tap-highlight-color: transparent;
+	color: white;
 }
 
 a:hover {

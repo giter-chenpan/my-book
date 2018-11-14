@@ -28,18 +28,24 @@ let { FindUserIdDao } = require('./dao/user')
 let { FindUserNameDao } =require('./dao/user')
 // json格式不能拥有空格与单引号
 app.post('/api/newuser', (req, res) => {
+    // 解决跨域问题
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.setHeader("X-Powered-By",' 3.2.1');
+    res.setHeader("Content-Type", "text/html");
     let user = req.body
     if (user && user.user_id.length > 5 && user.user_password.length > 5 && user.user_name.length > 1) {
         // 注册
         FindUserIdDao(UserModel, user, function (err, docs) {
             if (!err) {
                 if (docs.length !== 0) {
-                    res.send('该用户id已被注册')
+                    res.send({code: 400, data:'该用户已被注册'})
                 } else {
                     FindUserNameDao(UserModel, user, function (err, docs) {
                         if (!err) {
                             if (docs.length !== 0) {
-                                res.send('该名称已被使用')
+                                res.send({code: 400, data:'该名称已被使用'})
                             } else {
                                 NewUserDao(UserModel, user, function (err) {
                                     if (!err) {
@@ -59,16 +65,22 @@ app.post('/api/newuser', (req, res) => {
             }
         })
     } else {
-        res.send('参数不能为空')
+        res.send({code: 400, data:'请填写完表单'})
     }
 })
 
 // 用户登录
 let { LoginUserDao } = require('./dao/user')
 app.post('/api/loginuser', (req, res) => {
+    // 解决跨域问题
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.setHeader("X-Powered-By",' 3.2.1');
+    res.setHeader("Content-Type", "text/html");
     let user = req.body
     FindUserIdDao(UserModel, user, function(err, docs) {
-        if (!err) {
+        if (!err && docs.length > 0) {
             LoginUserDao(UserModel, user, function(err, docs) {
                 if (!err) {
                     user["user_token"] = uuidv1()
@@ -76,15 +88,15 @@ app.post('/api/loginuser', (req, res) => {
                         if (!err) {
                             res.send({ code: 200, token:user.user_token })
                         } else {
-                            res.send(err)
+                            res.send({ code:400, data: '发生未知错误,获取token失败' })
                         }
                     })
                 } else {
-                    res.send(err)
+                    res.send({ code:400, data: '发生未知错误' })
                 }
             })
         } else {
-            res.send(err)
+            res.send({ code:400, data: '未找到此用户' })
         }
     })
 })
