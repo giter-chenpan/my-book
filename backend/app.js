@@ -18,6 +18,14 @@ mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) =
         throw err
     }
 })
+//设置允许跨域访问该服务.
+app.all('*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, tiancai9token');
+    res.header('Access-Control-Allow-Methods', '*');
+    res.header('Content-Type', 'application/json;charset=utf-8');
+    next();
+  });
 
 let UserModel = require('./models/user')
 let { Findtoken } = require('./utile/token')
@@ -28,12 +36,6 @@ let { FindUserIdDao } = require('./dao/user')
 let { FindUserNameDao } =require('./dao/user')
 // json格式不能拥有空格与单引号
 app.post('/api/newuser', (req, res) => {
-    // 解决跨域问题
-    res.setHeader("Access-Control-Allow-Origin", "*"); 
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.setHeader("X-Powered-By",' 3.2.1');
-    res.setHeader("Content-Type", "text/html");
     let user = req.body
     if (user && user.user_id.length > 5 && user.user_password.length > 5 && user.user_name.length > 1) {
         // 注册
@@ -72,12 +74,6 @@ app.post('/api/newuser', (req, res) => {
 // 用户登录
 let { LoginUserDao } = require('./dao/user')
 app.post('/api/loginuser', (req, res) => {
-    // 解决跨域问题
-    res.setHeader("Access-Control-Allow-Origin", "*"); 
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.setHeader("X-Powered-By",' 3.2.1');
-    res.setHeader("Content-Type", "text/html");
     let user = req.body
     FindUserIdDao(UserModel, user, function(err, docs) {
         if (!err && docs.length > 0) {
@@ -105,6 +101,7 @@ app.post('/api/loginuser', (req, res) => {
 let { LogoutUserDao } = require('./dao/user')
 app.get('/api/userlogout', (req, res) => {
     let token = req.headers.tiancai9token
+    console.log(req)
     LogoutUserDao(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             if (docs.n == 1) {
@@ -154,12 +151,6 @@ app.post('/api/newtitle', (req, res) => {
 // 获取文章
 let { FindTitleDao } = require('./dao/title')
 app.get('/api/findtitle', (req, res) => {
-    // 解决跨域问题
-    res.setHeader("Access-Control-Allow-Origin", "*"); 
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-    res.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.setHeader("X-Powered-By",' 3.2.1');
-    res.setHeader("Content-Type", "text/html");
     let query = req.query
     FindTitleDao(TitleModel, query, (err, docs, page) => {
         if (!err) {

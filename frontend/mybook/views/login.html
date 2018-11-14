@@ -111,6 +111,7 @@
             $('.form-group').css('width', '90%')
             $('.login-form-font').css('margin-left', '3%')
             $('.login-logo').css('width', '90%')
+            $('.login').css('min-width', '0')
         } else {
             $('.login-logo').css('background-position-x', 'center')
         }
@@ -131,9 +132,8 @@
             user_id: id,
             user_password: password
         }, function(res) {
-            res = JSON.parse(res)
             if(res.code == 200) {
-                localStorage.tiancai9Token = res.token
+                localStorage.tiancai9token = res.token
                 alert('登录成功，跳往主页')
                 window.location.href = '../index.html'
             }else{

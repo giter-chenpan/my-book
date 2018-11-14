@@ -1,3 +1,5 @@
+ifLogin()
+
 function Bodyonscroll() {
     var top = $(document).scrollTop()
     var bottom = 80
@@ -27,7 +29,49 @@ function Bodyonscroll() {
 }
 
 function ifLogin () {
-    if(localStorage.tiancai9Token){
-        
+    if(localStorage.tiancai9token){
+        $('#UserState').css('display', 'none')
+        $('.UserMymid').css('display', 'block')
+    }else {
+        $('#UserState').css('display', 'block')
+        $('.UserMymid').css('display', 'none')    
     }
+}
+
+function UserLogout() {
+    var token = window.localStorage.tiancai9token
+    $.ajax({
+        type: "GET",
+        url: url + 'api/userlogout',
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        data: {},
+        beforeSend: function (XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("tiancai9token", token);
+        },
+        success: function (res) {
+            if(res.code == 200) {
+                alert('登出成功')
+                $('#UserState').css('display', 'block')
+                $('.UserMymid').css('display', 'none')
+                localStorage.removeItem('tiancai9token');
+            } else {
+                alert('登出失败')
+            }
+        },error:function(error){
+            console.log(error);
+        }
+    });
+
+    // $.ajax({
+    //     method: 'GET',
+    //     headers: {
+    //         tiancai9token: window.localStorage.tiancai9token
+    //     },
+    //     url: url + 'api/userlogout',
+    //     dataType:'text'
+    // })
+    // .then(response=>{
+
+    // })
 }

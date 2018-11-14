@@ -48,3 +48,6 @@
     float: left;
     margin: .2rem;
 }
+#UserMymid {
+    display: none;
+}
