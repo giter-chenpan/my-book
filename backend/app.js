@@ -21,11 +21,23 @@ mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) =
 //设置允许跨域访问该服务.
 app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, tiancai9token');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Access-Control-Allow-Origin,tiancai9token');
     res.header('Access-Control-Allow-Methods', '*');
     res.header('Content-Type', 'application/json;charset=utf-8');
     next();
   });
+
+// 图片上传
+let { LoadIMG } = require('./utile/IMG')
+app.post('/api/loadimg', (req, res) => {
+    LoadIMG(req, (err, path) => {
+        if (!err) {
+            res.send({ code: 200, data: path })
+        } else {
+            res.send({ code: 400, data: err })
+        }
+    })
+})
 
 let UserModel = require('./models/user')
 let { Findtoken } = require('./utile/token')
@@ -101,7 +113,6 @@ app.post('/api/loginuser', (req, res) => {
 let { LogoutUserDao } = require('./dao/user')
 app.get('/api/userlogout', (req, res) => {
     let token = req.headers.tiancai9token
-    console.log(req)
     LogoutUserDao(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             if (docs.n == 1) {

@@ -41,7 +41,19 @@
     }
     .col-md-12 {
         margin: .3rem 0;
-        margin-left: 4%;
+        margin-left: 5%;
+    }
+    .loading {
+        display: none;
+        color: orange;
+    }
+    .ending {
+        display: none;
+        color: green;
+    }
+    .erring {
+        display: none;
+        color: red;
     }
 </style>
 
@@ -73,7 +85,7 @@
     <div class="row">
         <div class="col-md-12">
             <b>分类：</b>
-            <select>
+            <select class="type">
                 <option>Javascript</option>
                 <option>Vue</option>
                 <option>React</option>
@@ -83,10 +95,16 @@
             </select>
         </div>
         <div class="col-md-12">
-                <b>封面图：</b>
-                <input id="LoadIMG" type="file" />
-                <p style="color: red" >*(如未选择封面图则使用头像作为封面图)</p>
-            </div>
+            <b>封面图：</b>
+            <b class="loading">正在上传图片ing...</b>
+            <b class="ending">图片完成上传</b>
+            <b class="erring">图片上传失败X</b>
+            <input id="LoadIMG" type="file" />
+            <p style="color: red" >*(如未选择封面图则使用头像作为封面图)</p>
+        </div>
+        <div class="col-md-12">
+            <button id="NewTitle" type="button" class="btn btn-success">创建</button>
+        </div>
     </div>
 </body>
 
@@ -97,17 +115,82 @@
 <script type="text/javascript" src="./NewTitle/wangEditor.min.js"></script>
 <script type="text/javascript">
 
+var ImgSwitch = null
+
+// 加载富文本
+var E = window.wangEditor
+var editor = new E('#editor')
+editor.customConfig.zIndex = 1
+editor.customConfig.menus = [
+    'bold',
+    'fontSize',
+    'foreColor',
+    'justify',
+    'code',
+    'image',
+    'undo'
+
+]
+editor.create()
+
 $(document).ready(function() {
-    // 加载富文本
-    Editor()
     // 监听LoadIMG上传图片
     LoadIMG()
+    // 提交文章
+    $('#NewTitle').click(function() {
+        if(ImgSwitch && ImgSwitch.code == 200) {
+            NewTitle(ImgSwitch.data)
+        }else {
+            alert('请上传封面图')
+        }
+    })
 })
+
+function NewTitle(ImgPath) {
+    var title = $('.rich-title-input').val()
+    var description = JSON.stringify(editor.txt.getJSON())
+    var type = $('.type').val()
+    var ImgPath = ImgPath
+    if (title !== '' && description !== '' && type !== '' && ImgPath !== ''){
+        var data = {
+                title_title: title,
+                title_description: description,
+                title_type: type,
+                title_IMG: ImgPath
+            }
+        $.ajax({
+            type: "post",
+            url: url + 'api/newtitle',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            jsonp: "callback",
+            data: JSON.stringify(data),
+            beforeSend: function(XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("tiancai9token", token);
+            },
+            success: function (res) {
+                if(res.code == 200) {
+                    alert(res.data + '接下来跳往主页')
+                    window.location.href = '../index.html'
+                }else {
+                    alert(res.data)
+                }
+            },error:function(error){
+                console.log(error);
+            }
+        });
+    }else {
+        alert('请填写完表单')
+    }
+}
 
 function LoadIMG () {
     $('#LoadIMG').change(function(file) {
         file = file.target.files[0]
-        console.log(file)
+        $('.loading').css('display', 'block')
+        $('.ending').css('display', 'none')
+        $('.erring').css('display', 'none')
+        // console.log(file)
         var loadFrom = new FormData()
         loadFrom.append('file', file)
         $.ajax({
@@ -115,27 +198,21 @@ function LoadIMG () {
             type: "POST",
             data: loadFrom,
             processData: false,
-            contentType: false
+            contentType: false,
+            success: function(res) {
+                if (res.code == 200) {
+                    $('.loading').css('display', 'none')
+                    $('.ending').css('display', 'block')
+                }else {
+                    $('.loading').css('display', 'none')
+                    $('.erring').css('display', 'block')
+                }
+                return ImgSwitch = res
+            }
         });
     })
 }
 
-function Editor () {
-    var E = window.wangEditor
-    var editor = new E('#editor')
-    editor.customConfig.menus = [
-        'head',
-        'bold',
-        'fontSize',
-        'foreColor',
-        'justify',
-        'code',
-        'image',
-        'undo'
-
-    ]
-    editor.create()
-}
 </script>
 
 </html>
