@@ -24,7 +24,7 @@ function Bodyonscroll() {
         $('.menu-mylogo-title').css('font-size', '.4rem')
         $('.menu-mylogo-title').css('line-height', '1.2rem')
         $('.menu-mylogo-title').css('text-indent', '.4rem')
-        $('.menu-user').css('top', '.5rem')
+        $('.menu-user').css('top', '.9rem')
     }
 }
 

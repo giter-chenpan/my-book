@@ -40,7 +40,7 @@
 }
 .menu-user {
     position: absolute;
-    top: .5rem;
+    top: .9rem;
     right: 0;
     transition: top 0.45s;
 }

@@ -7,52 +7,13 @@
     <title>新建文章</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/tiancai9Headers.css">
 
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <style>
-    .menu {
-        margin: 0;
-        width: 100%;
-        height: 1.6rem;
-        /* height: 1.2rem; */
-        /* background-image: url('./img/yuzhoumiku.png');
-        background-repeat:no-repeat; */
-        background-color: rgb(64, 158, 255);
-        /* background-color: rgb(120 , 85, 69); */
-        color: white;
-        position: relative;
-        top: 0;
-    }
-    .menu-mylogo {
-        position: absolute;
-        width: 4rem;
-        top: .2rem;
-    }
-    .menu-mylogo-logo {
-        float: left;
-        font-size: .8rem;
-        width: 1.2rem;
-        height: 1.2rem;
-        border: 1px solid white;
-        border-radius: 50% 50%;
-        text-align: center;
-    }
-    .menu-mylogo-title {
-        font-size: .4rem;
-        line-height: 1.2rem;
-        text-indent: .4rem;
-    }
-    .menu-user {
-        position: absolute;
-        top: .5rem;
-        right: 0;
-    }
-    .menu-user li {
-        float: left;
-        margin: .2rem;
-    }
+
 </style>
 <body>
     <menu class="menu">
@@ -64,13 +25,17 @@
         </div>
         <div class="menu-user">
             <ul>
-                <li>首页</li>
-                <li>登录</li>
-                <!-- <li>个人中心</li> -->
+                <li><a href="../index.html">首页</a></li>
+                <li id="UserState"><a href="../views/login.html">登录</a></li>
+                <li class="UserMymid"><a href="usermymid.html">个人中心</a></li>
+                <li onclick="UserLogout()" class="UserMymid"><a>登出</a></li>
             </ul>
         </div>
     </menu>
     <samp>This text is meant to be treated as sample output from a computer program.</samp>
     <pre>&lt;p&gt;Sample text here...&lt;/p&gt;</pre>
 </body>
+
+<script src="../js/tiancai9Headers.js"></script>
+<script src="../js/result.js"></script>
 </html>
