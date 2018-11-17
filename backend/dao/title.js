@@ -7,6 +7,7 @@ exports.NewTitleDao = function (model, conditions, callback) {
     conditions["title_status"] = 0
     conditions["title_time"] = myDate
     conditions["title_delete"] = 0
+    console.log(conditions)
     model.create(conditions, (err) => {
         if (!err) {
             callback()
