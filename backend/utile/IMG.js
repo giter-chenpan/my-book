@@ -37,3 +37,10 @@ exports.LoadIMG = function (req, callback) {
         return
     })
 }
+
+exports.GetImg = function (conditions, callback) {
+    let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\uploads\\' + conditions
+    fs.readFile(path, (err, data) => {
+        callback(err, data)
+    })
+}

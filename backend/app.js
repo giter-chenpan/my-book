@@ -38,6 +38,18 @@ app.post('/api/loadimg', (req, res) => {
         }
     })
 })
+// 获取图片
+let { GetImg } = require('./utile/IMG')
+app.get('/api/getimg', (req, res) => {
+    let imgString = req.query.img
+    GetImg(imgString, (err, img) => {
+        if (!err) {
+            res.send(img)
+        } else {
+            res.send({ code: 400, data: err})
+        }
+    })
+})
 
 let UserModel = require('./models/user')
 let { Findtoken } = require('./utile/token')
@@ -140,7 +152,6 @@ app.post('/api/newtitle', (req, res) => {
                     title["user_id"] = docs[0].user_id
                     NewTitleDao(TitleModel, title, (err) => {
                         if (!err) {
-                            console.log('创建文章成功' + title)
                             res.send({ code: 200, data: '创建文章成功'})
                         } else {
                             console.log(err)
@@ -148,7 +159,7 @@ app.post('/api/newtitle', (req, res) => {
                         }
                     })
                 } else {
-                    es.send({ code: 402, data: '登录失效，请重新登录'})
+                    res.send({ code: 402, data: '登录失效，请重新登录'})
                 }
             } else {
                 res.send(err)

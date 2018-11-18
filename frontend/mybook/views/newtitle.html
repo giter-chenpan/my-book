@@ -99,7 +99,7 @@
             <b class="loading">正在上传图片ing...</b>
             <b class="ending">图片完成上传</b>
             <b class="erring">图片上传失败X</b>
-            <input id="LoadIMG" type="file" />
+            <input id="LoadIMG" type="file" accept="image/*" multiple="false" />
             <p style="color: red" >*(如未选择封面图则使用头像作为封面图)</p>
         </div>
         <div class="col-md-12">
@@ -156,7 +156,7 @@ function NewTitle(ImgPath) {
                 title_title: title,
                 title_description: description,
                 title_type: type,
-                title_IMG: ImgPath
+                title_img: ImgPath
             }
         $.ajax({
             type: "post",
@@ -170,8 +170,8 @@ function NewTitle(ImgPath) {
             },
             success: function (res) {
                 if(res.code == 200) {
-                    alert(res.data + '接下来跳往主页')
-                    window.location.href = '../index.html'
+                    // alert(res.data + '接下来跳往主页')
+                    // window.location.href = '../index.html'
                 }else {
                     alert(res.data)
                 }

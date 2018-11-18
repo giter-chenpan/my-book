@@ -7,6 +7,7 @@ exports.NewTitleDao = function (model, conditions, callback) {
     conditions["title_status"] = 0
     conditions["title_time"] = myDate
     conditions["title_delete"] = 0
+    conditions["title_see"] = 0
     model.create(conditions, (err) => {
         if (!err) {
             callback()
@@ -22,7 +23,11 @@ exports.FindTitleDao = function (model, conditions, callback) {
     let pageNum = (conditions.pageNum - 1) * conditions.pageSize
     delete conditions["pageSize"]
     delete conditions["pageNum"]
-    model.countDocuments({}, (err, count) => {
+    conditions.title_type = decodeURIComponent(conditions.title_type)
+    if (conditions.title_type == 'undefined') {
+        delete conditions["title_type"]
+    }
+    model.countDocuments(conditions, (err, count) => {
         if (!err) {
             model.find(conditions, {
                 _id: 0,
@@ -32,7 +37,9 @@ exports.FindTitleDao = function (model, conditions, callback) {
                 title_description: 1,
                 title_type: 1,
                 title_time: 1,
-                title_status: 1
+                title_status: 1,
+                title_img: 1,
+                title_see: 1
             }, {
                 skip:  pageNum || 0,
                 limit: conditions.pageSize || 10,

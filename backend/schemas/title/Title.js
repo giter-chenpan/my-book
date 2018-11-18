@@ -10,7 +10,8 @@ let TitleSchema = new Schema({
     title_status: Number,
     title_time: Date,
     title_delete: Number,
-    title_img: String
+    title_img: String,
+    title_see: Number
 })
 
 module.exports = TitleSchema
