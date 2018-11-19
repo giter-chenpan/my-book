@@ -57,6 +57,9 @@ function UserLogout() {
                 localStorage.removeItem('tiancai9token');
             } else {
                 alert('登出失败')
+                $('#UserState').css('display', 'block')
+                $('.UserMymid').css('display', 'none')
+                localStorage.removeItem('tiancai9token');
             }
         },error:function(error){
             console.log(error);

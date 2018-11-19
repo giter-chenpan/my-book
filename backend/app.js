@@ -51,6 +51,22 @@ app.get('/api/getimg', (req, res) => {
     })
 })
 
+// 根据用户id获取图片
+let { GetUserImgDao } = require('./dao/user')
+app.get('/api/getuserimg', (req, res) => {
+    var query = req.query
+    console.log(res)
+    console.log(query)
+    GetUserImgDao(UserModel, query, (err, docs) => {
+        if (!err) {
+            console.log(docs)
+            res.send({ code: 200, data: docs})
+        } else {
+            res.send({ code: 400, data: err })
+        }
+    })
+})
+
 let UserModel = require('./models/user')
 let { Findtoken } = require('./utile/token')
 let { Updatetoken } = require('./utile/token')
@@ -65,19 +81,19 @@ app.post('/api/newuser', (req, res) => {
         // 注册
         FindUserIdDao(UserModel, user, function (err, docs) {
             if (!err) {
-                if (docs.length !== 0) {
+                if (docs.length) {
                     res.send({code: 400, data:'该用户已被注册'})
                 } else {
                     FindUserNameDao(UserModel, user, function (err, docs) {
                         if (!err) {
-                            if (docs.length !== 0) {
-                                res.send({code: 400, data:'该名称已被使用'})
+                            if (docs.length) {
+                                res.send({ code: 400, data:'该名称已被使用' })
                             } else {
                                 NewUserDao(UserModel, user, function (err) {
                                     if (!err) {
-                                        res.send({ code: 200, data: 'OK'})
+                                        res.send({ code: 200, data: 'OK' })
                                     } else {
-                                        res.send(err)
+                                        res.send({ code: 200, data: err })
                                     }
                                 })
                             }
@@ -172,15 +188,18 @@ app.post('/api/newtitle', (req, res) => {
 
 // 获取文章
 let { FindTitleDao } = require('./dao/title')
+let { SeeTitleDao } = require('./dao/title')
 app.get('/api/findtitle', (req, res) => {
     let query = req.query
     FindTitleDao(TitleModel, query, (err, docs, page) => {
         if (!err) {
+            SeeTitleDao(TitleModel, query)
             res.send({ code: 200, data: docs, total: page.total, currentPage: page.pageNum })
         } else {
             console.log('获取文章失败' + err)
             res.send(err)
         }
+        
     })
 })
 
@@ -247,11 +266,6 @@ app.get('/api/removetitle', (req, res) => {
         }
     })
 })
-
-// // 点赞文章
-// app.get('/api/givetitle', (req, res) => {
-    
-// })
 
 let CommentsModel = require('./models/comments')
 // 新增评论

@@ -72,3 +72,11 @@ exports.RemoveTitleDao = function (model, conditions, callback) {
         callback(err,docs)
     })
 }
+
+// 文章阅读量增加
+exports.SeeTitleDao = function (model, conditions, callback) {
+    model.updateMany(conditions, { $inc: { title_see: 1 } }, (err, docs) => {
+    
+    })
+}
+

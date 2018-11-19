@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>逍遥君の小屋</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/tiancai9Headers.css">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+<style>
+    .content {
+        margin: 0 auto;
+        margin-top: 2rem;
+        width: 90%;
+        min-width: 20rem;
+    }
+    .content-title {
+        width: 100%;
+    }
+    .content-title-author {
+        float: left;
+        padding: .4rem;
+        background-color: white;
+        box-shadow: 1px 1px 1px #ccc;
+    }
+    .content-title-author-img {
+        border: 1px solid #ccc;
+        padding: 0.05rem;
+    }
+    .content-title-author-name {
+        color: #666666;
+        margin: .2rem;
+        font-weight: bold;
+        font-size: 0.4rem;
+        background-color: #f5f3f3;
+        box-shadow: 3px 2px 1px #ccc;
+    }
+    .content-content {
+        float: left;
+        margin-left: 5%;
+        width: 75%;
+        height: 200px;
+    }
+    .content-content-tilte {
+        width: 100%;
+        height: 1.8rem;
+        border: 1px solid #ccc;
+        background-color: white;
+        box-shadow: 1px 1px 1px #ccc;
+    }
+    .content-content-tilte-name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 0.4rem;
+        font-weight: bold;
+        padding: .2rem .3rem;
+    }
+    .content-content-tilte-time{
+        padding: .2rem;
+        width: 30%;
+        float: left;
+        color: #666666;
+    }
+    .content-content-tilte-right {
+        width: 70%;
+        padding: .2rem;
+        float: left;
+        color: #666666;
+        text-align: right;
+    }
+    .content-content-tilte-right * {
+        float: right;
+        margin-right: .4rem;
+    }
+    .content-content-description {
+        margin-top: .6rem;
+        width: 100%;
+        border: 1px solid #ccc;
+        background-color: white;
+        box-shadow: 1px 1px 1px #ccc;
+    }
+    .content-content-description-content {
+        padding: .4rem;
+        min-height: 5rem;
+    }
+    .content-content-tilte-right-status {
+        cursor: pointer;
+    }
+    .content-comments {
+
+    }
+    
+</style>
+
+<body>
+    <menu class="menu">
+        <div class="menu-mylogo">
+            <div class="menu-mylogo-logo">
+                9
+            </div>
+            <div class="menu-mylogo-title">逍遥君の小屋</div>
+        </div>
+        <div class="menu-user">
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li id="UserState"><a href="../views/login.html">登录</a></li>
+                <li class="UserMymid"><a href="usermymid.html">个人中心</a></li>
+                <li onclick="UserLogout()" class="UserMymid"><a>登出</a></li>
+            </ul>
+        </div>
+    </menu>
+    <!-- 内容 -->
+    <div class="content" style="height: 1200px;">
+        <!-- 文章 -->
+        <div class="content-title">
+            <div align="center" class="content-title-author">
+                <img class="content-title-author-img" src="https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=9b07ca2cda39bc0e5f09a03a0a81d9c3&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Fd4628535e5dde7115a39c281acefce1b9c1661da.jpg" />
+                <p class="content-title-author-name">admin</p>
+            </div>
+            <div class="content-content">
+                <div class="content-content-tilte">
+                    <div class="content-content-tilte-name">吾非中二，那只是愚蠢的人类对我妄加攻击，这一切都是机关的阴谋。世界受到如何的诅咒才会如此分崩离析？人们的基因被如何污染才会如此痛不欲生？为了修正最初的错误的因果吾诞生于世，吾之武器为，十二次元观测炮。吾，大晨未来在此命令，全世界，臣服于吾！！！！吾之名为dark frame master，反抗吾的人将会被漆黑烈焰燃烧殆尽！！！！臣服吾的人能目睹吾的光辉，是汝等的荣幸。哼！庆幸吧，能得到王的庇佑。</div>
+                    <div class="content-content-tilte-time">2018年11月18日21:35:59</div>
+                    <div class="content-content-tilte-right">
+                        <div class="content-content-tilte-right-see">阅读量：99999</div>
+                    </div>
+                </div>
+                <div class="content-content-description">
+                    <div class="content-content-description-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 评论 -->
+        <div class="content-comments">
+            <div>
+                <div>评<br></br>论者</div>
+                <div>评论内容</div>
+                <div>回复盒子</div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/result.js"></script>
+<script type="text/javascript" src="../js/IfPC.js"></script>
+<script type="text/javascript" src="../js/throttle.js"></script>
+<script type="text/javascript" src="../js/tiancai9Headers.js"></script>
+<script type="text/javascript" src="../js/canvasbackground.js"></script>
+<script type="text/javascript" src="../js/ChinaDate.js"></script>
+<script type="text/javascript" >
+    var descriptionString = ''
+    $(document).ready(function() {
+        // 根据向下滚动menu更改
+        document.body.onscroll = throttle(Bodyonscroll, 30)
+        // 动态背景
+        CanvasBackground()
+        // 获取文章
+        var NowUrl = window.location.href
+            if (NowUrl.indexOf('title_uid=') !== -1) {
+                var title_uid = NowUrl.substring(NowUrl.indexOf('title_uid=') + 10, NowUrl.length)
+                GetTitle(title_uid)
+            } else {
+                alert('页面不存在，点击确定跳回首页')
+                window.open('../index.html')
+            }
+    })
+
+    function GetTitle (title_uid) {
+        $.get(url + 'api/findtitle', {
+            title_uid: title_uid
+        }, function (res) {
+            console.log(res)
+            var data = res.data[0]
+            $('.content-content-tilte-name').text(data.title_title)
+            var title_time = format(data.title_time,'yyyy年MM月dd日 HH:mm:ss')
+            $('.content-content-tilte-time').text(title_time)
+            $('.content-content-tilte-right-see').text('阅读量：' + data.title_see)
+            var descriptionJson =  JSON.parse(data.title_description)
+            // 获取文章内容
+            GetDescription(descriptionJson)
+            $('.content-content-description-content').html(descriptionString)
+        })
+    }
+
+    function GetUserImg (path) {
+        $.get(url + 'api/getuserimg', {
+            user_name: path
+        }, function (res) {
+            console.log(res)
+        })
+    }
+
+    function GetDescription (obj) {
+        for(var i=0; i<obj.length;i++) {
+            var tag = obj[i].tag
+            if(tag) {
+                if(obj[i].attrs.length !== 0) {
+                    descriptionString += '<'+tag+' '+obj[i].attrs[0].name+'="'+obj[i].attrs[0].value+'" >'
+                    GetDescription(obj[i].children)
+                }else {
+                    descriptionString += '<'+tag+'>'
+                    GetDescription(obj[i].children)
+                }
+                descriptionString += '</'+tag+'>'
+            }else {
+                descriptionString += obj[0]
+            }
+        }
+    }
+</script>
+</html>

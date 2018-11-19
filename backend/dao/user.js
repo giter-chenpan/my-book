@@ -50,3 +50,10 @@ exports.LogoutUserDao = function (model, conditions, callback) {
         callback(err, docs)
     })
 }
+
+// 获取用户图片
+exports.GetUserImgDao = function (model, conditions, callback) {
+    model.find(conditions, (err, docs) => {
+        callback(err, docs)
+    })
+}
