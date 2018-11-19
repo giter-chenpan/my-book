@@ -31,7 +31,7 @@ exports.FindTitleDao = function (model, conditions, callback) {
         if (!err) {
             model.find(conditions, {
                 _id: 0,
-                user_id: 1,
+                user_name: 1,
                 title_uid: 1,
                 title_title: 1,
                 title_description: 1,

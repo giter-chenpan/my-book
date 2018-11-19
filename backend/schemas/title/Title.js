@@ -3,7 +3,7 @@ let Schema = mongoose.Schema
 
 let TitleSchema = new Schema({
     title_uid: String,
-    user_id: String,
+    user_name: String,
     title_title: String,
     title_description: String,
     title_type: String,

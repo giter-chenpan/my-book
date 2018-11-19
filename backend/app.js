@@ -165,7 +165,7 @@ app.post('/api/newtitle', (req, res) => {
         Findtoken(UserModel, { user_token: token }, (err, docs) => {
             if (!err) {
                 if (docs.length !== 0) {
-                    title["user_id"] = docs[0].user_id
+                    title["user_name"] = docs[0].user_name
                     NewTitleDao(TitleModel, title, (err) => {
                         if (!err) {
                             res.send({ code: 200, data: '创建文章成功'})

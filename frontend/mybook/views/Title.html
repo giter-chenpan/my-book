@@ -185,6 +185,9 @@
             var title_time = format(data.title_time,'yyyy年MM月dd日 HH:mm:ss')
             $('.content-content-tilte-time').text(title_time)
             $('.content-content-tilte-right-see').text('阅读量：' + data.title_see)
+            $('.content-title-author-name').text(data.user_name)
+            // 根据用户name获取用户头像
+            GetUserImg(data.user_name)
             var descriptionJson =  JSON.parse(data.title_description)
             // 获取文章内容
             GetDescription(descriptionJson)

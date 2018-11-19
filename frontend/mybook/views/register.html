@@ -128,8 +128,8 @@
             alert('账户不能小于六位')
             return false
         }
-        if(user.length < 2) {
-            alert('昵称不能小于两位')
+        if(7 < user.length < 2) {
+            alert('昵称不能小于两位,大于6位')
             return false           
         }
         if (password.length < 6) {
@@ -141,7 +141,6 @@
             user_name: user,
             user_password: password
         }, function(res) {
-            res = JSON.parse(res)
             if(res.code == 200) {
                 alert('注册成功，跳转至登录页面')
                 window.location.href = "./login.html"
