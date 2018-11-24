@@ -10,7 +10,7 @@ exports.LoadIMG = function (req, callback) {
 
     // 2.设置上传的文件路径
     form.uploadDir = 'img/uploads'
-
+    
     // 3.获取表单的内容
     form.parse(req, (err, fields, files) => {
         if (!err && files.file && files.file.size < 4194304 ) {

@@ -38,6 +38,27 @@ app.post('/api/loadimg', (req, res) => {
         }
     })
 })
+
+// 更换头像
+let { ChangeImg } = require('./dao/user')
+app.post('/api/changeimg', (req, res) => {
+    let token = req.headers.tiancai9token
+    LoadIMG(req, (err, path) => {
+        console.log(path)
+        if (!err) {
+            ChangeImg(UserModel, { user_token: token, user_img: path }, (err) => {
+                if (!err) {
+                    res.send({ code: 200, data: '修改成功'})
+                } else {
+                    res.send({ code: 400, data: err })
+                }
+            })
+        } else {
+            res.send({ code: 400, data: err })
+        }
+    })
+})
+
 // 获取图片
 let { GetImg } = require('./utile/IMG')
 app.get('/api/getimg', (req, res) => {
@@ -55,11 +76,8 @@ app.get('/api/getimg', (req, res) => {
 let { GetUserImgDao } = require('./dao/user')
 app.get('/api/getuserimg', (req, res) => {
     var query = req.query
-    console.log(res)
-    console.log(query)
     GetUserImgDao(UserModel, query, (err, docs) => {
         if (!err) {
-            console.log(docs)
             res.send({ code: 200, data: docs})
         } else {
             res.send({ code: 400, data: err })
@@ -151,6 +169,33 @@ app.get('/api/userlogout', (req, res) => {
         } else {
             console.log('登录失败' + err )
             res.send({ code:400, data: '登出失败，请稍后重试' })
+        }
+    })
+})
+
+// 获取用户信息
+let { GetUserDao } = require('./dao/user')
+app.get('/api/getuser', (req, res) => {
+    var token = req.headers.tiancai9token
+    GetUserDao(UserModel, {user_token: token}, (err, docs) => {
+        if (!err) {
+            res.send({ code: 200, data: docs })
+        } else {
+            res.send({ code: 400, data: err })
+        }
+    })
+})
+
+// 修改用户密码
+let { ChangePwd } = require('./dao/user')
+app.post('/api/changepwd', (req, res) => {
+    var token = req.headers.tiancai9token
+    var password = req.body.user_password
+    ChangePwd(UserModel, { user_token: token, user_password: password }, (err) => {
+        if (!err) {
+            res.send({ code: 200, data: '修改密码成功' })
+        } else {
+            res.send({ code: 400, data: err})
         }
     })
 })
@@ -328,14 +373,17 @@ app.get('/api/findcomments', (req, res) => {
     let query = req.query
     // console.log(query)
     FindCommentsDao(CommentsModel, query, (err, docs) => {
+        console.log(docs)
         if (!err) {
             if (docs.length !== 0) {
                 let commentsObj = docs
                 let replyAry = []
                 let commentsAry = []
                 for (let i = 0; i < commentsObj.length; i++) {
+                    console.log(commentsObj)
                     FindReplyDao(ReplyModel, { comments_uid: commentsObj[i]._doc.comments_uid }, (err, docs) => {
                         if (!err) {
+                            console.log(docs)
                             if (docs.length !== 0) {
                                 for (let j = 0; j < docs.length;  j++) {
                                     replyAry.push(docs[j]._doc)
@@ -351,7 +399,7 @@ app.get('/api/findcomments', (req, res) => {
                                 }
                             } else {
                                 if (i == commentsObj.length - 1) {
-                                    console.log('获取评论失败' + err)
+                                    // console.log('获取评论失败' + err)    
                                     res.send({ code: 400, data: '获取评论失败' })
                                 }
                             }
@@ -364,7 +412,11 @@ app.get('/api/findcomments', (req, res) => {
                     })
                 }
                 setTimeout( function Res () {
-                    res.send(commentsAry)
+                    if (commentsAry.length !== 0) {
+                        res.send({ coed: 200, data: commentsAry})
+                    } else {
+                        res.send({ code: 400, data: '没有找到回复'})
+                    }
                 }, 500)
             } else {
                 res.send({ code: 400, data: '文章的评论为空' })

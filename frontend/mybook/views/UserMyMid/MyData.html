@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人资料</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/reset.css">  
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        overflow: auto;
+        overflow-x: hidden;
+        background-color: white;
+    }
+
+    /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+    body::-webkit-scrollbar {
+        width: 3px;
+        height: 2px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滚动条轨道 内阴影+圆角*/
+    body::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    /*定义滑块 内阴影+圆角*/
+    body::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgb(64, 158, 255);
+        background-color: #555;
+    }
+    .header {
+        width: 100%;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: .5rem;
+        padding: .6rem 0;
+        font-weight: 600;
+    }
+    .uploadImg {
+        border: 1px solid #efefef;
+        border-radius: 50% 50%;
+        overflow: hidden;
+    }
+    #img {
+        width: 2.4rem;
+    }
+    .header-img {
+        float: left;
+        height: 100%;
+        padding: 0 .6rem;
+        padding-top: .3rem;
+    }
+    .changeImg {
+        width: 100%;
+        padding: .3rem;
+    }
+    .row {
+        float: left;
+        width: 80%;
+    }
+    .form-input {
+        padding: .4rem;
+    }
+    .form-input>input {
+        height: .7rem;
+        width: 40%;
+    }
+    .main {
+        height: 60%;
+        min-width: 16rem;
+    }
+</style>
+
+<body>
+    <div class="header">
+        个人资料
+    </div>
+    <div class="main">
+        <div class="header-img">
+            <label for="uploadImg" >
+                <div class="uploadImg">
+                    <img id="img"/>
+                </div>
+                <div align="center" class="changeImg">
+                    <div class="btn btn-default">更换头像</div>
+                </div>
+            </label>
+            <input id="uploadImg" style="display:none" type="file"  />
+        </div>    
+        <div class="row">
+            <div class="form-input col-md-12">
+                账户：
+                <input id="id" type="text" disabled />
+            </div>
+            <div class="form-input col-md-12">
+                昵称：
+                <input id="name" type="text" disabled />
+            </div>
+            <div class="form-input col-md-12">
+                密码：
+                <input id="password" type="password" />
+                <span style="font-size:.2rem; color: red">*密码不能小于6位</span>
+            </div>
+            <div class="form-input col-md-12">
+                <button id="ChangePwd" class="btn btn-default">修改密码</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../js/result.js"></script>
+<script>
+    $(document).ready(function() {
+        // 获取当前用户个人信息
+        GetUser()
+        // 更换头像
+        $('#uploadImg').change(function (file) {
+            var file = file.target.files[0]
+            ChangeImg(file)
+        })
+        $('#ChangePwd').click(function() {
+            var password = $('#password').val()
+            if(password.length < 6 ) {
+                alert('密码不能小于6位数')
+            }else {
+                ChangePwd(password)
+            }
+        })
+    })
+
+function ChangePwd (val) {
+    $.ajax({
+        type: "post",
+        url: url + 'api/changepwd',
+        data: JSON.stringify({
+            user_password: val
+        }),
+        dataType: "json",
+        jsonp: "callback",
+        contentType: "application/json;charset=utf-8",
+        beforeSend: function(XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("tiancai9token", token);
+        },
+        success: function (res) {
+            if(res.code == 200) {
+                alert(res.data)
+                $('#password').val('')
+            }else {
+                alert('修改密码失败')
+            }
+        },error:function(error){
+            console.log(error);
+        }
+    });  
+}
+
+function ChangeImg (file) {
+    var loadFrom = new FormData()
+    loadFrom.append('file', file)
+    $.ajax({
+        type: "post",
+        url: url + 'api/changeimg',
+        data: loadFrom,
+        dataType: "json",
+        jsonp: "callback",
+        processData: false,
+        contentType: false,
+        beforeSend: function(XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("tiancai9token", token);
+        },
+        success: function (res) {
+            if(res.code == 200) {
+                alert('修改头像成功')
+                GetUser()
+            }else {
+                alert('获取用户信息失败，请刷新或者重新登录')
+            }
+        },error:function(error){
+            console.log(error);
+        }
+    });   
+}
+
+function GetUser () {
+    $.ajax({
+        type: "get",
+        url: url + 'api/getuser',
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        jsonp: "callback",
+        beforeSend: function(XMLHttpRequest) {
+            XMLHttpRequest.setRequestHeader("tiancai9token", token);
+        },
+        success: function (res) {
+            if(res.code == 200) {
+                var data = res.data[0]
+                $('#id').val(data.user_id)
+                $('#name').val(data.user_name)
+                $('#img').attr('src', url + 'api/getimg?img=' + data.user_img)
+            }else {
+                alert('获取用户信息失败，请刷新或者重新登录')
+            }
+        },error:function(error){
+            console.log(error);
+        }
+    });
+}
+</script>
+</html>

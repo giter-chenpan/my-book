@@ -24,18 +24,20 @@
     }
     .content-title {
         width: 100%;
+        float: left;
     }
-    .content-title-author {
+    .content-title-author, .content-comments-div-author {
         float: left;
         padding: .4rem;
         background-color: white;
         box-shadow: 1px 1px 1px #ccc;
     }
-    .content-title-author-img {
+    .content-title-author-img, .content-comments-author-div-img {
+        width: 3.2rem;
         border: 1px solid #ccc;
         padding: 0.05rem;
     }
-    .content-title-author-name {
+    .content-title-author-name, .content-comments-div-author-name {
         color: #666666;
         margin: .2rem;
         font-weight: bold;
@@ -43,11 +45,10 @@
         background-color: #f5f3f3;
         box-shadow: 3px 2px 1px #ccc;
     }
-    .content-content {
+    .content-content, .content-comments-div-comments {
         float: left;
         margin-left: 5%;
         width: 75%;
-        height: 200px;
     }
     .content-content-tilte {
         width: 100%;
@@ -96,9 +97,104 @@
         cursor: pointer;
     }
     .content-comments {
-
+        float: left;
+        width: 100%;
+        margin: .8rem 0;
     }
-    
+    .content-comments-div {
+        float: left;
+        width: 100%;
+    }
+    .content-comments-div-comments-content {
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 1px #ccc;
+        background-color: white;
+        padding: .4rem;
+        min-height: .5rem;
+        float: left;
+        width: 100%;
+    }
+    .content-comments-div-comments-content-bottom {
+        height: .4rem;
+        font-size: .25rem;
+    }
+    .content-comments-div-comments-content-bottom * {
+        float: right;
+        margin: 0 .2rem;
+        color: #666;
+    }
+    .content-comments-div-comments-content-comments {
+        background-color: #f7f8fa;
+        border: 1px solid #f0f1f2;
+        float: left;
+        width: 100%;
+    }
+    .content-comments-div-comments-content-comments-author {
+        width: 100%;
+    }
+    .content-comments-div-comments-content-comments-author * {
+        float: left;
+    }
+    .comments-author-img {
+        width: 1.2rem;
+        height: 1.2rem;
+        padding: .1rem;
+    }
+    .comments-author-img img {
+        width: 90%;
+        height: 90%;
+        border: 1px solid #ccc;
+    }
+    .comments-author-time {
+        width: 100%;
+        color: #666;
+        font-size: .25rem;
+    }
+    .comments-author-description {
+        width: 90%;
+        line-height: .7rem;
+        text-indent: .2rem;
+    }
+    .comments-author-time * {
+        float: right;
+        margin: 0 .2rem;
+    }
+    .content-comments-div-comments-content-input {
+        float: left;
+        width: 100%;
+        position: relative;
+    }
+    .content-comments-div-comments-content-input * {
+        float: left;
+    }
+    .content-input-button {
+        padding: .1rem;
+        background-color: white;
+        border: 1px solid #ccc;
+        width: 1.8rem;
+        text-align: center;
+        font-size: .25rem;
+        margin-top: .3rem;
+        margin-left: .2rem;
+    }
+    .content-input-textarea {
+        resize: none;
+        width: 80%;
+        height: .8rem;
+        margin-top: .2rem;
+        border: 1px solid #ccc;
+    }
+    .content-input {
+        float: left;
+        width: 100%;
+        background-color: white;
+    }
+    .btn-info {
+        margin-top: .4rem;
+        background-color: rgb(64, 158, 255);
+        margin-bottom: 3rem;
+    }
+
 </style>
 
 <body>
@@ -119,19 +215,19 @@
         </div>
     </menu>
     <!-- 内容 -->
-    <div class="content" style="height: 1200px;">
+    <div class="content">
         <!-- 文章 -->
         <div class="content-title">
             <div align="center" class="content-title-author">
-                <img class="content-title-author-img" src="https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=9b07ca2cda39bc0e5f09a03a0a81d9c3&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Fd4628535e5dde7115a39c281acefce1b9c1661da.jpg" />
-                <p class="content-title-author-name">admin</p>
+                <img class="content-title-author-img" />
+                <p class="content-title-author-name"></p>
             </div>
             <div class="content-content">
                 <div class="content-content-tilte">
-                    <div class="content-content-tilte-name">吾非中二，那只是愚蠢的人类对我妄加攻击，这一切都是机关的阴谋。世界受到如何的诅咒才会如此分崩离析？人们的基因被如何污染才会如此痛不欲生？为了修正最初的错误的因果吾诞生于世，吾之武器为，十二次元观测炮。吾，大晨未来在此命令，全世界，臣服于吾！！！！吾之名为dark frame master，反抗吾的人将会被漆黑烈焰燃烧殆尽！！！！臣服吾的人能目睹吾的光辉，是汝等的荣幸。哼！庆幸吧，能得到王的庇佑。</div>
-                    <div class="content-content-tilte-time">2018年11月18日21:35:59</div>
+                    <div class="content-content-tilte-name"></div>
+                    <div class="content-content-tilte-time"></div>
                     <div class="content-content-tilte-right">
-                        <div class="content-content-tilte-right-see">阅读量：99999</div>
+                        <div class="content-content-tilte-right-see"></div>
                     </div>
                 </div>
                 <div class="content-content-description">
@@ -143,12 +239,58 @@
         </div>
         <!-- 评论 -->
         <div class="content-comments">
-            <div>
-                <div>评<br></br>论者</div>
-                <div>评论内容</div>
-                <div>回复盒子</div>
+            <div class="content-comments-div">
+                <div align="center" class="content-comments-div-author">
+                    <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" class="content-comments-author-div-img" />
+                    <p class="content-comments-div-author-name">天啊</p>
+                </div>
+                <div class="content-comments-div-comments">
+                    <div class="content-comments-div-comments-content">
+                        <div class="content-comments-div-comments-content-txte" >啦啦啦啦</div>
+                        <div class="content-comments-div-comments-content-bottom">
+                            <div>收起回复</div>
+                            <div>2018年11月24日16:28:45</div>
+                            <div>1楼</div>
+                        </div>
+                        <div class="content-comments-div-comments-content-comments">
+                            <div class="content-comments-div-comments-content-comments-author">
+                                <div class="comments-author-img">
+                                    <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" />
+                                </div>
+                                <div class="comments-author-description">
+                                    啦啦啦
+                                </div>
+                                <div class="comments-author-time">
+                                    <div>回复</div>
+                                    <div>2018年11月24日17:35:44</div>
+                                </div>
+                            </div>
+                            <div class="content-comments-div-comments-content-comments-author">
+                                <div class="comments-author-img">
+                                    <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" />
+                                </div>
+                                <div class="comments-author-description">
+                                    天才9
+                                </div>
+                                <div class="comments-author-time">
+                                    <div>回复</div>
+                                    <div>2018年11月24日17:33:42</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-comments-div-comments-content-input">
+                            <textarea rows="2" class="content-input-textarea"></textarea>
+                            <div class="content-input-button">我也说一句</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- 评论输入框 -->
+        <div class="content-input">
+            <div id="editor"></div>
+        </div>
+        <button id="NewComnents" class="btn btn-info">评论</button>
     </div>
 </body>
 <script type="text/javascript" src="../js/result.js"></script>
@@ -157,29 +299,94 @@
 <script type="text/javascript" src="../js/tiancai9Headers.js"></script>
 <script type="text/javascript" src="../js/canvasbackground.js"></script>
 <script type="text/javascript" src="../js/ChinaDate.js"></script>
+<!-- 富文本插件WangEditor -->
+<script type="text/javascript" src="./NewTitle/wangEditor.min.js"></script>
 <script type="text/javascript" >
     var descriptionString = ''
+    var NowUrl = window.location.href
+    var title_uid = NowUrl.substring(NowUrl.indexOf('title_uid=') + 10, NowUrl.length)
+
+// 加载富文本
+var E = window.wangEditor
+var editor = new E('#editor')
+editor.customConfig.zIndex = 1
+editor.customConfig.menus = [
+    'bold',
+    'fontSize',
+    'foreColor',
+    'justify',
+    'code',
+    'image',
+    'undo'
+]
+editor.create()
+
     $(document).ready(function() {
         // 根据向下滚动menu更改
         document.body.onscroll = throttle(Bodyonscroll, 30)
         // 动态背景
         CanvasBackground()
         // 获取文章
-        var NowUrl = window.location.href
-            if (NowUrl.indexOf('title_uid=') !== -1) {
-                var title_uid = NowUrl.substring(NowUrl.indexOf('title_uid=') + 10, NowUrl.length)
-                GetTitle(title_uid)
+        if (NowUrl.indexOf('title_uid=') !== -1) {
+            GetTitle(title_uid)
+        } else {
+            alert('页面不存在，点击确定跳回首页')
+            window.open('../index.html')
+        }
+        // 获取评论
+        GetComments(title_uid)
+        // 新增评论
+        $('#NewComnents').click(function() {
+            if(token) {
+                var description = JSON.stringify(editor.txt.getJSON())
+                NewComments(title_uid, description)
             } else {
-                alert('页面不存在，点击确定跳回首页')
-                window.open('../index.html')
+                alert('请登录后再回复')
             }
+        })
     })
+
+    function GetComments (title_uid, pageNum, pageSize) {
+        $.get(url + 'api/findcomments', {
+            title_uid: title_uid,
+            pageNum: pageNum || 1,
+            pageSize: pageSize || 10
+        }, function(res) {
+            console.log(res)
+        })
+    }
+
+    function NewComments (title_uid, description) {
+        var data = {
+            title_uid: title_uid,
+            comments_content: description
+        }
+        $.ajax({
+            type: "post",
+            url: url + 'api/newcomments',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            jsonp: "callback",
+            data: JSON.stringify(data),
+            beforeSend: function(XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("tiancai9token", token);
+            },
+            success: function (res) {
+                if(res.code == 200) {
+                    console.log(res)
+                }else {
+                    alert(res.data)
+                }
+            },error:function(error){
+                console.log(error);
+            }
+        });
+    }
 
     function GetTitle (title_uid) {
         $.get(url + 'api/findtitle', {
             title_uid: title_uid
         }, function (res) {
-            console.log(res)
             var data = res.data[0]
             $('.content-content-tilte-name').text(data.title_title)
             var title_time = format(data.title_time,'yyyy年MM月dd日 HH:mm:ss')
@@ -199,7 +406,11 @@
         $.get(url + 'api/getuserimg', {
             user_name: path
         }, function (res) {
-            console.log(res)
+            if(res.code == 200) {
+                $('.content-title-author-img').attr('src', url + 'api/getimg?img=' + res.data[0].user_img)
+            }else {
+                alert('获取用户头像失败，请刷新后重试')
+            }
         })
     }
 

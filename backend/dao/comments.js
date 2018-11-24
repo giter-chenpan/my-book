@@ -16,6 +16,9 @@ exports.NewCommentsDao = function (model, conditions, callback) {
 }
 
 exports.FindCommentsDao = function (model, conditions, callback) {
+    console.log(conditions)
+    var pageNum = Number(conditions.pageNum)
+    var pageSize = Number(conditions.pageSize)
     model.find({
         title_uid: conditions.title_uid
     }, {
@@ -27,8 +30,8 @@ exports.FindCommentsDao = function (model, conditions, callback) {
         comments_status: 1,
         _id: 0
     }, {
-        skip: (conditions.pageNum - 1)*conditions.pageSize || (1-1)*1,
-        limit: conditions.pageSize || 10,
+        skip: (pageNum - 1)*pageSize || (1-1)*1,
+        limit: pageSize || 10,
         sort: { "_id": -1 }
     }, (err, docs) => {
         callback(err, docs)

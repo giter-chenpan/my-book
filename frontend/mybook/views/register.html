@@ -124,11 +124,12 @@
         var id = $('#user_id').val()
         var user = $('#user_name').val()
         var password = $('#user_password').val()
+        console.log(user.length)
         if(id.length < 6) {
             alert('账户不能小于六位')
             return false
         }
-        if(7 < user.length < 2) {
+        if( user.length < 2 && user.length > 6) {
             alert('昵称不能小于两位,大于6位')
             return false           
         }
