@@ -239,7 +239,7 @@
         </div>
         <!-- 评论 -->
         <div class="content-comments">
-            <div class="content-comments-div">
+            <!-- <div class="content-comments-div">
                 <div align="center" class="content-comments-div-author">
                     <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" class="content-comments-author-div-img" />
                     <p class="content-comments-div-author-name">天啊</p>
@@ -265,18 +265,6 @@
                                     <div>2018年11月24日17:35:44</div>
                                 </div>
                             </div>
-                            <div class="content-comments-div-comments-content-comments-author">
-                                <div class="comments-author-img">
-                                    <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" />
-                                </div>
-                                <div class="comments-author-description">
-                                    天才9
-                                </div>
-                                <div class="comments-author-time">
-                                    <div>回复</div>
-                                    <div>2018年11月24日17:33:42</div>
-                                </div>
-                            </div>
                         </div>
                         <div class="content-comments-div-comments-content-input">
                             <textarea rows="2" class="content-input-textarea"></textarea>
@@ -284,7 +272,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+        </div>
+        <!-- 分页 -->
+        <div id="pagination" class="pagination-main">
         </div>
         <!-- 评论输入框 -->
         <div class="content-input">
@@ -301,43 +292,60 @@
 <script type="text/javascript" src="../js/ChinaDate.js"></script>
 <!-- 富文本插件WangEditor -->
 <script type="text/javascript" src="./NewTitle/wangEditor.min.js"></script>
-<script type="text/javascript" >
+<script type="text/javascript">
     var descriptionString = ''
+    var CommentsString = ''
     var NowUrl = window.location.href
     var title_uid = NowUrl.substring(NowUrl.indexOf('title_uid=') + 10, NowUrl.length)
+    if (title_uid.indexOf('&') !== -1) {
+        title_uid = title_uid.substring(0, title_uid.indexOf('&'))
+    }
+    // 加载富文本
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    editor.customConfig.zIndex = 1
+    editor.customConfig.menus = [
+        'bold',
+        'fontSize',
+        'foreColor',
+        'justify',
+        'code',
+        'image',
+        'undo'
+    ]
+    editor.create()
 
-// 加载富文本
-var E = window.wangEditor
-var editor = new E('#editor')
-editor.customConfig.zIndex = 1
-editor.customConfig.menus = [
-    'bold',
-    'fontSize',
-    'foreColor',
-    'justify',
-    'code',
-    'image',
-    'undo'
-]
-editor.create()
-
-    $(document).ready(function() {
+    $(document).ready(function () {
         // 根据向下滚动menu更改
         document.body.onscroll = throttle(Bodyonscroll, 30)
         // 动态背景
         CanvasBackground()
         // 获取文章
         if (NowUrl.indexOf('title_uid=') !== -1) {
-            GetTitle(title_uid)
+            if (title_uid.indexOf('&') !== -1) {
+                GetTitle(title_uid.substring(0, title_uid.indexOf('&')))
+            } else {
+                GetTitle(title_uid, 1, 10)
+            }
         } else {
             alert('页面不存在，点击确定跳回首页')
             window.open('../index.html')
         }
         // 获取评论
-        GetComments(title_uid)
+        if (NowUrl.indexOf('pageNum=') !== -1) {
+            var Comments = NowUrl.substring(NowUrl.indexOf('pageNum=') +8, NowUrl.length)
+            if (Comments.indexOf('&') !== -1) {
+                console.log(title_uid)
+                GetComments(title_uid, Comments.substring(0, Comments.indexOf('&')), 10)
+            } else {
+                GetComments(title_uid, Comments, 10)
+            }
+        } else {
+            GetComments(title_uid, 1, 10)
+        }
         // 新增评论
-        $('#NewComnents').click(function() {
-            if(token) {
+        $('#NewComnents').click(function () {
+            if (token) {
                 var description = JSON.stringify(editor.txt.getJSON())
                 NewComments(title_uid, description)
             } else {
@@ -346,17 +354,163 @@ editor.create()
         })
     })
 
-    function GetComments (title_uid, pageNum, pageSize) {
+    function GetComments(title_uid, pageNum, pageSize) {
         $.get(url + 'api/findcomments', {
             title_uid: title_uid,
             pageNum: pageNum || 1,
             pageSize: pageSize || 10
-        }, function(res) {
-            console.log(res)
+        }, function (res) {
+            if (res.code == 200 && res.data.length) {
+                console.log(res)
+                var data = res.data
+                var temp = ''
+                for (var i = 0; i < data.length; i++) {
+                    data[i].comments_content = JSON.parse(data[i].comments_content)
+                    CommentsString = ''
+                    GetCommentString(data[i].comments_content)
+                    var user_img = GetUserImg (data[i].user_name)
+                    temp += `
+                    <div class="content-comments-div">
+                        <div align="center" class="content-comments-div-author">
+                            <img src="`+url+`api/getimg?img=`+user_img+`" class="content-comments-author-div-img" />
+                            <p class="content-comments-div-author-name">`+data[i].user_name+`</p>
+                        </div>
+                        <div class="content-comments-div-comments">
+                            <div class="content-comments-div-comments-content">
+                                <div class="content-comments-div-comments-content-txte" >`+ CommentsString + `</div>
+                                <div class="content-comments-div-comments-content-bottom">
+                                    <div>收起回复</div>
+                                    <div>`+ format(data[i].comments_time, 'yyyy年MM月dd日 HH:mm:ss') + `</div>
+                                    <div>1楼</div>
+                                </div>
+                                <div class="content-comments-div-comments-content-comments">
+                                    <div class="content-comments-div-comments-content-comments-author">
+                                        <div class="comments-author-img">
+                                            <img src="http://127.0.0.1:3001/api/getimg?img=908f9200-efb4-11e8-9701-a7ae248e4b99.jpg" />
+                                        </div>
+                                        <div class="comments-author-description">
+                                            啦啦啦
+                                        </div>
+                                        <div class="comments-author-time">
+                                            <div>回复</div>
+                                            <div>2018年11月24日17:35:44</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-comments-div-comments-content-input">
+                                    <textarea data-comments_uid="`+data[i].comments_uid+`" rows="2" class="content-input-textarea"></textarea>
+                                    <div class="replyonClick content-input-button">我也说一句</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                }
+                $('.content-comments').html(temp)
+                // 发回复
+                $('.replyonClick').click(function() {
+                    var input = $(this).siblings()
+                    NewReply($(input[0]).val(), $(input[0]).attr('data-comments_uid'))
+                
+                })
+                // 根据currentPage显示分页
+                var total = Math.ceil(Number(res.total)/Number(pageSize))
+                var currentPage = Number(res.currentPage)
+                var spick = location.href.indexOf('?')
+                var localhostUrl = location.href.substring(0, spick) + '?'
+                if (location.href.indexOf('title_uid=') !== -1) {
+                    var TypeStatus = location.href.substring(location.href.indexOf('title_uid='), location.href.length)
+                    if(TypeStatus.indexOf('&') !== -1) {
+                        TypeStatus = TypeStatus.substring(0, TypeStatus.indexOf('&'))
+                    }
+                    localhostUrl = localhostUrl + TypeStatus + '&'
+                }
+                var pageTemp = ''
+                    pageTemp += `
+                        <nav style="margin-top: 1.2rem" aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li>
+                                <a href="`+localhostUrl+`pageNum=1" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                                </li>`
+                if (currentPage - 5>= 0 && currentPage + 4 < total) {
+                    pageTemp += `
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 4)+`">`+(currentPage - 4) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 3)+`">`+(currentPage - 3) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 2)+`">`+(currentPage - 2) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage - 1)+`">`+(currentPage - 1) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+currentPage+`">`+currentPage+`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 1)+`">`+(currentPage + 1) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 2)+`">`+(currentPage + 2) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 3)+`">`+(currentPage + 3) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 4)+`">`+(currentPage + 4) +`</a></li>
+                                <li><a href="`+localhostUrl+`pageNum=`+(currentPage + 5)+`">`+(currentPage + 5) +`</a></li>
+                                `
+                } else if(currentPage - 5 <= 0) {
+                    if (total > 10) {
+                        for (var i=1;i<11;i++) {
+                            pageTemp +=`
+                                    <li><a href="`+localhostUrl+`pageNum=`+i+`">`+i+`</a></li>
+                            `
+                        }
+                    } else {
+                        for (var i=1;i<total + 1;i++) {
+                            pageTemp +=`
+                                    <li><a href="`+localhostUrl+`pageNum=`+i+`">`+i+`</a></li>
+                            `
+                        }         
+                    }
+                } else if(currentPage + 5 >= total) {
+                    for (var i=total-9;i<total + 1;i++) {
+                        pageTemp +=`
+                                <li><a href="`+localhostUrl+`pageNum=`+i+`">`+i+`</a></li>
+                        `
+                    }      
+                }
+                    pageTemp +=`<li>
+                                    <a href="`+localhostUrl+`pageNum=`+total+`" class="pagination-end" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        `
+                    $('#pagination').append(pageTemp)                
+            }
         })
     }
 
-    function NewComments (title_uid, description) {
+    function NewReply(value, uid, user, touser) {
+        var data = {
+            reply_content: value,
+            comments_uid: uid,
+            reply_id: user,
+            reply_toid: touser
+        }
+        $.ajax({
+            type: "post",
+            url: url + 'api/newreply',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            jsonp: "callback",
+            data: JSON.stringify(data),
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("tiancai9token", token);
+            },
+            success: function (res) {
+                if (res.code == 200) {
+                    console.log(res)
+                } else {
+                    alert(res.data)
+                }
+            }, error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function NewComments(title_uid, description) {
         var data = {
             title_uid: title_uid,
             comments_content: description
@@ -368,68 +522,104 @@ editor.create()
             dataType: "json",
             jsonp: "callback",
             data: JSON.stringify(data),
-            beforeSend: function(XMLHttpRequest) {
+            beforeSend: function (XMLHttpRequest) {
                 XMLHttpRequest.setRequestHeader("tiancai9token", token);
             },
             success: function (res) {
-                if(res.code == 200) {
-                    console.log(res)
-                }else {
+                if (res.code == 200) {
+                    alert('评论成功')
+                    GetComments()
+                } else {
                     alert(res.data)
                 }
-            },error:function(error){
+            }, error: function (error) {
                 console.log(error);
             }
         });
     }
 
-    function GetTitle (title_uid) {
+    function GetTitle(title_uid) {
         $.get(url + 'api/findtitle', {
             title_uid: title_uid
         }, function (res) {
-            var data = res.data[0]
-            $('.content-content-tilte-name').text(data.title_title)
-            var title_time = format(data.title_time,'yyyy年MM月dd日 HH:mm:ss')
-            $('.content-content-tilte-time').text(title_time)
-            $('.content-content-tilte-right-see').text('阅读量：' + data.title_see)
-            $('.content-title-author-name').text(data.user_name)
-            // 根据用户name获取用户头像
-            GetUserImg(data.user_name)
-            var descriptionJson =  JSON.parse(data.title_description)
-            // 获取文章内容
-            GetDescription(descriptionJson)
-            $('.content-content-description-content').html(descriptionString)
-        })
-    }
-
-    function GetUserImg (path) {
-        $.get(url + 'api/getuserimg', {
-            user_name: path
-        }, function (res) {
-            if(res.code == 200) {
-                $('.content-title-author-img').attr('src', url + 'api/getimg?img=' + res.data[0].user_img)
-            }else {
-                alert('获取用户头像失败，请刷新后重试')
+            if (res.code == 200 && res.data.length) {
+                var data = res.data[0]
+                $('.content-content-tilte-name').text(data.title_title)
+                var title_time = format(data.title_time, 'yyyy年MM月dd日 HH:mm:ss')
+                $('.content-content-tilte-time').text(title_time)
+                $('.content-content-tilte-right-see').text('阅读量：' + data.title_see)
+                $('.content-title-author-name').text(data.user_name)
+                // 根据用户name获取用户头像
+                var user_img = GetUserImg(data.user_name)
+                $('.content-title-author-img').attr('src', ''+url + 'api/getimg?img=' + user_img+'')
+                var descriptionJson = JSON.parse(data.title_description)
+                // 获取文章内容
+                GetDescription(descriptionJson)
+                $('.content-content-description-content').html(descriptionString)
+            } else {
+                alert('未找到该页面, 点击确定返回首页')
+                window.open('../index.html')
             }
         })
     }
 
-    function GetDescription (obj) {
-        for(var i=0; i<obj.length;i++) {
+    function GetUserImg(path) {
+        var i = ''
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: url + 'api/getuserimg',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: {
+                user_name: path
+            },
+            success: function (res) {
+                if(res.code == 200) {
+                    i = res.data[0].user_img
+                } else {
+                    alert('获取用户头像失败，请刷新后重试')
+                }
+            }
+        });        
+        return i
+    }
+
+    function GetDescription(obj) {
+        for (var i = 0; i < obj.length; i++) {
             var tag = obj[i].tag
-            if(tag) {
-                if(obj[i].attrs.length !== 0) {
-                    descriptionString += '<'+tag+' '+obj[i].attrs[0].name+'="'+obj[i].attrs[0].value+'" >'
+            if (tag) {
+                if (obj[i].attrs.length !== 0) {
+                    descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
                     GetDescription(obj[i].children)
-                }else {
-                    descriptionString += '<'+tag+'>'
+                } else {
+                    descriptionString += '<' + tag + '>'
                     GetDescription(obj[i].children)
                 }
-                descriptionString += '</'+tag+'>'
-            }else {
+                descriptionString += '</' + tag + '>'
+            } else {
                 descriptionString += obj[0]
             }
         }
     }
+
+    function GetCommentString(obj) {
+        for (var i = 0; i < obj.length; i++) {
+            var tag = obj[i].tag
+            if (tag) {
+                if (obj[i].attrs.length !== 0) {
+                    CommentsString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
+                    GetCommentString(obj[i].children)
+                } else {
+                    CommentsString += '<' + tag + '>'
+                    GetCommentString(obj[i].children)
+                }
+                CommentsString += '</' + tag + '>'
+            } else {
+                CommentsString += obj[0]
+            }
+        }
+    }
 </script>
+
 </html>

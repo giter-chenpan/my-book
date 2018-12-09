@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser:true }, (err) => {
+mongoose.connect('mongodb://127.0.0.1/mybook', { useNewUrlParser: true }, (err) => {
     if (!err) {
         console.log('数据库连接成功')
     } else {
@@ -25,7 +25,7 @@ app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Methods', '*');
     res.header('Content-Type', 'application/json;charset=utf-8');
     next();
-  });
+});
 
 // 图片上传
 let { LoadIMG } = require('./utile/IMG')
@@ -44,11 +44,10 @@ let { ChangeImg } = require('./dao/user')
 app.post('/api/changeimg', (req, res) => {
     let token = req.headers.tiancai9token
     LoadIMG(req, (err, path) => {
-        console.log(path)
         if (!err) {
             ChangeImg(UserModel, { user_token: token, user_img: path }, (err) => {
                 if (!err) {
-                    res.send({ code: 200, data: '修改成功'})
+                    res.send({ code: 200, data: '修改成功' })
                 } else {
                     res.send({ code: 400, data: err })
                 }
@@ -67,7 +66,7 @@ app.get('/api/getimg', (req, res) => {
         if (!err) {
             res.send(img)
         } else {
-            res.send({ code: 400, data: err})
+            res.send({ code: 400, data: err })
         }
     })
 })
@@ -78,7 +77,7 @@ app.get('/api/getuserimg', (req, res) => {
     var query = req.query
     GetUserImgDao(UserModel, query, (err, docs) => {
         if (!err) {
-            res.send({ code: 200, data: docs})
+            res.send({ code: 200, data: docs })
         } else {
             res.send({ code: 400, data: err })
         }
@@ -91,7 +90,7 @@ let { Updatetoken } = require('./utile/token')
 // 新建用户
 let { NewUserDao } = require('./dao/user')
 let { FindUserIdDao } = require('./dao/user')
-let { FindUserNameDao } =require('./dao/user')
+let { FindUserNameDao } = require('./dao/user')
 // json格式不能拥有空格与单引号
 app.post('/api/newuser', (req, res) => {
     let user = req.body
@@ -100,12 +99,12 @@ app.post('/api/newuser', (req, res) => {
         FindUserIdDao(UserModel, user, function (err, docs) {
             if (!err) {
                 if (docs.length) {
-                    res.send({code: 400, data:'该用户已被注册'})
+                    res.send({ code: 400, data: '该用户已被注册' })
                 } else {
                     FindUserNameDao(UserModel, user, function (err, docs) {
                         if (!err) {
                             if (docs.length) {
-                                res.send({ code: 400, data:'该名称已被使用' })
+                                res.send({ code: 400, data: '该名称已被使用' })
                             } else {
                                 NewUserDao(UserModel, user, function (err) {
                                     if (!err) {
@@ -125,7 +124,7 @@ app.post('/api/newuser', (req, res) => {
             }
         })
     } else {
-        res.send({code: 400, data:'请填写完表单'})
+        res.send({ code: 400, data: '请填写完表单' })
     }
 })
 
@@ -133,24 +132,24 @@ app.post('/api/newuser', (req, res) => {
 let { LoginUserDao } = require('./dao/user')
 app.post('/api/loginuser', (req, res) => {
     let user = req.body
-    FindUserIdDao(UserModel, user, function(err, docs) {
+    FindUserIdDao(UserModel, user, function (err, docs) {
         if (!err && docs.length > 0) {
-            LoginUserDao(UserModel, user, function(err, docs) {
+            LoginUserDao(UserModel, user, function (err, docs) {
                 if (!err) {
                     user["user_token"] = uuidv1()
                     Updatetoken(UserModel, user, (err, docs) => {
                         if (!err) {
-                            res.send({ code: 200, token:user.user_token })
+                            res.send({ code: 200, token: user.user_token })
                         } else {
-                            res.send({ code:400, data: '发生未知错误,获取token失败' })
+                            res.send({ code: 400, data: '发生未知错误,获取token失败' })
                         }
                     })
                 } else {
-                    res.send({ code:400, data: '发生未知错误' })
+                    res.send({ code: 400, data: '发生未知错误' })
                 }
             })
         } else {
-            res.send({ code:400, data: '未找到此用户' })
+            res.send({ code: 400, data: '未找到此用户' })
         }
     })
 })
@@ -167,8 +166,8 @@ app.get('/api/userlogout', (req, res) => {
                 res.send({ code: 402, data: '身份验证失效，请重新登录' })
             }
         } else {
-            console.log('登录失败' + err )
-            res.send({ code:400, data: '登出失败，请稍后重试' })
+            console.log('登录失败' + err)
+            res.send({ code: 400, data: '登出失败，请稍后重试' })
         }
     })
 })
@@ -177,7 +176,7 @@ app.get('/api/userlogout', (req, res) => {
 let { GetUserDao } = require('./dao/user')
 app.get('/api/getuser', (req, res) => {
     var token = req.headers.tiancai9token
-    GetUserDao(UserModel, {user_token: token}, (err, docs) => {
+    GetUserDao(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             res.send({ code: 200, data: docs })
         } else {
@@ -195,14 +194,14 @@ app.post('/api/changepwd', (req, res) => {
         if (!err) {
             res.send({ code: 200, data: '修改密码成功' })
         } else {
-            res.send({ code: 400, data: err})
+            res.send({ code: 400, data: err })
         }
     })
 })
 
 let TitleModel = require('./models/title')
 // 新增文章
-let { NewTitleDao } =require('./dao/title')
+let { NewTitleDao } = require('./dao/title')
 app.post('/api/newtitle', (req, res) => {
     if (req.headers.tiancai9token) {
         let token = req.headers.tiancai9token
@@ -213,21 +212,21 @@ app.post('/api/newtitle', (req, res) => {
                     title["user_name"] = docs[0].user_name
                     NewTitleDao(TitleModel, title, (err) => {
                         if (!err) {
-                            res.send({ code: 200, data: '创建文章成功'})
+                            res.send({ code: 200, data: '创建文章成功' })
                         } else {
                             console.log(err)
-                            res.send({ code: 400, data: '创建文章失败'})
+                            res.send({ code: 400, data: '创建文章失败' })
                         }
                     })
                 } else {
-                    res.send({ code: 402, data: '登录失效，请重新登录'})
+                    res.send({ code: 402, data: '登录失效，请重新登录' })
                 }
             } else {
                 res.send(err)
             }
         })
     } else {
-        res.send({code: 402, data: '登录失效，请重新登录'} )
+        res.send({ code: 402, data: '登录失效，请重新登录' })
     }
 })
 
@@ -244,7 +243,7 @@ app.get('/api/findtitle', (req, res) => {
             console.log('获取文章失败' + err)
             res.send(err)
         }
-        
+
     })
 })
 
@@ -261,15 +260,15 @@ app.post('/api/updatetitle', (req, res) => {
                     UpdateTitleDao(TitleModel, body, (err, docs) => {
                         if (!err) {
                             if (docs.n == 1) {
-                                res.send({ code: 200, data: '文章修改成功'})
+                                res.send({ code: 200, data: '文章修改成功' })
                             } else {
-                                res.send({ code:402, data: '身份认证失效，请重新登录' })
+                                res.send({ code: 402, data: '身份认证失效，请重新登录' })
                             }
                         } else {
                             console.log('文章修改失败' + err)
                             res.send({ code: 400, data: '修改失败' })
                         }
-                    })                    
+                    })
                 } else {
                     res.send({ code: 402, data: '登录失效，请重新登录' })
                 }
@@ -286,7 +285,7 @@ app.post('/api/updatetitle', (req, res) => {
 let { RemoveTitleDao } = require('./dao/title')
 app.get('/api/removetitle', (req, res) => {
     let token = req.headers.tiancai9token
-    Findtoken(UserModel, { user_token: token}, (err, docs) => {
+    Findtoken(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             if (docs.length !== 0) {
                 let query = req.query
@@ -294,13 +293,13 @@ app.get('/api/removetitle', (req, res) => {
                 RemoveTitleDao(TitleModel, query, (err, docs) => {
                     if (!err) {
                         if (docs.n == 1) {
-                            res.send({ code:200, data: '文章删除成功' })
+                            res.send({ code: 200, data: '文章删除成功' })
                         } else {
-                            res.send({ code:402, data: '身份认证失败,请重新登录' })
+                            res.send({ code: 402, data: '身份认证失败,请重新登录' })
                         }
                     } else {
                         console.log('文章删除失败' + err)
-                        res.send({ code:400, data: '删除失败' })
+                        res.send({ code: 400, data: '删除失败' })
                     }
                 })
             } else {
@@ -321,13 +320,13 @@ app.post('/api/newcomments', (req, res) => {
     Findtoken(UserModel, { user_token: token }, (err, docs) => {
         if (!err) {
             if (docs.length !== 0) {
-                body["user_id"] = docs[0].user_id
+                body["user_name"] = docs[0].user_name
                 NewCommentsDao(CommentsModel, body, (err) => {
                     if (!err) {
-                        res.send({ code:200, data: '新增评论成功' })
+                        res.send({ code: 200, data: '新增评论成功' })
                     } else {
                         console.log('新增评论失败' + err)
-                        res.send({ code:400, data: '新增评论失败' })
+                        res.send({ code: 400, data: '新增评论失败' })
                     }
                 })
             } else {
@@ -353,7 +352,7 @@ app.post('/api/newreply', (req, res) => {
                     if (!err) {
                         res.send({ code: 200, data: '回复成功' })
                     } else {
-                        console.log('回复内容失败' + err )
+                        console.log('回复内容失败' + err)
                         res.send({ code: 402, data: '回复失败' })
                     }
                 })
@@ -369,65 +368,54 @@ app.post('/api/newreply', (req, res) => {
 // 获取评论和回复
 let { FindCommentsDao } = require('./dao/comments')
 let { FindReplyDao } = require('./dao/reply')
+let CtoRobject = []
 app.get('/api/findcomments', (req, res) => {
     let query = req.query
-    // console.log(query)
-    FindCommentsDao(CommentsModel, query, (err, docs) => {
-        console.log(docs)
-        if (!err) {
-            if (docs.length !== 0) {
-                let commentsObj = docs
-                let replyAry = []
-                let commentsAry = []
-                for (let i = 0; i < commentsObj.length; i++) {
-                    console.log(commentsObj)
-                    FindReplyDao(ReplyModel, { comments_uid: commentsObj[i]._doc.comments_uid }, (err, docs) => {
-                        if (!err) {
-                            console.log(docs)
-                            if (docs.length !== 0) {
-                                for (let j = 0; j < docs.length;  j++) {
-                                    replyAry.push(docs[j]._doc)
-                                    if (j == docs.length - 1) {
-                                        commentsObj[i]._doc["reply"] = replyAry
-                                        replyAry = []
-                                        commentsAry.push(commentsObj[i]._doc)
-                                        // console.log(i)
-                                        // if (i == commentsObj.length - 1) {
-                                        //     res.send(commentsAry)
-                                        // }
-                                    }
-                                }
-                            } else {
-                                if (i == commentsObj.length - 1) {
-                                    // console.log('获取评论失败' + err)    
-                                    res.send({ code: 400, data: '获取评论失败' })
-                                }
-                            }
-                        } else {
-                            if (i == commentsObj.length - 1) {
-                                console.log('获取评论失败' + err)
-                                res.send({ code: 400, data: '获取评论失败' })
-                            }
-                        }
-                    })
+    FindCommentsDao(CommentsModel, query, (err, docs, page) => {
+        let comment = docs
+        if (!err && comment.length !== 0) {
+            CtoRobject = []
+            FindReplyFn(0, comment.length, comment, comment, (err) => {
+                if (err) {
+                    res.send({ code: 400, data: err })
                 }
-                setTimeout( function Res () {
-                    if (commentsAry.length !== 0) {
-                        res.send({ coed: 200, data: commentsAry})
-                    } else {
-                        res.send({ code: 400, data: '没有找到回复'})
-                    }
-                }, 500)
-            } else {
-                res.send({ code: 400, data: '文章的评论为空' })
-            }
+            })
+            console.log(CtoRobject)
+            // console.log(getJsonLength(CtoRobject))
+            // console.log(toArray(CtoRobject))
+            // if (CtoRobject) {
+            //     var a = []
+            //     for (var k = 0; k < CtoRobject.length; k++) {
+            //         a.push( CtoRobject[i]._doc)
+            //     }
+            //     console.log(a)
+            // }
+            // console.log(CtoRobject)
+            res.send({ code: 200, data: CtoRobject })
         } else {
-            console.log('获取评论失败' + err)
-            res.send({ code:400, data:'获取评论失败' })
+            res.send({ code: 400, data: err })
         }
     })
 })
 
+function FindReplyFn(index, length, obj, uid, callback) {
+    if (index >= length) {
+        CtoRobject.push({length: index})
+        return
+    } else {
+        FindReplyDao(ReplyModel, {
+            comments_uid: uid[index]._doc.comments_uid
+        }, (err, docs) => {
+            if (!err) {
+                obj[index].reply = docs
+                CtoRobject.push(obj[index])
+                FindReplyFn(++index, length, obj, uid)
+            } else {
+                callback(err)
+            }
+        })
+    }
+}
 
 app.listen(port, (err) => {
     if (!err) {

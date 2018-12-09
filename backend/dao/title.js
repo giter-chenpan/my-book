@@ -45,7 +45,7 @@ exports.FindTitleDao = function (model, conditions, callback) {
                 limit: conditions.pageSize || 10,
                 sort: { "_id": -1 }
             }, (err, docs) => {
-                callback(err, docs, { total:count, pageNum: Number(pageNums) })
+                callback(err, docs, { total: count, pageNum: Number(pageNums) })
             })           
         } else {
             callback(err)

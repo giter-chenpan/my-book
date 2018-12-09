@@ -5,7 +5,7 @@ let CommentsSchema = new Schema({
     comments_uid: String,
     title_uid: String,
     comments_content: String,
-    user_id: String,
+    user_name: String,
     comments_status: Number,
     comments_time: Date,
     comments_delete: Number
