@@ -22,3 +22,15 @@ npm install uglifyjs-webpack-plugin -D
 ```
 npm install mongoose --save
 ```
+## 引入jsonwebtoken jwt插件
+··
+npm install jsonwebtoken --save
+··
+## 引入body-parser 解析post请求插件
+```
+npm install body-parser --save
+```
+## 引入emailjs 发送QQ邮件插件
+```
+npm install emailjs --save
+```
