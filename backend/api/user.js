@@ -21,7 +21,7 @@ module.exports = {
   LoginUser () {
     return (req, res) => {
       let data = req.body
-      let dataJson = JSON.stringify(data)
+      let dataJson = JSON.stringify({ userid: data.userid })
       userModel.LoginUser(data, (err, docs) => {
         if (err || typeof docs === 'string') {
           res.send({ code: 400, data: docs })
@@ -43,6 +43,7 @@ module.exports = {
       })
     }
   },
+  // 修改密码
   UpdatePwd () {
     return (req, res) => {
       if (!req.headers.ticani9) {

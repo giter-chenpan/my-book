@@ -10,7 +10,7 @@ module.exports = {
   setToken (dataJson) {
     let content = { msg: dataJson } // 要生成token的主题信息
     let token = jwt.sign(content, secretOrPrivateKey, {
-      expiresIn: 60 * 60 * 24 * 24 * 30 // 一个月后过期
+      expiresIn: 60 * 60 * 24 * 24 // 一天后过期
     })
     return token
   },
