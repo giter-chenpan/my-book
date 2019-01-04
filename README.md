@@ -1,2 +1,7 @@
 # my-book
-搭建自己个人线上博客用,基于node与vue的实现前后端分离，数据库使用MongoDB
+自己的博客项目，未重构版
+后端：node + express
+前端：jQuery
+数据库： MongoDB
+
+# 用于以后记录自己一些学习思想的地方
