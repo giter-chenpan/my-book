@@ -76,12 +76,14 @@ module.exports = {
   OneFindArticle () {
     return (req, res) => {
       let data = req.query
-      ArticleModel.OneFindArticle(data, (err, docs) => {
-        if (err || docs.length === 0) {
-          res.send({ code: 400, data: '这篇文章可能消失在某个次元了' })
+      let pageNum = data.pageNum
+      let pageSize = data.pageSize
+      ArticleModel.OneFindArticle(pageNum, pageSize, { _id: data._id }, (err, docs, total) => {
+        if (err || docs.length === 0 || typeof docs === 'string') {
+          res.send({ code: 400, data: docs, total: total })
           return
         }
-        res.send({ code: 200, data: docs })
+        res.send({ code: 200, data: docs, total: total })
       })
     }
   }
