@@ -42,12 +42,21 @@
         </div>
       </div>
     </div>
+  <div class="ArticleList-pagination">
+    <pagination
+      :total="total"
+      :current-page='current'
+      @pagechange="getArticleList"
+    >
+    </pagination>
+  </div>
   </div>
 </template>
 
 <script>
 
 import { getArticleListAPI } from '@/api/article.js'
+import Pagination from '@/page/comment/pagination.vue'
 
 export default {
   name: 'ArticleList',
@@ -59,8 +68,14 @@ export default {
       ZuoZhe: require('@/assets/acticleIMG/zuozhe.png'),
       GuanKan: require('@/assets/acticleIMG/guankan.png'),
       ArticleList: [],
-      url: process.env.BASE_API
+      url: process.env.BASE_API,
+      total: 150, // 记录总条数
+      display: 10, // 每页显示条数
+      current: 1 // 当前的页数
     }
+  },
+  components: {
+    Pagination
   },
   methods: {
     getArticleList (pageNum, pageSize) {
