@@ -16,6 +16,10 @@ let { toEmail, ifEmail } = require('./utils/Email')
 app.post('/api/toemail', toEmail())
 app.get('/api/ifemail', ifEmail())
 
+let { LoadIMG, GetImg } = require('./utils/IMG')
+app.post('/api/loadimg', LoadIMG())
+app.get('/api/getimg', GetImg())
+
 // 用户
 let { NewUser, LoginUser, UpdatePwd } = require('./api/user')
 app.post('/api/newuser', NewUser())
@@ -23,10 +27,11 @@ app.post('/api/loginuser', LoginUser())
 app.post('/api/updatepwd', UpdatePwd())
 
 // 文章
-let { NewArticle, UpdateArticle, FindArticle, OneFindArticle } = require('./api/article')
+let { NewArticle, UpdateArticle, FindArticle, OneFindArticle, FindArticleType } = require('./api/article')
 app.post('/api/newarticle', NewArticle())
 app.post('/api/updatearticle', UpdateArticle())
 app.get('/api/findarticle', FindArticle())
+app.get('/api/findarticletype', FindArticleType())
 app.get('/api/onefindarticle', OneFindArticle())
 
 // 评论

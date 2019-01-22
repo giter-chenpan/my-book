@@ -3,11 +3,13 @@ let ArticleSchema = require('../schema/article')
 let CommentModel = require('../model/comment')
 let ReplyModel = require('../model/reply')
 
+// 创建文章
 ArticleSchema.statics.NewArticle = function (data, callback) {
   this.create(data, err => {
     callback(err)
   })
 }
+// 获取文章列表
 ArticleSchema.statics.FindArticle = function (pageNum, pageSize, data, callback) {
   this.countDocuments(data, (err, count) => {
     if (err) {
@@ -26,7 +28,7 @@ ArticleSchema.statics.FindArticle = function (pageNum, pageSize, data, callback)
       articleThumbs: 1,
       articleTime: 1
     }, {
-      skip: pageNum || 0,
+      skip: (pageNum - 1) * pageSize || 0,
       limit: pageSize || 10,
       sort: { '_id': -1 }
     }, (err, docs) => {
@@ -38,6 +40,7 @@ ArticleSchema.statics.FindArticle = function (pageNum, pageSize, data, callback)
     })
   })
 }
+// 获取文章
 ArticleSchema.statics.OneFindArticle = async function (pageNum, pageSize, data, callback) {
   let ArticleAry = await this.find(data, (err, docs) => {
     if (err || docs.length === 0) {
@@ -99,6 +102,12 @@ ArticleSchema.statics.OneFindArticle = async function (pageNum, pageSize, data, 
     pageNum: pageNum || 1
   }
   callback(null, ArticleAry, total)
+}
+// 获取文章分类数组
+ArticleSchema.statics.FindArticleType = function (callback) {
+  this.find({}, ['articleType'], (err, docs) => {
+    callback(err, docs)
+  })
 }
 /**
  * data: 锁定要更新的数据,

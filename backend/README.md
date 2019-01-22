@@ -34,3 +34,7 @@ npm install body-parser --save
 ```
 npm install emailjs --save
 ```
+## 引入formidable 处理图片上传
+```
+npm install formidable --save
+```

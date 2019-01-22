@@ -60,10 +60,13 @@ module.exports = {
     return (req, res) => {
       let pageNum = req.query.pageNum
       let pageSize = req.query.pageSize
-      if (typeof pageNum === 'string' || typeof pageSize === 'string') {
-        res.send({ code: 400, data: '请传入Number类型的数据' })
-        return
-      }
+      pageNum = Number(pageNum)
+      pageSize = Number(pageSize)
+      // console.log(pageNum)
+      // if (pageNum === 'NaN' || pageSize === 'NaN') {
+      //   res.send({ code: 400, data: '请传入Number类型的数据' })
+      //   return
+      // }
       ArticleModel.FindArticle(pageNum, pageSize, null, (err, docs, total) => {
         if (err) {
           res.send({ code: 400, data: '获取列表失败' })
@@ -84,6 +87,39 @@ module.exports = {
           return
         }
         res.send({ code: 200, data: docs, total: total })
+      })
+    }
+  },
+  FindArticleType () {
+    return (req, res) => {
+      ArticleModel.FindArticleType((err, docs) => {
+        if (err) {
+          res.send({ code: 400, data: err })
+          return
+        }
+        let typeList = []
+        for (let i = 0; i < docs.length; i++) {
+          typeList.push(docs[i].articleType)
+        }
+        // 数组去重
+        let newTypeList = [{ type: typeList[0], Number: 0 }]
+        for (let i = 0; i < typeList.length; i++) {
+          let flag = false
+          for (let j = 0; j < newTypeList.length; j++) {
+            if (typeList[i] === newTypeList[j].type) {
+              for (let k = 0; k < newTypeList.length; k++) {
+                if (newTypeList[k].type === typeList[i]) {
+                  newTypeList[k].Number = newTypeList[k].Number + 1
+                }
+              }
+              flag = true
+            }
+          }
+          if (!flag) {
+            newTypeList.push({ type: typeList[i], Number: 1 })
+          }
+        }
+        res.send({ code: 200, data: newTypeList })
       })
     }
   }
