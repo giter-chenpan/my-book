@@ -10,6 +10,7 @@
           v-for="item in ArticleTypeList"
           :key="item.type"
           @click="changeArticleType($event)"
+          ref="sidebarType"
         >
           {{item.type}}
           ({{item.Number}})
@@ -47,6 +48,12 @@ export default {
         })
     },
     changeArticleType (e) {
+      // 点击变色
+      let sidebarTypeList = this.$refs.sidebarType
+      for (let i = 0; i < sidebarTypeList.length; i++) {
+        sidebarTypeList[i].className = 'sidebar-type-content-item'
+      }
+      e.target.className = 'sidebar-type-content-item sidebarTypeOFF'
       let text = e.target.innerText
       text = text.split(' ')
       this.ArticleType = text[0]
@@ -95,5 +102,8 @@ export default {
   }
   .sidebar-type-content :hover {
     color: red;
+  }
+  .sidebarTypeOFF {
+    color: red
   }
 </style>

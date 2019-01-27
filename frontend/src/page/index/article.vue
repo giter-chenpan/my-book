@@ -90,7 +90,6 @@ export default {
             alert('获取失败，请刷新后重试。' + data.data)
             return
           }
-          console.log(data)
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = data.data
