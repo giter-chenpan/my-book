@@ -60,14 +60,16 @@ module.exports = {
     return (req, res) => {
       let pageNum = req.query.pageNum
       let pageSize = req.query.pageSize
+      let type = req.query.ArticleType
+      // console.log(pageNum)
+      // console.log(pageSize)
       pageNum = Number(pageNum)
       pageSize = Number(pageSize)
-      // console.log(pageNum)
       // if (pageNum === 'NaN' || pageSize === 'NaN') {
       //   res.send({ code: 400, data: '请传入Number类型的数据' })
       //   return
       // }
-      ArticleModel.FindArticle(pageNum, pageSize, null, (err, docs, total) => {
+      ArticleModel.FindArticle(pageNum, pageSize, { articleType: type }, (err, docs, total) => {
         if (err) {
           res.send({ code: 400, data: '获取列表失败' })
           return
