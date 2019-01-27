@@ -11,6 +11,9 @@ ArticleSchema.statics.NewArticle = function (data, callback) {
 }
 // 获取文章列表
 ArticleSchema.statics.FindArticle = function (pageNum, pageSize, data, callback) {
+  if (data.articleType === undefined) {
+    data = {}
+  }
   this.countDocuments(data, (err, count) => {
     if (err) {
       callback(err)

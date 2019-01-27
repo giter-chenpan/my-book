@@ -60,15 +60,9 @@ module.exports = {
     return (req, res) => {
       let pageNum = req.query.pageNum
       let pageSize = req.query.pageSize
-      let type = req.query.ArticleType
-      // console.log(pageNum)
-      // console.log(pageSize)
+      let type = req.query.articleType
       pageNum = Number(pageNum)
       pageSize = Number(pageSize)
-      // if (pageNum === 'NaN' || pageSize === 'NaN') {
-      //   res.send({ code: 400, data: '请传入Number类型的数据' })
-      //   return
-      // }
       ArticleModel.FindArticle(pageNum, pageSize, { articleType: type }, (err, docs, total) => {
         if (err) {
           res.send({ code: 400, data: '获取列表失败' })
@@ -119,6 +113,17 @@ module.exports = {
           }
           if (!flag) {
             newTypeList.push({ type: typeList[i], Number: 1 })
+          }
+        }
+        let temp
+        // 根据数据的数量冒泡排序
+        for (let i = 0; i < newTypeList.length - 1; i++) {
+          for (let j = 0; j < newTypeList.length - 1 - i; j++) {
+            if (newTypeList[j].Number < newTypeList[j + 1].Number) {
+              temp = newTypeList[j]
+              newTypeList[j] = newTypeList[j + 1]
+              newTypeList[j + 1] = temp
+            }
           }
         }
         res.send({ code: 200, data: newTypeList })
