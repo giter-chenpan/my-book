@@ -1,7 +1,10 @@
 <template>
   <div class="index">
-    <article-list class="index-article"/>
-    <sidebar class="index-sidebar"/>
+    <article-list :TypeValue='ArticleType' class="index-article"/>
+    <sidebar
+      class="index-sidebar"
+      v-on:SidebarType="TypeValue"
+    />
   </div>
 </template>
 
@@ -12,9 +15,19 @@ import Sidebar from './sidebar'
 
 export default {
   name: 'Index',
+  data () {
+    return {
+      ArticleType: null
+    }
+  },
   components: {
     ArticleList,
     Sidebar
+  },
+  methods: {
+    TypeValue (TypeValue) {
+      this.ArticleType = TypeValue
+    }
   }
 }
 </script>

@@ -9,8 +9,10 @@
           class="sidebar-type-content-item"
           v-for="item in ArticleTypeList"
           :key="item.type"
+          @click="changeArticleType($event)"
         >
-          {{item.type}}({{item.Number}})
+          {{item.type}}
+          ({{item.Number}})
         </div>
       </div>
     </div>
@@ -28,7 +30,8 @@ export default {
   name: 'Sidebar',
   data () {
     return {
-      ArticleTypeList: []
+      ArticleTypeList: [],
+      ArticleType: null
     }
   },
   methods: {
@@ -42,6 +45,12 @@ export default {
           }
           this.ArticleTypeList = data.data
         })
+    },
+    changeArticleType (e) {
+      let text = e.target.innerText
+      text = text.split(' ')
+      this.ArticleType = text[0]
+      this.$emit('SidebarType', this.ArticleType)
     }
   },
   created () {

@@ -60,6 +60,9 @@ import Pagination from '@/page/comment/pagination.vue'
 
 export default {
   name: 'ArticleList',
+  props: {
+    TypeValue: String
+  },
   data () {
     return {
       DianZan: require('@/assets/acticleIMG/dianzan.png'),
@@ -70,7 +73,7 @@ export default {
       ArticleList: [],
       url: process.env.BASE_API,
       total: 150, // 记录总条数
-      display: 10, // 每页显示条数
+      display: 5, // 每页显示条数
       current: 1 // 当前的页数
     }
   },
@@ -79,15 +82,24 @@ export default {
   },
   methods: {
     getArticleList (pageNum, pageSize) {
-      getArticleListAPI(pageNum, pageSize)
+      let articleType = this.TypeValue
+      getArticleListAPI(pageNum, pageSize, articleType)
         .then(res => {
           let data = res.data
           if (data.code !== 200) {
             alert('获取失败，请刷新后重试。' + data.data)
             return
           }
+          console.log(data)
+          this.total = data.total.count
+          this.current = data.total.pageNum
           this.ArticleList = data.data
         })
+    }
+  },
+  watch: {
+    TypeValue: function (val) {
+      this.getArticleList(1, 10, val)
     }
   },
   created () {
@@ -101,7 +113,7 @@ export default {
 <style scoped>
   .ArticleList-item {
     width: 80%;
-    min-width: 364px;
+    min-width: 480px;
     height: 120px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
@@ -202,5 +214,9 @@ export default {
     width: 17px;
     height: 17px;
     margin: 0 5px;
+  }
+  .ArticleList-pagination {
+    height: 60px;
+    padding-left: 10%;
   }
 </style>

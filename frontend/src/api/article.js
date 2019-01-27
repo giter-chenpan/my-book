@@ -1,12 +1,13 @@
 import service from '../utils/request'
 
-export function getArticleListAPI (pageNum, pageSize) {
+export function getArticleListAPI (pageNum, pageSize, articleType) {
   return service({
     method: 'get',
     url: '/api/findarticle',
     params: {
-      pageNum: pageNum,
-      pageSize: pageSize
+      pageNum: pageNum || 1,
+      pageSize: pageSize || 10,
+      articleType: articleType
     }
   })
 }
