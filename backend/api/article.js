@@ -74,7 +74,6 @@ module.exports = {
   },
   OneFindArticle () {
     return (req, res) => {
-      console.log(req.query)
       let data = req.query
       let pageNum = data.pageNum
       let pageSize = data.pageSize

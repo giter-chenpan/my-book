@@ -44,67 +44,76 @@ ArticleSchema.statics.FindArticle = function (pageNum, pageSize, data, callback)
   })
 }
 // 获取文章
-ArticleSchema.statics.OneFindArticle = async function (pageNum, pageSize, data, callback) {
-  let ArticleAry = await this.find(data, (err, docs) => {
+ArticleSchema.statics.OneFindArticle = function (pageNum, pageSize, data, callback) {
+  this.find(data, (err, docs) => {
     if (err || docs.length === 0) {
-      callback(err, '该文已经消失在异次元了')
+      callback(err, '该文章消失异次元了')
       return
     }
     return new Promise((resolve, reject) => {
       resolve(docs)
     })
-  }).catch((err) => {
-    callback(err, '遇见未知错误')
   })
-  // 获取评论表
-  ArticleAry[0]._doc.comment = await CommentModel.find({ commentPid: data._id }, {
-    commentPid: 1,
-    commentContent: 1,
-    commentUser: 1,
-    commentFloor: 1,
-    commentThumbs: 1,
-    commentTime: 1
-  }, {
-    skip: (pageNum - 1) * pageSize || 0,
-    limit: pageSize || 10,
-    sort: { '_id': -1 }
-  }, (err, docs) => {
-    if (err || docs.length === 0) {
-      return callback(err, ArticleAry)
-    }
-    console.log('222')
-    ArticleAry[0]._doc.comment = docs
-    return new Promise((resolve, reject) => {
-      resolve(ArticleAry)
-    }).catch((err) => {
-      callback(err, '遇见未知错误')
-    })
-  })
-  let count = await CommentModel.countDocuments({ commentPid: data._id }, (err, count) => {
-    if (err) {
-      callback(err)
-      return
-    }
-    return new Promise((resolve, reject) => {
-      resolve(count)
-    })
-  })
-  let CommentList = ArticleAry[0]._doc.comment
-  // 循环获取回复表
-  for (let i = 0; i < CommentList.length; i++) {
-    await new Promise((resolve, reject) => {
-      ReplyModel.find({ replyPid: CommentList[i].id }, (err, docs) => {
-        CommentList[i]._doc.reply = docs
-        resolve(err, CommentList)
+    .then((msg) => {
+      let ArticleAry = msg[0]
+      let id = msg[0].id
+      // 获取评论表
+      CommentModel.find({ commentPid: id }, {
+        commentPid: 1,
+        commentContent: 1,
+        commentUser: 1,
+        commentFloor: 1,
+        commentThumbs: 1,
+        commentTime: 1
+      }, {
+        skip: (pageNum - 1) * pageSize || 0,
+        limit: pageSize || 10,
+        sort: { '_id': -1 }
+      }, (err, docs) => {
+        if (err || docs.length === 0) {
+          callback(err, ArticleAry)
+          return
+        }
+        ArticleAry._doc.comment = docs
+        return new Promise((resolve, reject) => {
+          resolve(ArticleAry)
+          reject(err)
+        }).catch((err) => {
+          callback(err, '遇见未知错误')
+        })
+          .then((msg) => {
+            let CommentList = msg._doc.comment
+            // 获取页数
+            CommentModel.countDocuments({ commentPid: id }, (err, count) => {
+              if (err) {
+                callback(err, '遇见未知错误')
+                return
+              }
+              return new Promise((resolve, reject) => {
+                resolve(count)
+                reject(err)
+              })
+                .then(async (count) => {
+                  // 循环获取回复表
+                  for (let i = 0; i < CommentList.length; i++) {
+                    await new Promise((resolve, reject) => {
+                      ReplyModel.find({ replyPid: CommentList[i].id }, (err, docs) => {
+                        CommentList[i]._doc.reply = docs
+                        resolve(err, CommentList)
+                      })
+                    })
+                  }
+                  ArticleAry._doc.comment = CommentList
+                  let total = {
+                    count: count || 1,
+                    pageNum: pageNum || 1
+                  }
+                  callback(null, ArticleAry, total)
+                })
+            })
+          })
       })
     })
-  }
-  ArticleAry[0]._doc.comment = CommentList
-  let total = {
-    count: count || 1,
-    pageNum: pageNum || 1
-  }
-  callback(null, ArticleAry, total)
 }
 // 获取文章分类数组
 ArticleSchema.statics.FindArticleType = function (callback) {
