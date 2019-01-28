@@ -65,14 +65,14 @@ ArticleSchema.statics.OneFindArticle = async function (pageNum, pageSize, data, 
     commentThumbs: 1,
     commentTime: 1
   }, {
-    skip: pageNum || 0,
+    skip: (pageNum - 1) * pageSize || 0,
     limit: pageSize || 10,
     sort: { '_id': -1 }
   }, (err, docs) => {
     if (err || docs.length === 0) {
-      callback(err, ArticleAry)
-      return
+      return callback(err, ArticleAry)
     }
+    console.log('222')
     ArticleAry[0]._doc.comment = docs
     return new Promise((resolve, reject) => {
       resolve(ArticleAry)
