@@ -18,3 +18,13 @@ export function getArticleTypeListAPI () {
     url: '/api/findarticletype'
   })
 }
+
+export function getArticleAPI (ArticleUUID) {
+  return service({
+    method: 'get',
+    url: '/api/onefindarticle',
+    params: {
+      _id: ArticleUUID
+    }
+  })
+}

@@ -1,5 +1,5 @@
 <template>
-  <div align=center class="ArticleList">
+  <div align=center id="ArticleList" class="ArticleList">
     <div
       class="ArticleList-item"
       v-for="item in ArticleList"
@@ -13,11 +13,17 @@
         <img :src="ShiJian"/>
         <div>{{item.articleSee}}</div>
       </span>
-      <div class="ArticleList-item-img">
+      <div
+        class="ArticleList-item-img"
+        @click="ToArticle(item._id)"
+      >
         <img :src=" url + '/api/getimg?img=' + item.articleImg" />
       </div>
       <div class="ArticleList-item-content">
-        <div class="ArticleList-item-content-title">
+        <div
+          class="ArticleList-item-content-title"
+          @click="ToArticle(item._id)"
+        >
           {{item.articleTitle}}
         </div>
         <div class="ArticleList-item-content-ul">
@@ -81,6 +87,7 @@ export default {
     Pagination
   },
   methods: {
+    // 获取文章列表
     getArticleList (pageNum, pageSize) {
       let articleType = this.TypeValue
       getArticleListAPI(pageNum, pageSize, articleType)
@@ -94,6 +101,9 @@ export default {
           this.current = data.total.pageNum
           this.ArticleList = data.data
         })
+    },
+    ToArticle (articleUUID) {
+      this.$router.push({ path: `/home/article/${articleUUID}` })
     }
   },
   watch: {
@@ -161,6 +171,7 @@ export default {
   .ArticleList-item-img {
     width: 110px;
     height: 110px;
+    cursor: pointer;
   }
   .ArticleList-item-img img {
     width: 100%;
@@ -177,18 +188,20 @@ export default {
     font-size: 20px;
     font-weight: bold;
     color: #666666;
-    height: 26px;
+    height: 28px;
     line-height: 24px;
     overflow: hidden;
+    cursor: pointer;
   }
   .ArticleList-item-content-docs {
     font-size: 15px;
     color: #666;
     line-height: 21px;
+    width: 92%;
   }
   .ArticleList-item-content-ul {
     width: 100%;
-    height: 28px;
+    height: 20px;
   }
   .ArticleList-item-content-ul * {
     float: left;

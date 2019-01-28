@@ -13,6 +13,16 @@ let routerList = [
       title: '首页',
       power: '首页'
     }
+  },
+  {
+    path: '/home/article/:id',
+    name: 'Article',
+    component: () =>
+      import('@/page/article'),
+    meta: {
+      title: '文章',
+      power: '文章'
+    }
   }
 ]
 
@@ -29,6 +39,12 @@ export default new Router({
         import('@/page/home.vue'),
       redirect: 'home/index',
       children: routerList
+    },
+    {
+      path: '/err',
+      name: 'ERR',
+      component: () =>
+        import('@/page/err')
     }
   ]
 })
