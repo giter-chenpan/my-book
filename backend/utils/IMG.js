@@ -15,7 +15,7 @@ module.exports = {
 
       // 3.获取表单的内容
       form.parse(req, (err, fields, files) => {
-        if (!err && files.file && files.file.size < 4194304) {
+        if (!err && files.file && files.file.size < 4325900) {
           // 3.1生存随机的名称
           let name = uuidv1()
 
@@ -43,7 +43,7 @@ module.exports = {
       })
     }
   },
-  GetImg (conditions, callback) {
+  GetImg () {
     return (req, res) => {
       let imgName = req.query.img
       let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\uploads\\' + imgName
