@@ -1,4 +1,5 @@
 import service from '../utils/request'
+import axios from 'axios'
 
 export function getArticleListAPI (pageNum, pageSize, articleType) {
   return service({
@@ -25,6 +26,20 @@ export function getArticleAPI (ArticleUUID) {
     url: '/api/onefindarticle',
     params: {
       _id: ArticleUUID
+    }
+  })
+}
+
+export function loadArticleImgAPI (formData, path) {
+  return axios.post(process.env.BASE_API + '/api/loadimg', formData)
+}
+
+export function loadArticleAPI (data) {
+  return service({
+    method: 'post',
+    url: '/api/newarticle',
+    data: {
+      data
     }
   })
 }

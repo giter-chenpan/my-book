@@ -23,6 +23,16 @@ let routerList = [
       title: '文章',
       power: '文章'
     }
+  },
+  {
+    path: '/home/addarticle',
+    name: 'AddArticle',
+    component: () =>
+      import('@/page/addArticle'),
+    meta: {
+      title: '新增文章',
+      power: '新增文章'
+    }
   }
 ]
 
