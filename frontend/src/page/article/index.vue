@@ -31,12 +31,14 @@
         </div>
       </div>
     </div>
+    <Comment :Comment="ArticleList.comment" />
   </div>
 </template>
 
 <script>
 
 import { getArticleAPI } from '@/api/article.js'
+import Comment from './comment'
 
 export default {
   name: 'Index',
@@ -47,6 +49,9 @@ export default {
       DianZan: require('@/assets/acticleIMG/dianzan.png'),
       ShouCang: require('@/assets/acticleIMG/shoucang.png')
     }
+  },
+  components: {
+    Comment
   },
   watch: {
     $route (to, from) {
@@ -151,7 +156,7 @@ export default {
     padding-bottom: 60px;
   }
   .article-articleContent-operation div {
-    border: 1px solid black;
+    border: 1px solid #666;
     border-radius: 50%;
     padding: 10px;
     width: 20px;
