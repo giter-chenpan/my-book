@@ -33,6 +33,16 @@ let routerList = [
       title: '新增文章',
       power: '新增文章'
     }
+  },
+  {
+    path: '/home/login',
+    name: 'Login',
+    component: () =>
+      import('@/page/login'),
+    meta: {
+      title: '登入',
+      power: '登入'
+    }
   }
 ]
 

@@ -6,7 +6,7 @@
     <div class="meru-router">
       <div class="meru-router-a">首页</div>
       <div class="meru-router-a">关于逍遥</div>
-      <div class="meru-router-a">登入</div>
+      <router-link to="/home/login" class="meru-router-a">登入</router-link>
     </div>
   </div>
 </template>
