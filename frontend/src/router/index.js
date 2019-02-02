@@ -43,6 +43,16 @@ let routerList = [
       title: '登入',
       power: '登入'
     }
+  },
+  {
+    path: '/home/register',
+    name: 'Register',
+    component: () =>
+      import('@/page/register'),
+    meta: {
+      title: '注册',
+      power: '注册'
+    }
   }
 ]
 
