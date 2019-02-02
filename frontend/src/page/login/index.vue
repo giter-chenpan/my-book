@@ -29,6 +29,9 @@ export default {
       loginInfo: {}
     }
   },
+  mounted () {
+    console.log(this.$store)
+  },
   methods: {
     LoginClick () {
       let loginInfo = this.loginInfo

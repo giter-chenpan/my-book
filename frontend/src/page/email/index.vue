@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     toEmailClick () {
-      console.log(this.Email)
+      console.log(this.$store)
       this.buttonString = 60
       setInterval(function () {
         console.log('33')

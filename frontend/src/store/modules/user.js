@@ -1,4 +1,4 @@
-import { RegisterUserAPI, LoginUserAPI } from '@/api/user'
+import { RegisterUserAPI, LoginUserAPI, getUserAPI } from '@/api/user'
 import { getToken, setToken } from '@/utils/auth'
 
 const user = {
@@ -42,13 +42,24 @@ const user = {
     },
 
     // 登入
-    LoginUser ({ commit, state }, loginInfo) {
+    LoginUser ({ commit }, loginInfo) {
       return new Promise((resolve) => {
         LoginUserAPI(loginInfo)
           .then((res) => {
             let data = res.data
             setToken(data.token)
             commit('SET_TOKEN', data.token)
+            resolve(res)
+          })
+      })
+    },
+
+    // 获得用户信息
+    GetUser ({ commit }) {
+      return new Promise((resolve) => {
+        getUserAPI()
+          .then((res) => {
+            let data = res.data
             commit('SET_USERID', data.data.userid)
             commit('SET_USERNAME', data.data.username)
             commit('SET_USERIMG', data.data.userImg)

@@ -17,3 +17,10 @@ export function LoginUserAPI (userInfo) {
     data
   })
 }
+
+export function getUserAPI () {
+  return service({
+    method: 'post',
+    url: '/api/getuser'
+  })
+}

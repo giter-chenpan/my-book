@@ -11,9 +11,13 @@ const service = axios.create({
 // 拦截request请求
 service.interceptors.request.use(
   config => {
-    console.log(config)
-    if (store.getters.token) {
-      config.headers['tiancai9'] = getToken()
+    let whiteList = ['数组遍历bug预留位', '/api/findarticletype', '/api/onefindarticle', '/api/findarticle', '/api/loginuser', '/api/newuser', '/api/getimg']
+    let url = config.url
+    url = url.substring(process.env.BASE_API, url.length)
+    if (whiteList.indexOf(url) === -1) {
+      if (store.getters.token) {
+        config.headers['tiancai9'] = getToken()
+      }
     }
     return config
   },
