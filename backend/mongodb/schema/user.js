@@ -45,7 +45,7 @@ let UserSchema = mongoose.Schema({
     default: new Date()
   },
   userpwd: {
-    type: Number,
+    type: String,
     default: 1
   }
 })
