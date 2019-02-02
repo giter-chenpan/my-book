@@ -53,6 +53,16 @@ let routerList = [
       title: '注册',
       power: '注册'
     }
+  },
+  {
+    path: '/home/email',
+    name: 'Email',
+    component: () =>
+      import('@/page/email'),
+    meta: {
+      title: '邮箱发送',
+      power: '邮箱发送'
+    }
   }
 ]
 
