@@ -32,6 +32,11 @@ export default {
   methods: {
     LoginClick () {
       let loginInfo = this.loginInfo
+      console.log(loginInfo.userid)
+      if (loginInfo.userid === undefined || loginInfo.userpwd === undefined) {
+        alert('请填写完登录信息')
+        return
+      }
       this.$store.dispatch('LoginUser', loginInfo)
         .then((res) => {
           let data = res.data
