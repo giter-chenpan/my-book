@@ -1,5 +1,13 @@
+let Token = 'tiancai9'
+
 module.exports = {
   getToken () {
-    console.log('得到token')
+    return localStorage.getItem(Token)
+  },
+  setToken (token) {
+    localStorage.setItem(Token, token)
+  },
+  removeToken () {
+    localStorage.removeItem(Token)
   }
 }
