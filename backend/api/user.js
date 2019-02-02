@@ -46,10 +46,6 @@ module.exports = {
   // 修改密码
   UpdatePwd () {
     return (req, res) => {
-      if (!req.headers.ticani9) {
-        res.send({ code: 400, data: '身份验证失效，请重新登入' })
-        return
-      }
       let data = req.body
       let token = req.headers.ticani9
       getToken(token)

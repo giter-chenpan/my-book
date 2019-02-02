@@ -4,10 +4,6 @@ let CommentModel = require('../mongodb/model/comment')
 module.exports = {
   NewCommnet () {
     return (req, res) => {
-      if (!req.headers.tiancai9) {
-        res.send({ code: 400, data: '身份验证失效，请重新登录' })
-        return
-      }
       let token = req.headers.tiancai9
       let data = req.body
       getToken(token)
