@@ -11,7 +11,7 @@
     </div>
     <div class="login-button">
       <!-- <button>注册</button> -->
-      <button>登入</button>
+      <button @click="LoginClick">登入</button>
     </div>
     <div class="login-register">
       *没有账号点我
@@ -21,11 +21,31 @@
 </template>
 
 <script>
+
 export default {
   name: 'Login',
   data () {
     return {
       loginInfo: {}
+    }
+  },
+  methods: {
+    LoginClick () {
+      let loginInfo = this.loginInfo
+      this.$store.dispatch('LoginUser', loginInfo)
+        .then((res) => {
+          let data = res.data
+          if (data.code === 400) {
+            alert(data.data)
+            return
+          }
+          if (data.cod === 401) {
+            alert('请激活邮箱')
+            this.$router.push({ path: '/home/email' })
+            return
+          }
+          this.$router.push({ path: '/home' })
+        })
     }
   }
 }

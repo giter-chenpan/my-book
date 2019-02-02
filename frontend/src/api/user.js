@@ -8,3 +8,12 @@ export function RegisterUserAPI (userInfo) {
     data
   })
 }
+
+export function LoginUserAPI (userInfo) {
+  const data = userInfo
+  return service({
+    method: 'post',
+    url: '/api/loginuser',
+    data
+  })
+}

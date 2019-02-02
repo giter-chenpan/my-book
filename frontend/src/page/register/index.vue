@@ -3,15 +3,15 @@
     <h1 class="login-title">注册界面</h1>
     <div class="login-style">
       <span>账号：</span>
-      <input type="text" v-model="loginInfo.userid" placeholder="输入账号"/>
+      <input type="text" v-model="registerInfo.userid" placeholder="输入账号"/>
     </div>
     <div class="login-style">
       <span>昵称：</span>
-      <input type="text" v-model="loginInfo.username" placeholder="输入昵称"/>
+      <input type="text" v-model="registerInfo.username" placeholder="输入昵称"/>
     </div>
     <div class="login-style">
       <span>密码：</span>
-      <input type="password" v-model="loginInfo.userpwd" placeholder="输入密码" />
+      <input type="password" v-model="registerInfo.userpwd" placeholder="输入密码" />
       <em style="color: red">*密码不能低于6位数</em>
     </div>
     <div class="login-style">
@@ -20,7 +20,7 @@
     </div>
     <div class="login-style">
       <span>邮箱：</span>
-      <input type="text" v-model="loginInfo.userEmail" placeholder="输入邮箱" />
+      <input type="text" v-model="registerInfo.userEmail" placeholder="输入邮箱" />
       <em style="color: red">*请输入有效邮箱，需验证才可完成注册。</em>
     </div>
     <div class="login-button">
@@ -30,43 +30,49 @@
 </template>
 
 <script>
+import { toEmailAPI } from '@/api/utils'
+
 export default {
   name: 'Login',
   data () {
     return {
-      userpwdIF: '123456',
-      loginInfo: {}
+      userpwdIF: '',
+      registerInfo: {}
     }
   },
   methods: {
     RegisterClick () {
-      let loginInfo = this.loginInfo
-      loginInfo = {
-        userid: 'j38125493',
-        username: '世界第一3',
-        userpwd: '123456',
-        userEmail: '380012546@qq.com'
-      }
-      if (loginInfo.userid === undefined || loginInfo.username === undefined || loginInfo.userpwd === undefined || loginInfo.userEmail === undefined) {
+      let registerInfo = this.registerInfo
+      if (registerInfo.userid === undefined || registerInfo.username === undefined || registerInfo.userpwd === undefined || registerInfo.userEmail === undefined) {
         alert('请填写完注册信息')
         return
       }
-      if (loginInfo.userpwd.length < 6) {
+      if (registerInfo.userpwd.length < 6) {
         alert('密码不能低于6位数')
         return
       }
-      if (loginInfo.userpwd !== this.userpwdIF) {
+      if (registerInfo.userpwd !== this.userpwdIF) {
         alert('两次密码不一致')
         return
       }
-      this.$store.dispatch('RegisterUser', loginInfo)
+      this.$store.dispatch('RegisterUser', registerInfo)
         .then((res) => {
           let data = res.data
           if (data.code !== 200) {
             alert(data.data)
             return
           }
-          this.$router.push({ path: '/home/email' })
+          let loginInfo = {
+            userid: registerInfo.userid,
+            userpwd: registerInfo.userpwd
+          }
+          this.$store.dispatch('LoginUser', loginInfo)
+            .then((res) => {
+              toEmailAPI()
+                .then((res) => {
+                  this.$router.push({ path: '/home/email' })
+                })
+            })
         })
     }
   }
