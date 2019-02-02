@@ -1,8 +1,9 @@
 import { RegisterUserAPI, LoginUserAPI } from '@/api/user'
+import { getToken, setToken } from '@/utils/auth'
 
 const user = {
   state: {
-    token: '',
+    token: getToken(),
     userid: '',
     username: '',
     userEmail: '',
@@ -46,6 +47,7 @@ const user = {
         LoginUserAPI(loginInfo)
           .then((res) => {
             let data = res.data
+            setToken(data.token)
             commit('SET_TOKEN', data.token)
             commit('SET_USERID', data.data.userid)
             commit('SET_USERNAME', data.data.username)
