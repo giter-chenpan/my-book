@@ -33,7 +33,8 @@ module.exports = {
           userid: userStar.userid,
           username: userStar.username,
           userImg: userStar.userImg,
-          userRoot: userStar.userRoot
+          userRoot: userStar.userRoot,
+          userEmail: userStar.userEmail
         }
         if (EmailStatus === 0) {
           res.send({ code: 401, data: user, token: setToken(dataJson) })
@@ -41,6 +42,41 @@ module.exports = {
         }
         res.send({ code: 200, data: user, token: setToken(dataJson) })
       })
+    }
+  },
+  // 获取用户信息
+  getUser () {
+    return (req, res) => {
+      let token = req.headers.tiancai9
+      getToken(token)
+        .then(msg => {
+          if (msg.code !== 200) {
+            res.send({ code: 400, data: '身份验证失效，请重新登入' })
+            return
+          }
+          let user = JSON.parse(msg.data)
+          userModel.FindUser(user, (err, docs) => {
+            if (err) {
+              res.send({ code: 400, data: err })
+              return
+            }
+            let data = docs[0]._doc
+            let userOBJ = {
+              userEmail: data.userEmail,
+              userid: data.userid,
+              username: data.username,
+              userRoot: data.userRoot,
+              userImg: data.userImg,
+              userCollect: data.userCollect,
+              userFensi: data.userFensi,
+              userGuanZhu: data.userGuanZhu,
+              userStatus: data.userStatus,
+              userTongZhi: data.userTongZhi
+
+            }
+            res.send({ code: 200, data: userOBJ })
+          })
+        })
     }
   },
   // 修改密码

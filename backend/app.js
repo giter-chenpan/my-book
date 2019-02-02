@@ -21,10 +21,11 @@ app.post('/api/loadimg', LoadIMG())
 app.get('/api/getimg', GetImg())
 
 // 用户
-let { NewUser, LoginUser, UpdatePwd } = require('./api/user')
+let { NewUser, LoginUser, UpdatePwd, getUser } = require('./api/user')
 app.post('/api/newuser', NewUser())
 app.post('/api/loginuser', LoginUser())
 app.post('/api/updatepwd', UpdatePwd())
+app.post('/api/getuser', getUser())
 
 // 文章
 let { NewArticle, UpdateArticle, FindArticle, OneFindArticle, FindArticleType } = require('./api/article')

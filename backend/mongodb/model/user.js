@@ -30,6 +30,7 @@ UserSchema.statics.LoginUser = function (data, callback) {
         callback(err, '密码错误')
         return
       }
+      console.log(docs)
       callback(err, docs)
     })
   })
