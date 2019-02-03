@@ -71,8 +71,8 @@ module.exports = {
               userFensi: data.userFensi,
               userGuanZhu: data.userGuanZhu,
               userStatus: data.userStatus,
-              userTongZhi: data.userTongZhi
-
+              userTongZhi: data.userTongZhi,
+              userHistory: data.userHistory
             }
             res.send({ code: 200, data: userOBJ })
           })
