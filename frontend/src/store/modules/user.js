@@ -8,7 +8,13 @@ const user = {
     username: '',
     userEmail: '',
     userImg: '',
-    userRoot: ''
+    userRoot: '',
+    userCollect: '',
+    userFensi: '',
+    userGuanZhu: '',
+    userStatus: '',
+    userTongZhi: '',
+    userHistory: ''
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -28,6 +34,24 @@ const user = {
     },
     SET_USERROOT: (state, userRoot) => {
       state.userRoot = userRoot
+    },
+    SET_USERCOLLECT: (state, userCollect) => {
+      state.userCollect = userCollect
+    },
+    SET_USERFENSI: (state, userfensi) => {
+      state.userfensi = userfensi
+    },
+    SET_USERGUANZHU: (state, userGuanZhu) => {
+      state.userGuanZhu = userGuanZhu
+    },
+    SET_USERSTATUS: (state, userStatus) => {
+      state.userStatus = userStatus
+    },
+    SET_USERTONGZHI: (state, userTongZhi) => {
+      state.userTongZhi = userTongZhi
+    },
+    SET_USERHISTORY: (state, userHistory) => {
+      state.userHistory = userHistory
     }
   },
   actions: {
@@ -64,7 +88,12 @@ const user = {
             commit('SET_USERNAME', data.data.username)
             commit('SET_USERIMG', data.data.userImg)
             commit('SET_USERROOT', data.data.userRoot)
-            commit('SET_USEREMAIL', data.data.userEmail)
+            commit('SET_USERCOLLECT', data.data.userCollect)
+            commit('SET_USERFENSI', data.data.userfensi)
+            commit('SET_USERGUANZHU', data.data.userGuanZhu)
+            commit('SET_USERSTATUS', data.data.userStatus)
+            commit('SET_USERTONGZHI', data.data.userTongZhi)
+            commit('SET_USERHISTORY', data.data.userHistory)
             resolve(res)
           })
       })
