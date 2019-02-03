@@ -38,6 +38,10 @@ export default {
   methods: {
     submitArticle () {
       let files = this.$refs.articleImg.files
+      if (files.length === 0) {
+        alert('请上传封面')
+        return
+      }
       let formData = new FormData()
       formData.append('file', files[0])
       loadArticleImgAPI(formData)

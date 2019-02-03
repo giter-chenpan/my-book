@@ -38,8 +38,8 @@ const user = {
     SET_USERCOLLECT: (state, userCollect) => {
       state.userCollect = userCollect
     },
-    SET_USERFENSI: (state, userfensi) => {
-      state.userfensi = userfensi
+    SET_USERFENSI: (state, userFensi) => {
+      state.userFensi = userFensi
     },
     SET_USERGUANZHU: (state, userGuanZhu) => {
       state.userGuanZhu = userGuanZhu
@@ -87,9 +87,10 @@ const user = {
             commit('SET_USERID', data.data.userid)
             commit('SET_USERNAME', data.data.username)
             commit('SET_USERIMG', data.data.userImg)
+            commit('SET_USEREMAIL', data.data.userEmail)
             commit('SET_USERROOT', data.data.userRoot)
             commit('SET_USERCOLLECT', data.data.userCollect)
-            commit('SET_USERFENSI', data.data.userfensi)
+            commit('SET_USERFENSI', data.data.userFensi)
             commit('SET_USERGUANZHU', data.data.userGuanZhu)
             commit('SET_USERSTATUS', data.data.userStatus)
             commit('SET_USERTONGZHI', data.data.userTongZhi)

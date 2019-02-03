@@ -6,10 +6,8 @@ import { getToken } from '@/utils/auth'
 
 // 全局导航守卫
 router.beforeEach((to, from, next) => {
-  console.log(getToken)
   if (getToken()) {
     if (!store.state.user.username) {
-      console.log(store.state)
       store.dispatch('GetUser')
     }
     next()

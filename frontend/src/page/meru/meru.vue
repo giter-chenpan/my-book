@@ -4,16 +4,37 @@
       9
     </div>
     <div class="meru-router">
-      <div class="meru-router-a">首页</div>
-      <div class="meru-router-a">关于逍遥</div>
-      <router-link to="/home/login" class="meru-router-a">登入</router-link>
+      <router-link to="/home/index" class="meru-router-a">
+        <a>首页</a>
+      </router-link>
+      <div class="meru-router-a">
+        <a>关于逍遥</a>
+      </div>
+      <router-link tag="div" v-if="!loginStatus" to="/home/login" class="meru-router-a">
+        <a>登入</a>
+      </router-link>
+      <div v-else class="meru-router-user">
+        <div class="meru-router-user-name">{{loginStatus.username}}</div>
+        <router-link class="meru-router-user-addartilce" tag="div" to="/home/addarticle">发表文章</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Meru'
+  name: 'Meru',
+  data () {
+    return {
+      loginStatus: {}
+    }
+  },
+  watch: {
+    $route () {
+      this.loginStatus = this.$store.state.user
+      console.log(this.loginStatus)
+    }
+  }
 }
 </script>
 
@@ -43,14 +64,21 @@ export default {
   .meru-router {
     float: right;
   }
-  .meru-router-a {
+  .meru-router-a, .meru-router-user {
     float: left;
     padding: 5px;
     color: #ffffff;
     margin-top: 20px;
     cursor: pointer;
   }
-  .meru-router :hover {
+  .meru-router-a :hover {
     color: red;
+  }
+  .meru-router-user-name {
+    margin-right: 5px;
+    float: left;
+  }
+  .meru-router-user-addartilce {
+    float: left;
   }
 </style>
