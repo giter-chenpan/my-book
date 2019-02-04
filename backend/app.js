@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ // 解析post请求的中间件
   limit: '50mb',
   extended: true
 }))
-app.use(bodyParser.json({limit: '50mb'})) // 解析json
+app.use(bodyParser.json({ limit: '50mb' })) // 解析json
 
 let auth = require('./api')
 app.use('*', auth())
@@ -17,9 +17,11 @@ let { toEmail, ifEmail } = require('./utils/Email')
 app.post('/api/toemail', toEmail())
 app.get('/api/ifemail', ifEmail())
 
-let { LoadIMG, GetImg } = require('./utils/IMG')
-app.post('/api/loadimg', LoadIMG())
-app.get('/api/getimg', GetImg())
+let { LoadArticleIMG, GetImg, LoadUserImg, GetUserImg } = require('./utils/IMG')
+app.post('/api/loadimg', LoadArticleIMG()) // 上传文章封面图
+app.get('/api/getimg', GetImg()) // 得到文章封面图
+app.post('/api/loaduserimg', LoadUserImg()) // 上传用户头像
+app.get('/api/getuserimg', GetUserImg()) // 得到用户头像
 
 // 用户
 let { NewUser, LoginUser, UpdatePwd, getUser } = require('./api/user')
