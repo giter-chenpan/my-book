@@ -76,6 +76,7 @@ export default {
       ShouCang: require('@/assets/acticleIMG/shoucang.png'),
       ZuoZhe: require('@/assets/acticleIMG/zuozhe.png'),
       GuanKan: require('@/assets/acticleIMG/guankan.png'),
+      descriptionString: '',
       ArticleList: [],
       url: process.env.BASE_API,
       total: 150, // 记录总条数
@@ -97,13 +98,39 @@ export default {
             alert('获取失败，请刷新后重试。' + data.data)
             return
           }
+          console.log(data.data)
+          let ArticleList = data.data
+          for (let i = 0; i < ArticleList.length; i++) {
+            console.log(ArticleList[i].articleContent)
+            // console.log(JSON.parse(ArticleList[i].articleContent))
+            // this.GetDescription(JSON.parse(ArticleList[i].articleContent))
+          }
+          console.log(this.descriptionString)
           this.total = data.total.count
           this.current = data.total.pageNum
-          this.ArticleList = data.data
+          this.ArticleList = ArticleList
         })
     },
     ToArticle (articleUUID) {
       this.$router.push({ path: `/home/article/${articleUUID}` })
+    },
+    GetDescription (obj) {
+      this.descriptionString = ''
+      for (var i = 0; i < obj.length; i++) {
+        var tag = obj[i].tag
+        if (tag) {
+          if (obj[i].attrs.length !== 0) {
+            this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
+            this.GetDescription(obj[i].children)
+          } else {
+            this.descriptionString += '<' + tag + '>'
+            this.GetDescription(obj[i].children)
+          }
+          this.descriptionString += '</' + tag + '>'
+        } else {
+          this.descriptionString += obj[0]
+        }
+      }
     }
   },
   watch: {
@@ -189,7 +216,7 @@ export default {
     font-weight: bold;
     color: #666666;
     height: 28px;
-    line-height: 24px;
+    line-height: 26px;
     overflow: hidden;
     cursor: pointer;
   }

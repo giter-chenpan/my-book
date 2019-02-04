@@ -1,6 +1,5 @@
 import service from '../utils/request'
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
 
 export function getArticleListAPI (pageNum, pageSize, articleType) {
   return service({
@@ -39,8 +38,6 @@ export function loadArticleAPI (data) {
   return service({
     method: 'post',
     url: '/api/newarticle',
-    data: {
-      data
-    }
+    data
   })
 }

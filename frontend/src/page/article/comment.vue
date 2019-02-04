@@ -7,7 +7,7 @@
       <div v-for="item in Comment" :key="item.index" class="comment-item">
         <div class="comment-user">
           <div class="comment-user-img">
-            <img src="https://ss1.bdstatic.com/5aAHeD3nKgcUp2HgoI7O1ygwehsv/media/ch1000/png/pct1.png" />
+            <img :src="url + '/api/getuserimg?userid=' + item.commentUser" />
           </div>
           <div class="comment-user-name">
             <div>{{item.commentUser}}</div>
@@ -30,7 +30,7 @@
     </div>
     <div class="comment-editor" ref="editorElem"></div>
     <div class="comment-button">
-      <button type="text">点我回复呢。。</button>
+      <button :disabled="disabled" @click="commentClick" type="text">点我回复呢。。</button>
     </div>
   </div>
 </template>
@@ -38,23 +38,30 @@
 <script>
 
 import E from 'wangeditor'
+import { addCommentAPI } from '@/api/comment'
 
 export default {
   name: 'Comment',
   data () {
     return {
-      DianZan: require('@/assets/acticleIMG/dianzan.png')
+      url: process.env.BASE_API,
+      DianZan: require('@/assets/acticleIMG/dianzan.png'),
+      disabled: false,
+      CommentList: {
+        _id: this.ArticleUUID,
+        commentContent: ''
+      }
     }
   },
   props: {
-    Comment: Array
+    Comment: Array,
+    ArticleUUID: String
   },
   mounted () {
-    console.log(this.Comment)
     let editor = new E(this.$refs.editorElem)
     editor.customConfig.zIndex = 1
     editor.customConfig.onchange = (html) => {
-      this.ArticleList.articleContent = html
+      this.CommentList.commentContent = html
     }
     editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
     editor.customConfig.menus = [
@@ -67,6 +74,30 @@ export default {
       'undo'
     ]
     editor.create()
+  },
+  methods: {
+    commentClick () {
+      if (this.CommentList.commentContent.length < 6) {
+        alert('评论不能少于6个字符')
+        return
+      }
+      this.disabled = true
+      let commnetList = this.CommentList
+      addCommentAPI(commnetList)
+        .then((res) => {
+          this.disabled = false
+          let data = res.data
+          if (data.code !== 200) {
+            alert(data.data)
+            return
+          }
+          window.scrollTo(0, 0)
+          alert(data.data)
+          this.$emit('getArticle')
+        }).catch(() => {
+          this.disabled = false
+        })
+    }
   }
 }
 </script>
@@ -169,5 +200,8 @@ export default {
     border-radius: 2px;
     margin-top: 30px;
     float: right;
+  }
+  .article-articleContent-operation {
+    padding-bottom: 20px;
   }
 </style>

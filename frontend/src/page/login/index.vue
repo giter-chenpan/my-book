@@ -30,7 +30,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$store)
   },
   methods: {
     LoginClick () {
@@ -47,7 +46,7 @@ export default {
             alert(data.data)
             return
           }
-          if (data.cod === 401) {
+          if (data.code === 401) {
             alert('请激活邮箱')
             this.$router.push({ path: '/home/email' })
             return
@@ -95,7 +94,7 @@ export default {
     height: 100%;
     border: 0;
     font-size: 20px;
-    text-indent: 70px;
+    text-indent: 90px;
   }
   .login-button {
     margin-top: 20px;

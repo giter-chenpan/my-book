@@ -10,6 +10,13 @@ router.beforeEach((to, from, next) => {
     if (!store.state.user.username) {
       store.dispatch('GetUser')
     }
+    // 未激活的用户使他跳入邮箱激活区
+    if (store.state.user.userStatus === 0) {
+      if (to.path !== '/home/email') {
+        next('/home/email')
+        return
+      }
+    }
     next()
   } else {
     next()

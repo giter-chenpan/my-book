@@ -10,11 +10,11 @@
       <div class="meru-router-a">
         <a>关于逍遥</a>
       </div>
-      <router-link tag="div" v-if="!loginStatus" to="/home/login" class="meru-router-a">
+      <router-link v-if="!loginStatus.username" to="/home/login" class="meru-router-a">
         <a>登入</a>
       </router-link>
       <div v-else class="meru-router-user">
-        <div class="meru-router-user-name">{{loginStatus.username}}</div>
+        <!-- <div class="meru-router-user-name">{{loginStatus.username}}</div> -->
         <router-link class="meru-router-user-addartilce" tag="div" to="/home/addarticle">发表文章</router-link>
       </div>
     </div>
@@ -29,10 +29,11 @@ export default {
       loginStatus: {}
     }
   },
+  created () {
+    this.loginStatus = this.$store.state.user
+  },
   watch: {
     $route () {
-      this.loginStatus = this.$store.state.user
-      console.log(this.loginStatus)
     }
   }
 }
@@ -70,6 +71,7 @@ export default {
     color: #ffffff;
     margin-top: 20px;
     cursor: pointer;
+    text-decoration: none;
   }
   .meru-router-a :hover {
     color: red;

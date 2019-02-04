@@ -18,8 +18,7 @@
           <div class="article-articleContent-ifon-user">{{ArticleList.articleUser}}</div>
           <div class="article-articleContent-ifon-see">阅读数： {{ArticleList.articleSee}}</div>
         </div>
-        <div class="article-articleContent-docs">
-          {{ArticleList.articleContent}}
+        <div class="article-articleContent-docs" v-html="ArticleList.articleContent">
         </div>
         <div align=center class="article-articleContent-operation">
           <div>
@@ -31,7 +30,7 @@
         </div>
       </div>
     </div>
-    <Comment :Comment="ArticleList.comment" />
+    <Comment v-on:getArticle="getArticle" :Comment="ArticleList.comment" :ArticleUUID="$route.params.id" />
   </div>
 </template>
 
@@ -71,8 +70,14 @@ export default {
             this.$router.push({ path: '/err', params: data.data })
             return
           }
+          let d = new Date(data.data.articleTime)
+          data.data.articleTime = d.toLocaleString()
+          let commentList = data.data.comment
+          for (let i = 0; i < commentList.length; i++) {
+            commentList[i].commentTime = new Date(commentList[i].commentTime).toLocaleString()
+          }
+          data.data.comment = commentList
           this.ArticleList = data.data
-          console.log(data.data)
         })
     }
   }

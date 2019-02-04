@@ -113,7 +113,7 @@ export default {
     height: 100%;
     border: 0;
     font-size: 20px;
-    text-indent: 70px;
+    text-indent: 90px;
     color: #666;
   }
   .login-button {

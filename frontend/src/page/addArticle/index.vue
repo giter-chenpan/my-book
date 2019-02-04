@@ -4,9 +4,11 @@
       <input v-model="ArticleList.articleTitle" type="text" placeholder="请输入标题"/>
     </div>
     <div class="addArticle-editor" ref="editorElem"></div>
+    <div style="color: red;font-size: 14px;margin: 0 auto;width: 90%;">*插入的图片总共请小于50mb，否则会报错。</div>
     <div class="addArticle-type">
       分类：
       <input v-model="ArticleList.articleType" type="text" placeholder="输入分类"/>
+      <div style="color: red;font-size: 14px;margin: 0 auto;width: 90%;">*分类不能超过9个字符</div>
     </div>
     <div class="addArticle-Img">
       封面图：
@@ -15,7 +17,7 @@
       <em style="color: red;font-size: 14px;">*图片需要小于4mb</em>
     </div>
     <div class="addArticle-button">
-      <button @click="submitArticle">提交</button>
+      <button :disabled="disabled" @click="submitArticle">提交</button>
     </div>
   </div>
 </template>
@@ -28,6 +30,7 @@ export default {
   name: 'AddArticle',
   data () {
     return {
+      disabled: false,
       ArticleList: {
         articleTitle: '',
         articleContent: '',
@@ -37,9 +40,15 @@ export default {
   },
   methods: {
     submitArticle () {
+      this.disabled = true
       let files = this.$refs.articleImg.files
       if (files.length === 0) {
         alert('请上传封面')
+        this.disabled = false
+        return
+      }
+      if (this.ArticleList.articleType.length > 9) {
+        alert('分类不能超过九个字符')
         return
       }
       let formData = new FormData()
@@ -48,6 +57,7 @@ export default {
         .then((res) => {
           if (res.data.code !== 200) {
             alert(res.data.data)
+            this.disabled = false
             return
           }
           this.ArticleList['articleImg'] = res.data.data
@@ -56,10 +66,17 @@ export default {
             .then((res) => {
               if (res.data.code !== 200) {
                 alert(res.data.data)
+                this.disabled = false
                 return
               }
               alert(res.data.data)
+              this.$router.push({ path: '/home/index' })
+            }).catch(() => {
+              this.disabled = false
+              alert('可能是插入的图片大于50mb所产生的错误')
             })
+        }).catch(() => {
+          this.disabled = false
         })
     }
   },
