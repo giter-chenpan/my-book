@@ -14,8 +14,7 @@
           </div>
         </div>
         <div class="comment-index">
-          <div class="comment-index-docs">
-            {{item.commentContent}}
+          <div v-html="item.commentContent" class="comment-index-docs">
           </div>
           <div class="comment-index-info">
             <div>{{item.commentFloor}}楼</div>
