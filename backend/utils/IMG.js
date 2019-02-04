@@ -85,7 +85,7 @@ module.exports = {
   GetImg () {
     return (req, res) => {
       let imgName = req.query.img
-      let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\userimg\\' + imgName
+      let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\uploads\\' + imgName
       fs.readFile(path, (err, data) => {
         if (err) {
           res.send({ code: 400, data: err })
@@ -97,13 +97,14 @@ module.exports = {
   },
   GetUserImg () {
     return (req, res) => {
+      console.log(req)
       userModel.FindUser({ userid: req.query.userid }, (err, docs) => {
         if (err) {
           res.send({ code: 400, data: err })
           return
         }
         let imgName = docs[0]._doc.userImg
-        let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\uploads\\' + imgName
+        let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\userimg\\' + imgName
         fs.readFile(path, (err, data) => {
           if (err) {
             res.send({ code: 400, data: err })
