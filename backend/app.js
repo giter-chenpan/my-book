@@ -4,9 +4,10 @@ let config = require('./config') // 公共配置
 let bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ // 解析post请求的中间件
+  limit: '50mb',
   extended: true
 }))
-app.use(bodyParser.json()) // 解析json
+app.use(bodyParser.json({limit: '50mb'})) // 解析json
 
 let auth = require('./api')
 app.use('*', auth())
