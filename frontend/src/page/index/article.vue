@@ -11,18 +11,18 @@
       </span>
       <span class="ArticleList-item-date label">
         <img :src="ShiJian"/>
-        <div>{{item.articleSee}}</div>
+        <div>{{item.articleTime}}</div>
       </span>
       <div
         class="ArticleList-item-img"
-        @click="ToArticle(item._id)"
+        @click="ToArticle(item._id), SeeArticle(item._id)"
       >
         <img :src=" url + '/api/getimg?img=' + item.articleImg" />
       </div>
       <div class="ArticleList-item-content">
         <div
           class="ArticleList-item-content-title"
-          @click="ToArticle(item._id)"
+          @click="ToArticle(item._id), SeeArticle(item._id)"
         >
           {{item.articleTitle}}
         </div>
@@ -61,7 +61,7 @@
 
 <script>
 
-import { getArticleListAPI } from '@/api/article.js'
+import { getArticleListAPI, seeArticleAPI } from '@/api/article.js'
 import Pagination from '@/page/comment/pagination.vue'
 
 export default {
@@ -98,40 +98,42 @@ export default {
             alert('获取失败，请刷新后重试。' + data.data)
             return
           }
-          console.log(data.data)
           let ArticleList = data.data
-          for (let i = 0; i < ArticleList.length; i++) {
-            console.log(ArticleList[i].articleContent)
-            // console.log(JSON.parse(ArticleList[i].articleContent))
-            // this.GetDescription(JSON.parse(ArticleList[i].articleContent))
-          }
-          console.log(this.descriptionString)
+          // for (let i = 0; i < ArticleList.length; i++) {
+          //   // console.log(JSON.parse(ArticleList[i].articleContent))
+          //   // this.GetDescription(JSON.parse(ArticleList[i].articleContent))
+          // }
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = ArticleList
         })
     },
+    SeeArticle (articleUUID) {
+      seeArticleAPI({ _id: articleUUID })
+        .then((res) => {
+        })
+    },
     ToArticle (articleUUID) {
       this.$router.push({ path: `/home/article/${articleUUID}` })
-    },
-    GetDescription (obj) {
-      this.descriptionString = ''
-      for (var i = 0; i < obj.length; i++) {
-        var tag = obj[i].tag
-        if (tag) {
-          if (obj[i].attrs.length !== 0) {
-            this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
-            this.GetDescription(obj[i].children)
-          } else {
-            this.descriptionString += '<' + tag + '>'
-            this.GetDescription(obj[i].children)
-          }
-          this.descriptionString += '</' + tag + '>'
-        } else {
-          this.descriptionString += obj[0]
-        }
-      }
     }
+    // GetDescription (obj) {
+    //   this.descriptionString = ''
+    //   for (var i = 0; i < obj.length; i++) {
+    //     var tag = obj[i].tag
+    //     if (tag) {
+    //       if (obj[i].attrs.length !== 0) {
+    //         this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
+    //         this.GetDescription(obj[i].children)
+    //       } else {
+    //         this.descriptionString += '<' + tag + '>'
+    //         this.GetDescription(obj[i].children)
+    //       }
+    //       this.descriptionString += '</' + tag + '>'
+    //     } else {
+    //       this.descriptionString += obj[0]
+    //     }
+    //   }
+    // }
   },
   watch: {
     TypeValue: function (val) {

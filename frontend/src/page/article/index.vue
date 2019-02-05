@@ -72,11 +72,13 @@ export default {
           }
           let d = new Date(data.data.articleTime)
           data.data.articleTime = d.toLocaleString()
-          let commentList = data.data.comment
-          for (let i = 0; i < commentList.length; i++) {
-            commentList[i].commentTime = new Date(commentList[i].commentTime).toLocaleString()
+          if (data.data.comment) {
+            let commentList = data.data.comment
+            for (let i = 0; i < commentList.length; i++) {
+              commentList[i].commentTime = new Date(commentList[i].commentTime).toLocaleString()
+            }
+            data.data.comment = commentList
           }
-          data.data.comment = commentList
           this.ArticleList = data.data
         })
     }

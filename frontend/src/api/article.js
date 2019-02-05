@@ -41,3 +41,11 @@ export function loadArticleAPI (data) {
     data
   })
 }
+
+export function seeArticleAPI (data) {
+  return service({
+    method: 'post',
+    url: '/api/seearticle',
+    data
+  })
+}
