@@ -4,10 +4,6 @@ let { getToken } = require('../utils/token')
 module.exports = {
   NewArticle () {
     return (req, res) => {
-      if (!req.headers.tiancai9) {
-        res.send({ code: 400, data: '身份验证失效，请重新登录' })
-        return
-      }
       let data = req.body
       let token = req.headers.tiancai9
       getToken(token)
@@ -30,10 +26,6 @@ module.exports = {
   },
   UpdateArticle () {
     return (req, res) => {
-      if (!req.headers.tiancai9) {
-        res.send({ code: 400, data: '身份验证失效，请重新登录' })
-        return
-      }
       let token = req.headers.tiancai9
       let data = req.body
       getToken(token)
@@ -60,14 +52,10 @@ module.exports = {
     return (req, res) => {
       let pageNum = req.query.pageNum
       let pageSize = req.query.pageSize
+      let type = req.query.articleType
       pageNum = Number(pageNum)
       pageSize = Number(pageSize)
-      // console.log(pageNum)
-      // if (pageNum === 'NaN' || pageSize === 'NaN') {
-      //   res.send({ code: 400, data: '请传入Number类型的数据' })
-      //   return
-      // }
-      ArticleModel.FindArticle(pageNum, pageSize, null, (err, docs, total) => {
+      ArticleModel.FindArticle(pageNum, pageSize, { articleType: type }, (err, docs, total) => {
         if (err) {
           res.send({ code: 400, data: '获取列表失败' })
           return
@@ -119,7 +107,30 @@ module.exports = {
             newTypeList.push({ type: typeList[i], Number: 1 })
           }
         }
+        let temp
+        // 根据数据的数量冒泡排序
+        for (let i = 0; i < newTypeList.length - 1; i++) {
+          for (let j = 0; j < newTypeList.length - 1 - i; j++) {
+            if (newTypeList[j].Number < newTypeList[j + 1].Number) {
+              temp = newTypeList[j]
+              newTypeList[j] = newTypeList[j + 1]
+              newTypeList[j + 1] = temp
+            }
+          }
+        }
         res.send({ code: 200, data: newTypeList })
+      })
+    }
+  },
+  SeeArticle () {
+    return (req, res) => {
+      let _id = req.body._id
+      ArticleModel.SeeArticle({ _id: _id }, (err) => {
+        if (err) {
+          res.send({ code: 400, data: '失败' })
+          return
+        }
+        res.send({ code: 200, data: '成功' })
       })
     }
   }
