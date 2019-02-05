@@ -67,7 +67,6 @@ module.exports = {
   OneFindArticle () {
     return (req, res) => {
       let data = req.query
-      console.log(data)
       let pageNum = data.pageNum
       let pageSize = data.pageSize
       ArticleModel.OneFindArticle(pageNum, pageSize, { _id: data._id }, (err, docs, total) => {

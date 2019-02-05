@@ -102,7 +102,7 @@ module.exports = {
           res.send({ code: 400, data: err })
           return
         }
-        let imgName = docs[0]._doc.userImg
+        let imgName = docs[0].userImg
         let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\userimg\\' + imgName
         fs.readFile(path, (err, data) => {
           if (err) {
