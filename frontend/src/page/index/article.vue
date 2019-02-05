@@ -111,6 +111,7 @@ export default {
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = ArticleList
+          window.screenTop(0, 0)
         })
     },
     SeeArticle (articleUUID) {

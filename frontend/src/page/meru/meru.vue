@@ -7,14 +7,14 @@
       <router-link to="/home/index" class="meru-router-a">
         <a>首页</a>
       </router-link>
-      <div class="meru-router-a">
+      <!-- <div class="meru-router-a">
         <a>关于逍遥</a>
-      </div>
+      </div> -->
       <router-link v-if="!loginStatus.username" to="/home/login" class="meru-router-a">
         <a>登入</a>
       </router-link>
       <div v-else class="meru-router-user">
-        <!-- <div class="meru-router-user-name">{{loginStatus.username}}</div> -->
+        <div class="meru-router-user-name">{{loginStatus.username}}</div>
         <router-link class="meru-router-user-addartilce" tag="div" to="/home/addarticle">发表文章</router-link>
       </div>
     </div>

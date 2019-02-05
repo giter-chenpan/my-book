@@ -3,7 +3,7 @@
     <div class="article-articleContent">
       <div class="article-articleContent-user">
         <div class="article-articleContent-user-img">
-          <img :src=" url + '/api/getimg?img=' + ArticleList.articleImg" />
+          <img :src=" url + '/api/getuserimg?userid=' + ArticleList.articleUser" />
         </div>
         <div class="article-articleContent-user-name">
           <div>{{ArticleList.articleUser}}</div>
@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+  body {
+    min-width: 1200px;
+  }
   .article {
     padding-top: 70px;
     width: 80%;

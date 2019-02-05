@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
   .index {
-    min-width: 570px;
+    min-width: 1200px;
   }
   .index-article {
     margin-top: 60px;
