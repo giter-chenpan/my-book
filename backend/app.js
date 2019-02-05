@@ -31,12 +31,13 @@ app.post('/api/updatepwd', UpdatePwd())
 app.post('/api/getuser', getUser())
 
 // 文章
-let { NewArticle, UpdateArticle, FindArticle, OneFindArticle, FindArticleType } = require('./api/article')
+let { NewArticle, UpdateArticle, FindArticle, OneFindArticle, FindArticleType, SeeArticle } = require('./api/article')
 app.post('/api/newarticle', NewArticle())
 app.post('/api/updatearticle', UpdateArticle())
 app.get('/api/findarticle', FindArticle())
 app.get('/api/findarticletype', FindArticleType())
 app.get('/api/onefindarticle', OneFindArticle())
+app.post('/api/seearticle', SeeArticle())
 
 // 评论
 let { NewCommnet } = require('./api/comment')

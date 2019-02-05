@@ -67,6 +67,7 @@ module.exports = {
   OneFindArticle () {
     return (req, res) => {
       let data = req.query
+      console.log(data)
       let pageNum = data.pageNum
       let pageSize = data.pageSize
       ArticleModel.OneFindArticle(pageNum, pageSize, { _id: data._id }, (err, docs, total) => {
@@ -119,6 +120,18 @@ module.exports = {
           }
         }
         res.send({ code: 200, data: newTypeList })
+      })
+    }
+  },
+  SeeArticle () {
+    return (req, res) => {
+      let _id = req.body._id
+      ArticleModel.SeeArticle({ _id: _id }, (err) => {
+        if (err) {
+          res.send({ code: 400, data: '失败' })
+          return
+        }
+        res.send({ code: 200, data: '成功' })
       })
     }
   }

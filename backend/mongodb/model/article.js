@@ -133,6 +133,12 @@ ArticleSchema.statics.UpdateArticle = function (data, makedata, callback) {
   })
 }
 
+ArticleSchema.statics.SeeArticle = function (data, callback) {
+  this.updateMany(data, { $inc: { articleSee: 1 } }, (err) => {
+    callback(err)
+  })
+}
+
 let ArticleModel = mongoose.model('Article', ArticleSchema, 'article')
 
 module.exports = ArticleModel
