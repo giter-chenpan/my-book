@@ -63,6 +63,7 @@
 
 import { getArticleListAPI, seeArticleAPI } from '@/api/article.js'
 import Pagination from '@/page/comment/pagination.vue'
+import { substractDate } from '@/utils/Date'
 
 export default {
   name: 'ArticleList',
@@ -103,6 +104,10 @@ export default {
           //   // console.log(JSON.parse(ArticleList[i].articleContent))
           //   // this.GetDescription(JSON.parse(ArticleList[i].articleContent))
           // }
+          for (let i = 0; i < ArticleList.length; i++) {
+            let d = new Date()
+            ArticleList[i].articleTime = substractDate(d, ArticleList[i].articleTime)
+          }
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = ArticleList
@@ -162,7 +167,7 @@ export default {
     position: relative;
   }
   .label {
-    width: 40px;
+    width: 60px;
     height: 20px;
     padding: .2em .6em .3em;
     font-size: 75%;
