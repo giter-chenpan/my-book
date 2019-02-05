@@ -1,0 +1,1345 @@
+
+        <html xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta http-equiv=Content-Type content="text/html;  
+        charset=utf-8">
+        <style type="text/css">
+            table  
+            {  
+                border-collapse: collapse;
+                border: none;  
+                width: 100%;  
+            }  
+            td  
+            {  
+                border: solid #CCC 1px;  
+            }  
+            .codestyle{
+                word-break: break-all;
+                background:silver;mso-highlight:silver;
+            }
+        </style>
+        <meta name=ProgId content=Word.Document>
+        <meta name=Generator content="Microsoft Word 11">
+        <meta name=Originator content="Microsoft Word 11">
+        <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+        <body><h1>1、前台</h1><div style="margin-left:20px;"><h2>1.1、工具</h2><div style="margin-left:20px;"><h3>1.1.1、上传用户头像</h3><div style="margin-left:30px;"><p>欢迎使用ShowDoc！</p>
+<p><strong>简要描述：</strong> </p>
+<ul>
+<li>头像上传接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/loaduserimg</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">file</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">file</td>
+<td>文件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    code: 200，
+    data: 'adasjkldjkashdkjashdas'
+}</code></pre></table>
+<h4></h4></div><h3>1.1.2、获取用户头像</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>用户注册接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/getuserimg</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">userid</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>用户名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>图片</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.1.3、发送邮件</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>发送邮件接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/toemail</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>登录返回的token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": "邮件发送成功，请前往邮箱激活"
+}</code></pre></table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.1.4、激活邮件接口</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>用户注册接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/ifemail?email=286c545e8297822a468e8f8032f93a5b</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>登入返回的token值</td>
+</tr>
+</tbody>
+</table>
+<p>邮件一个月后未激活失效</p>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": "激活邮件成功"
+}</code></pre></table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.1.5、获取图片</h3><div style="margin-left:30px;"><p>欢迎使用ShowDoc！</p>
+<p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取图片</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/getimg</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">img</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>图片名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    图片
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p></div><h3>1.1.6、上传图片</h3><div style="margin-left:30px;"><p>欢迎使用ShowDoc！</p>
+<p><strong>简要描述：</strong> </p>
+<ul>
+<li>图片上传接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/loadimg</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">file</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">file</td>
+<td>文件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    code: 200，
+    data: 'adasjkldjkashdkjashdas'
+}</code></pre></table>
+<h4></h4></div></div><h2>1.2、用户</h2><div style="margin-left:20px;"><h3>1.2.1、用户注册</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>用户注册接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/newuser</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">userid</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">userpwd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">userEmail</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 400,
+    "data": "该id已被使用"
+}
+{
+    "code": 400,
+    "data": "该用户名已被使用"
+}
+{
+    "code": 200,
+    "data": "注册成功"
+}</code></pre></table>
+<p>欢迎使用ShowDoc！</p></div><h3>1.2.2、修改密码</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改密码</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/updatepwd</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">updatepwd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>要修改的密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>用户登入所返回的验证信息</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": "恭喜您！修改密码成功"
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.2.3、用户登出</h3><div style="margin-left:30px;"><p>登出清除tiancai9 token</p></div><h3>1.2.4、用户登录</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>用户登录</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/loginuser</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">userid</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td style="text-align: left;">userpwd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2ciOiJ7XCJ1c2VyaWRcIjpcImFkbWluXCIsXCJ1c2VycHdkXCI6XCIxMjM0NTZcIn0iLCJpYXQiOjE1NDU1Nzk2NDksImV4cCI6MTYwNzc4NzY0OX0.yNs7zDaROeYwbIldB8aFjSG3esILqewvWsh3YMQDa6s"
+} // 返回的token值</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">400</td>
+<td style="text-align: left;">int</td>
+<td>登录失败</td>
+</tr>
+<tr>
+<td style="text-align: left;">401</td>
+<td style="text-align: left;">int</td>
+<td>登录成功，邮箱未激活，让他跳转去激活</td>
+</tr>
+<tr>
+<td style="text-align: left;">200</td>
+<td style="text-align: left;">int</td>
+<td>登录成功且邮箱已激活</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.2.5、获取用户信息</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取用户信息</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/getuser</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>登入返回的token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    code: 200,
+    data: {
+        userEmail: 'data.userEmail', // 邮箱号
+        userid: 'data.userid', // 用户id
+        username: 'data.username', // 昵称
+        userRoot: 'data.userRoot', // 权限
+        userImg: 'data.userImg',// 头像
+        userCollect: 'data.userCollect',// 收藏
+        userFensi: 'data.userFensi',// 粉丝
+        userGuanZhu: 'data.userGuanZhu', // 关注
+        userStatus: 'data.userStatus',// 邮箱是否激活的状态
+        userTongZhi: 'data.userTongZhi',// 通知消息
+        userHistory: []// 历史记录
+    }
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div></div><h2>1.3、回复</h2><div style="margin-left:20px;"><h3>1.3.1、新增回复</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>用户注册接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://127.0.0.1:3001/api/newreply</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">replyPid</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>评论的uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyContent</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>回复内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyUserTo</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>回复的用户uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": "恭喜您！回复成功"
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div></div><h2>1.4、评论</h2><div style="margin-left:20px;"><h3>1.4.1、新增评论</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>新增评论</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/newcontent</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">_id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>文章的uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentContent</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>评论的内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "code": 200,
+    "data": "恭喜您！评论成功"
+}</code></pre></table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div></div><h2>1.5、文章</h2><div style="margin-left:20px;"><h3>1.5.1、修改文章</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改文章</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/updatearticle</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">articleUid</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleTitle</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>标题</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleContent</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleType</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>分类</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleImg</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>封面图</td>
+</tr>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": "恭喜您！修改文章成功"
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.5.2、创建文章</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>创建文章</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/newarticle</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">articleTitle</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>标题</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleContent</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleType</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>分类 1.前端 2.后端 3.杂谈</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleImg</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>图片接口返回的图片名</td>
+</tr>
+<tr>
+<td style="text-align: left;">tiancai9</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">token</td>
+<td>用户登入返回的token</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code> {
+    "code": 200,
+    "data": "创建文章成功"
+}</code></pre></table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.5.3、获取文章列表</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取文章列表接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/findarticle</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">pageNum</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">number</td>
+<td>不传默认1</td>
+</tr>
+<tr>
+<td style="text-align: left;">pageSize</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">number</td>
+<td>不传默认10</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleType</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>分类</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleUser</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>作者</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": [
+        {
+            "articleUid": "8266a271-f4b9-445d-96c4-8b26ee9cae3c", // 文章的唯一UID
+            "articleSee": 0, // 浏览数
+            "articleCollect": 0, // 收藏量
+            "articleThumbs": 0, // 点赞数
+            "articleTime": "2018-12-24T13:51:41.866Z", // 创建时间
+            "articleTitle": "标题", // 标题
+            "articleContent": "内容",
+            "articleType": "分类",
+            "articleImg": "status.jpg", // 根据图片接口获取图片
+            "articleUser": "admin" // 作者
+        },
+        {
+            "articleUid": "8266a271-f4b9-445d-96c4-8b26ee9cae3c",
+            "articleSee": 0,
+            "articleCollect": 0,
+            "articleThumbs": 0,
+            "articleTime": "2018-12-24T13:51:41.866Z",
+            "articleTitle": "标题",
+            "articleContent": "内容",
+            "articleType": "分类",
+            "articleImg": "status.jpg",
+            "articleUser": "admin"
+        }
+    ],
+    "total": {
+        "count": 2
+    }
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.5.4、获取文章</h3><div style="margin-left:30px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取文章接口</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/onefindarticle</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">_id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>文章列表返回的uuid</td>
+</tr>
+<tr>
+<td style="text-align: left;">pageNum</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">number</td>
+<td>页码： 默认 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">pageSize</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">number</td>
+<td>页数： 默认10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code": 200,
+    "data": [
+        {
+            "articleSee": 0, // 浏览数
+            "articleCollect": 0, // 收藏数
+            "articleThumbs": 0, // 点赞数
+            "articleTime": "2019-01-05T15:43:48.690Z", // 创建时间
+            "_id": "5c30d14ea2324f1118149020", // uuid
+            "articleTitle": "标题", // 标题
+            "articleContent": "内容1", // 内容
+            "articleType": "分类", // 分类
+            "articleImg": "status.jpg", // 封面图
+            "articleUser": "admin", // 作者
+            "__v": 0,
+            "comment": [
+                {
+                    "commentThumbs": 0, // 点赞数
+                    "commentTime": "2019-01-05T15:43:48.699Z", // 创建时间
+                    "_id": "5c30d198a2324f1118149026", // 评论uuid
+                    "commentUser": "admin", // 评论者
+                    "commentPid": "5c30d14ea2324f1118149020", // 依赖文章uuid
+                    "commentContent": "评论4", // 评论内容
+                    "commentFloor": 4, // 楼层
+                    "reply": []
+                },
+                {
+                    "commentThumbs": 0,
+                    "commentTime": "2019-01-05T15:43:48.699Z",
+                    "_id": "5c30d18fa2324f1118149025",
+                    "commentUser": "admin",
+                    "commentPid": "5c30d14ea2324f1118149020",
+                    "commentContent": "评论3",
+                    "commentFloor": 3,
+                    "reply": []
+                },
+                {
+                    "commentThumbs": 0,
+                    "commentTime": "2019-01-05T15:43:48.699Z",
+                    "_id": "5c30d18ca2324f1118149024",
+                    "commentUser": "admin",
+                    "commentPid": "5c30d14ea2324f1118149020",
+                    "commentContent": "评论2",
+                    "commentFloor": 2,
+                    "reply": []
+                },
+                {
+                    "commentThumbs": 0,
+                    "commentTime": "2019-01-05T15:43:48.699Z",
+                    "_id": "5c30d187a2324f1118149023",
+                    "commentUser": "admin",
+                    "commentPid": "5c30d14ea2324f1118149020",
+                    "commentContent": "评论1",
+                    "commentFloor": 1,
+                    "reply": [
+                        {
+                            "replyTime": "Sat Jan 05 2019 23:43:48 GMT+0800 (GMT+08:00)", // 回复创建时间
+                            "_id": "5c30d1afa2324f1118149027", // 回复uuid
+                            "replyPid": "5c30d187a2324f1118149023", // 评论uid
+                            "replyContent": "回复1", // 回复内容
+                            "replyUserTo": "admin", // 回复者
+                            "replyUser": "admin", // 创建回复的作者
+                            "__v": 0
+                        },
+                        {
+                            "replyTime": "Sat Jan 05 2019 23:43:48 GMT+0800 (GMT+08:00)",
+                            "_id": "5c30d1b7a2324f1118149028",
+                            "replyPid": "5c30d187a2324f1118149023",
+                            "replyContent": "回复2",
+                            "replyUserTo": "admin",
+                            "replyUser": "admin",
+                            "__v": 0
+                        },
+                        {
+                            "replyTime": "Sat Jan 05 2019 23:43:48 GMT+0800 (GMT+08:00)",
+                            "_id": "5c30d1bba2324f1118149029",
+                            "replyPid": "5c30d187a2324f1118149023",
+                            "replyContent": "回复3",
+                            "replyUserTo": "admin",
+                            "replyUser": "admin",
+                            "__v": 0
+                        },
+                        {
+                            "replyTime": "Sat Jan 05 2019 23:43:48 GMT+0800 (GMT+08:00)",
+                            "_id": "5c30d1c0a2324f111814902a",
+                            "replyPid": "5c30d187a2324f1118149023",
+                            "replyContent": "回复4",
+                            "replyUserTo": "admin",
+                            "replyUser": "admin",
+                            "__v": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "total": {
+        "count": 4,
+        "pageNum": 1
+    }
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">groupid</td>
+<td style="text-align: left;">int</td>
+<td>用户组id，1：超级管理员；2：普通用户</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h3>1.5.5、获取文章分类数组</h3><div style="margin-left:30px;"><p>欢迎使用ShowDoc！</p>
+<p><strong>简要描述：</strong> </p>
+<ul>
+<li>获取文章分类数组</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>/api/findarticletype</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>get </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    "code":200,
+    "data":
+    [
+        {"type":"分类","Number":3},
+        {"type":"JavaScript","Number":5},
+        {"type":"vue","Number":4},{"type":"react","Number":4}
+    ]
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">string</td>
+<td>分类的名字</td>
+</tr>
+<tr>
+<td style="text-align: left;">Number</td>
+<td style="text-align: left;">Number</td>
+<td>属于该名字的分类有多少个</td>
+</tr>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul></div></div></div><h1>2、数据库字段设计</h1><div style="margin-left:20px;"><h2>2.1、用户表</h2><div style="margin-left:20px;"><ul>
+<li>用户表，储存用户信息</li>
+</ul>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">userid</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">用户名</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">昵称</td>
+</tr>
+<tr>
+<td style="text-align: left;">userpwd</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">userImg</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">用户头像</td>
+</tr>
+<tr>
+<td style="text-align: left;">userEmail</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">邮箱</td>
+</tr>
+<tr>
+<td style="text-align: left;">userFensi</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">粉丝</td>
+</tr>
+<tr>
+<td style="text-align: left;">userGuanZhu</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">关注</td>
+</tr>
+<tr>
+<td style="text-align: left;">userCollect</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">收藏的文章</td>
+</tr>
+<tr>
+<td style="text-align: left;">userHistory</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">浏览历史记录（存三十条）</td>
+</tr>
+<tr>
+<td style="text-align: left;">userQQ</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">QQ</td>
+</tr>
+<tr>
+<td style="text-align: left;">userTongZhi</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">通知</td>
+</tr>
+<tr>
+<td style="text-align: left;">userRoot</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">1.会员 2.管理员</td>
+</tr>
+<tr>
+<td style="text-align: left;">userStatus</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">0.邮箱未激活 1.邮箱已激活</td>
+</tr>
+<tr>
+<td style="text-align: left;">userTime</td>
+<td style="text-align: left;">varchar(10)</td>
+<td style="text-align: left;">用户注册时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>备注：无</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>2.2、文章表</h2><div style="margin-left:20px;"><ul>
+<li>文章表，储存文章信息</li>
+</ul>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">articleUid</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">唯一Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleTitle</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">标题</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleContent</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleType</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">分类</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleImg</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">封面图</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleUser</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">作者Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleSee</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">浏览量</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleCollect</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">收藏量</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleThumbs</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">点赞数</td>
+</tr>
+<tr>
+<td style="text-align: left;">articleTime</td>
+<td style="text-align: left;">varchar(20)</td>
+<td style="text-align: left;">创建时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>备注：无</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>2.3、评论表</h2><div style="margin-left:20px;"><ul>
+<li>评论表，储存评论信息</li>
+</ul>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">commentUid</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">唯一uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentPid</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">父辈文章的uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentContent</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentUser</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">作者Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentFloor</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">楼层</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentThumbs</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">点赞数</td>
+</tr>
+<tr>
+<td style="text-align: left;">commentTime</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">创建时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>备注：无</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>2.4、回复表</h2><div style="margin-left:20px;"><ul>
+<li>回复表，储存评论表中的回复信息</li>
+</ul>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">replyUid</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">唯一uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyPid</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">父辈的评论表的Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyContent</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyUser</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">作者唯一Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyUserTo</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">回复用户唯一Uid</td>
+</tr>
+<tr>
+<td style="text-align: left;">replyTime</td>
+<td style="text-align: left;">int(10)</td>
+<td style="text-align: left;">创建时间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>备注：无</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div></div><h1>3、后台</h1><div style="margin-left:20px;"></div></body></html>
