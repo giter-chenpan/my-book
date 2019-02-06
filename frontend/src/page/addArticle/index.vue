@@ -31,6 +31,7 @@ export default {
   data () {
     return {
       disabled: false,
+      editor: null,
       ArticleList: {
         articleTitle: '',
         articleContent: '',
@@ -62,6 +63,7 @@ export default {
           }
           this.ArticleList['articleImg'] = res.data.data
           let ArticleList = this.ArticleList
+          ArticleList.articleContent = JSON.stringify(this.editor.txt.getJSON())
           loadArticleAPI(ArticleList)
             .then((res) => {
               if (res.data.code !== 200) {
@@ -69,6 +71,7 @@ export default {
                 this.disabled = false
                 return
               }
+              this.editor.txt.clear()
               alert(res.data.data)
               this.$router.push({ path: '/home/index' })
             }).catch(() => {
@@ -83,9 +86,6 @@ export default {
   mounted () {
     let editor = new E(this.$refs.editorElem)
     editor.customConfig.zIndex = 1
-    editor.customConfig.onchange = (html) => {
-      this.ArticleList.articleContent = html
-    }
     editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
     editor.customConfig.menus = [
       'bold',
@@ -97,6 +97,7 @@ export default {
       'undo'
     ]
     editor.create()
+    this.editor = editor
   }
 }
 </script>

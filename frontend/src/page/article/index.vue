@@ -45,6 +45,7 @@ export default {
     return {
       url: process.env.BASE_API,
       ArticleList: {},
+      descriptionString: '',
       DianZan: require('@/assets/acticleIMG/dianzan.png'),
       ShouCang: require('@/assets/acticleIMG/shoucang.png')
     }
@@ -63,24 +64,58 @@ export default {
   methods: {
     getArticle () {
       let ArticleUUID = this.$route.params.id
+      this.descriptionString = ''
       getArticleAPI(ArticleUUID)
         .then((res) => {
           let data = res.data
+          let ArticleList = data.data
           if (data.code !== 200) {
             this.$router.push({ path: '/err', params: data.data })
             return
           }
-          let d = new Date(data.data.articleTime)
-          data.data.articleTime = d.toLocaleString()
-          if (data.data.comment) {
-            let commentList = data.data.comment
+          let d = new Date(ArticleList.articleTime)
+          ArticleList.articleTime = d.toLocaleString()
+          if (ArticleList.comment) {
+            let commentList = ArticleList.comment
             for (let i = 0; i < commentList.length; i++) {
+              // 对评论的时间进行处理
               commentList[i].commentTime = new Date(commentList[i].commentTime).toLocaleString()
             }
-            data.data.comment = commentList
+            ArticleList.comment = commentList
           }
-          this.ArticleList = data.data
+          // 对传过来的富文本数据进行处理
+          let contentObj = JSON.parse(ArticleList.articleContent)
+          this.GetDescription(contentObj)
+          ArticleList.articleContent = this.descriptionString
+          this.descriptionString = ''
+          for (let i = 0; i < ArticleList.comment.length; i++) {
+            this.GetDescription(JSON.parse(ArticleList.comment[i].commentContent))
+            ArticleList.comment[i].commentContent = this.descriptionString
+            this.descriptionString = ''
+          }
+          this.ArticleList = ArticleList
         })
+    },
+    GetDescription (obj) {
+      for (var i = 0; i < obj.length; i++) {
+        var tag = obj[i].tag
+        if (tag) {
+          if (obj[i].attrs.length !== 0) {
+            if (tag === 'img') {
+              this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '=" ' + process.env.BASE_API + '/api/getarticleimg?img=' + obj[i].attrs[0].value + '" >'
+            } else {
+              this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
+            }
+            this.GetDescription(obj[i].children)
+          } else {
+            this.descriptionString += '<' + tag + '>'
+            this.GetDescription(obj[i].children)
+          }
+          this.descriptionString += '</' + tag + '>'
+        } else {
+          this.descriptionString += obj[0]
+        }
+      }
     }
   }
 }

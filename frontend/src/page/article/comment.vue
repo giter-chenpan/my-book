@@ -43,9 +43,11 @@ export default {
   name: 'Comment',
   data () {
     return {
+      editor: null,
       url: process.env.BASE_API,
       DianZan: require('@/assets/acticleIMG/dianzan.png'),
       disabled: false,
+      commentContent: '', // 用于检测是否评论是否少于6个字的
       CommentList: {
         _id: this.ArticleUUID,
         commentContent: ''
@@ -60,7 +62,7 @@ export default {
     let editor = new E(this.$refs.editorElem)
     editor.customConfig.zIndex = 1
     editor.customConfig.onchange = (html) => {
-      this.CommentList.commentContent = html
+      this.commentContent = html
     }
     editor.customConfig.uploadImgShowBase64 = true // 使用 base64 保存图片
     editor.customConfig.menus = [
@@ -73,15 +75,18 @@ export default {
       'undo'
     ]
     editor.create()
+    this.editor = editor
   },
   methods: {
     commentClick () {
-      if (this.CommentList.commentContent.length < 6) {
-        alert('评论不能少于6个字符')
-        return
-      }
       this.disabled = true
       let commnetList = this.CommentList
+      commnetList.commentContent = this.editor.txt.getJSON()
+      if (this.commentContent.length < 6) {
+        alert('评论不能少于6个字符')
+        this.disabled = false
+        return
+      }
       addCommentAPI(commnetList)
         .then((res) => {
           this.disabled = false
@@ -90,6 +95,7 @@ export default {
             alert(data.data)
             return
           }
+          this.editor.txt.clear()
           window.scrollTo(0, 0)
           alert(data.data)
           this.$emit('getArticle')

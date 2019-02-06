@@ -100,19 +100,37 @@ export default {
             return
           }
           let ArticleList = data.data
-          // for (let i = 0; i < ArticleList.length; i++) {
-          //   // console.log(JSON.parse(ArticleList[i].articleContent))
-          //   // this.GetDescription(JSON.parse(ArticleList[i].articleContent))
-          // }
           for (let i = 0; i < ArticleList.length; i++) {
             let d = new Date()
             ArticleList[i].articleTime = substractDate(d, ArticleList[i].articleTime)
+            // 对传入的富文本数据进行处理
+            this.GetDescription(JSON.parse(ArticleList[i].articleContent))
+            ArticleList[i].articleContent = this.descriptionString
           }
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = ArticleList
           window.screenTop(0, 0)
         })
+    },
+    GetDescription (obj) {
+      for (let i = 0; i < obj.length; i++) {
+        let tag = obj[i].tag
+        if (tag) {
+          if (obj[i].attrs.length !== 0) {
+            if (tag === 'img') {
+              this.descriptionString += '图片'
+            } else {
+              this.descriptionString += obj[i].attrs[0].name + '="' + obj[i].attrs[0].value
+            }
+            this.GetDescription(obj[i].children)
+          } else {
+            this.GetDescription(obj[i].children)
+          }
+        } else {
+          this.descriptionString += obj[0]
+        }
+      }
     },
     SeeArticle (articleUUID) {
       seeArticleAPI({ _id: articleUUID })
@@ -122,24 +140,6 @@ export default {
     ToArticle (articleUUID) {
       this.$router.push({ path: `/home/article/${articleUUID}` })
     }
-    // GetDescription (obj) {
-    //   this.descriptionString = ''
-    //   for (var i = 0; i < obj.length; i++) {
-    //     var tag = obj[i].tag
-    //     if (tag) {
-    //       if (obj[i].attrs.length !== 0) {
-    //         this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
-    //         this.GetDescription(obj[i].children)
-    //       } else {
-    //         this.descriptionString += '<' + tag + '>'
-    //         this.GetDescription(obj[i].children)
-    //       }
-    //       this.descriptionString += '</' + tag + '>'
-    //     } else {
-    //       this.descriptionString += obj[0]
-    //     }
-    //   }
-    // }
   },
   watch: {
     TypeValue: function (val) {
