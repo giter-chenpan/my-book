@@ -147,24 +147,18 @@ module.exports = {
       return obj
     }
     json = GetDescription(json)
-    return json
+    return JSON.stringify(json)
   },
   GetArticleImg () {
     return (req, res) => {
-      userModel.FindUser({ userid: req.query.userid }, (err, docs) => {
+      let imgName = req.query.img
+      let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\article\\' + imgName
+      fs.readFile(path, (err, data) => {
         if (err) {
           res.send({ code: 400, data: err })
           return
         }
-        let imgName = docs[0].userImg
-        let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\article\\' + imgName
-        fs.readFile(path, (err, data) => {
-          if (err) {
-            res.send({ code: 400, data: err })
-            return
-          }
-          res.send(data)
-        })
+        res.send(data)
       })
     }
   }
