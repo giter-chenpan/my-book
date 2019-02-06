@@ -113,5 +113,59 @@ module.exports = {
         })
       })
     }
+  },
+  /**
+   * @param {富文本传入的json字符串} JsonString
+   */
+  addArticleImgOPEN (JsonString) {
+    let json = JSON.parse(JsonString)
+    function GetDescription (obj) {
+      for (var i = 0; i < obj.length; i++) {
+        var tag = obj[i].tag
+        if (tag) {
+          if (tag === 'img') {
+            let attrs = obj[i].attrs
+            for (let i = 0; i < attrs.length; i++) {
+              if (attrs[i].name === 'src') {
+                let imgText = attrs[i].value
+                let jpgName = uuidv1()
+                let pathName = './img/article/' + jpgName + '.png' // 从app.js级开始找--在我的项目工程里是这样的
+                let base64 = imgText.replace(/^data:image\/\w+;base64,/, '') // 去掉图片base64码前面部分data:image/png;base64
+                let dataBuffer = Buffer.from(base64, 'base64') // 把base64码转成buffer对象，
+                fs.writeFileSync(pathName, dataBuffer)
+                attrs[i].value = jpgName + '.png'
+              }
+            }
+          }
+          if (obj[i].attrs.length !== 0) {
+            GetDescription(obj[i].children)
+          } else {
+            GetDescription(obj[i].children)
+          }
+        }
+      }
+      return obj
+    }
+    json = GetDescription(json)
+    return json
+  },
+  GetArticleImg () {
+    return (req, res) => {
+      userModel.FindUser({ userid: req.query.userid }, (err, docs) => {
+        if (err) {
+          res.send({ code: 400, data: err })
+          return
+        }
+        let imgName = docs[0].userImg
+        let path = __dirname.substring(0, __dirname.indexOf('utile')) + 'img\\article\\' + imgName
+        fs.readFile(path, (err, data) => {
+          if (err) {
+            res.send({ code: 400, data: err })
+            return
+          }
+          res.send(data)
+        })
+      })
+    }
   }
 }

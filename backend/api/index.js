@@ -15,7 +15,8 @@ module.exports = () => {
       '/api/loadimg',
       '/api/loaduserimg',
       '/api/getuserimg',
-      '/api/seearticle'
+      '/api/seearticle',
+      '/api/getarticleimg'
     ]
     let url = req.originalUrl
     if (url.indexOf('?') !== -1) {
