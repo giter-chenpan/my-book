@@ -72,6 +72,8 @@ module.exports = {
       let data = req.query
       let pageNum = data.pageNum
       let pageSize = data.pageSize
+      pageNum = Number(pageNum)
+      pageSize = Number(pageSize)
       ArticleModel.OneFindArticle(pageNum, pageSize, { _id: data._id }, (err, docs, total) => {
         if (err || docs.length === 0 || typeof docs === 'string') {
           res.send({ code: 400, data: docs, total: total })
