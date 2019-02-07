@@ -64,6 +64,7 @@
 import { getArticleListAPI, seeArticleAPI } from '@/api/article.js'
 import Pagination from '@/page/comment/pagination.vue'
 import { substractDate } from '@/utils/Date'
+import { getUserNameAPI } from '@/api/user.js'
 
 export default {
   name: 'ArticleList',
@@ -110,6 +111,12 @@ export default {
           this.total = data.total.count
           this.current = data.total.pageNum
           this.ArticleList = ArticleList
+          for (let i = 0; i < ArticleList.length; i++) {
+            getUserNameAPI(ArticleList[i].articleUser)
+              .then((res) => {
+                this.ArticleList[i].articleUser = res.data.data
+              })
+          }
           window.screenTop(0, 0)
         })
     },

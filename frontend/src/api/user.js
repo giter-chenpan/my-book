@@ -24,3 +24,13 @@ export function getUserAPI () {
     url: '/api/getuser'
   })
 }
+
+export function getUserNameAPI (userid) {
+  return service({
+    method: 'get',
+    url: '/api/getusername',
+    params: {
+      userid: userid
+    }
+  })
+}

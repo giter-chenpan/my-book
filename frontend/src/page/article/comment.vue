@@ -7,7 +7,7 @@
       <div v-for="item in Comment" :key="item.index" class="comment-item">
         <div class="comment-user">
           <div class="comment-user-img">
-            <img :src="url + '/api/getuserimg?userid=' + item.commentUser" />
+            <img :src="url + '/api/getuserimg?username=' + item.commentUser" />
           </div>
           <div class="comment-user-name">
             <div>{{item.commentUser}}</div>
@@ -57,6 +57,12 @@ export default {
   props: {
     Comment: Array,
     ArticleUUID: String
+  },
+  computed: {
+    CommentUserToname: function () {
+      console.log(this.Comment)
+      return this.Comment
+    }
   },
   mounted () {
     let editor = new E(this.$refs.editorElem)

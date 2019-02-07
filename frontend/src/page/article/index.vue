@@ -3,7 +3,7 @@
     <div class="article-articleContent">
       <div class="article-articleContent-user">
         <div class="article-articleContent-user-img">
-          <img :src=" url + '/api/getuserimg?userid=' + ArticleList.articleUser" />
+          <img :src=" url + '/api/getuserimg?username=' + ArticleList.articleUser" />
         </div>
         <div class="article-articleContent-user-name">
           <div>{{ArticleList.articleUser}}</div>
@@ -36,6 +36,7 @@
 
 <script>
 
+import { getUserNameAPI } from '@/api/user.js'
 import { getArticleAPI } from '@/api/article.js'
 import Comment from './comment'
 
@@ -75,7 +76,7 @@ export default {
           }
           let d = new Date(ArticleList.articleTime)
           ArticleList.articleTime = d.toLocaleString()
-          if (ArticleList.comment) {
+          if (ArticleList.comment.length !== 0) {
             let commentList = ArticleList.comment
             for (let i = 0; i < commentList.length; i++) {
               // 对评论的时间进行处理
@@ -94,6 +95,18 @@ export default {
             this.descriptionString = ''
           }
           this.ArticleList = ArticleList
+          getUserNameAPI(ArticleList.articleUser)
+            .then((res) => {
+              this.ArticleList.articleUser = res.data.data
+            })
+          if (ArticleList.comment.length !== 0) {
+            for (let i = 0; i < ArticleList.comment.length; i++) {
+              getUserNameAPI(this.ArticleList.comment[i].commentUser)
+                .then((res) => {
+                  this.ArticleList.comment[i].commentUser = res.data.data
+                })
+            }
+          }
         })
     },
     GetDescription (obj) {
