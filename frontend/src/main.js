@@ -4,9 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
+import Highlight from './utils/highlight'
 import './permission'
 import './assets/reset/reset.css'
-
+Vue.use(Highlight)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

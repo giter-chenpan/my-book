@@ -20,12 +20,14 @@ export function getArticleTypeListAPI () {
   })
 }
 
-export function getArticleAPI (ArticleUUID) {
+export function getArticleAPI (ArticleUUID, pageNum, pageSize) {
   return service({
     method: 'get',
     url: '/api/onefindarticle',
     params: {
-      _id: ArticleUUID
+      _id: ArticleUUID,
+      pageNum: pageNum || 1,
+      pageSize: pageSize || 10
     }
   })
 }

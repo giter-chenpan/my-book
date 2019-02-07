@@ -18,7 +18,7 @@
           <div class="article-articleContent-ifon-user">{{ArticleList.articleUser}}</div>
           <div class="article-articleContent-ifon-see">阅读数： {{ArticleList.articleSee}}</div>
         </div>
-        <div class="article-articleContent-docs" v-html="ArticleList.articleContent">
+        <div class="article-articleContent-docs" v-highlight v-html="ArticleList.articleContent">
         </div>
         <div align=center class="article-articleContent-operation">
           <div>
@@ -30,7 +30,13 @@
         </div>
       </div>
     </div>
-    <Comment v-on:getArticle="getArticle" :Comment="ArticleList.comment" :ArticleUUID="$route.params.id" />
+    <Comment
+      v-on:getArticle="getArticle"
+      :Comment="ArticleList.comment"
+      :ArticleUUID="$route.params.id"
+      :total="total"
+      :current="current"
+    />
   </div>
 </template>
 
@@ -44,6 +50,8 @@ export default {
   name: 'Index',
   data () {
     return {
+      current: 1,
+      total: 1,
       url: process.env.BASE_API,
       ArticleList: {},
       descriptionString: '',
@@ -56,17 +64,16 @@ export default {
   },
   watch: {
     $route (to, from) {
-      // console.log(to)
     }
   },
   mounted () {
     this.getArticle()
   },
   methods: {
-    getArticle () {
+    getArticle (pageNum, pageSize) {
       let ArticleUUID = this.$route.params.id
       this.descriptionString = ''
-      getArticleAPI(ArticleUUID)
+      getArticleAPI(ArticleUUID, pageNum, pageSize)
         .then((res) => {
           let data = res.data
           let ArticleList = data.data
@@ -76,30 +83,32 @@ export default {
           }
           let d = new Date(ArticleList.articleTime)
           ArticleList.articleTime = d.toLocaleString()
-          if (ArticleList.comment.length !== 0) {
+          if (ArticleList.comment) {
+            this.total = data.total.count
+            this.current = data.total.pageNum
             let commentList = ArticleList.comment
             for (let i = 0; i < commentList.length; i++) {
               // 对评论的时间进行处理
               commentList[i].commentTime = new Date(commentList[i].commentTime).toLocaleString()
             }
             ArticleList.comment = commentList
+            for (let i = 0; i < ArticleList.comment.length; i++) {
+              this.GetDescription(JSON.parse(ArticleList.comment[i].commentContent))
+              ArticleList.comment[i].commentContent = this.descriptionString
+              this.descriptionString = ''
+            }
           }
           // 对传过来的富文本数据进行处理
           let contentObj = JSON.parse(ArticleList.articleContent)
           this.GetDescription(contentObj)
           ArticleList.articleContent = this.descriptionString
           this.descriptionString = ''
-          for (let i = 0; i < ArticleList.comment.length; i++) {
-            this.GetDescription(JSON.parse(ArticleList.comment[i].commentContent))
-            ArticleList.comment[i].commentContent = this.descriptionString
-            this.descriptionString = ''
-          }
           this.ArticleList = ArticleList
           getUserNameAPI(ArticleList.articleUser)
             .then((res) => {
               this.ArticleList.articleUser = res.data.data
             })
-          if (ArticleList.comment.length !== 0) {
+          if (ArticleList.comment) {
             for (let i = 0; i < ArticleList.comment.length; i++) {
               getUserNameAPI(this.ArticleList.comment[i].commentUser)
                 .then((res) => {
@@ -107,6 +116,7 @@ export default {
                 })
             }
           }
+          document.documentElement.scrollTop = document.body.scrollTop = 0
         })
     },
     GetDescription (obj) {

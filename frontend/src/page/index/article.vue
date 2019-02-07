@@ -117,7 +117,7 @@ export default {
                 this.ArticleList[i].articleUser = res.data.data
               })
           }
-          window.screenTop(0, 0)
+          document.documentElement.scrollTop = document.body.scrollTop = 0
         })
     },
     GetDescription (obj) {

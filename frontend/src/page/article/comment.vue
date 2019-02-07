@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="comment-index">
-          <div v-html="item.commentContent" class="comment-index-docs">
+          <div v-html="item.commentContent" v-highlight class="comment-index-docs">
           </div>
           <div class="comment-index-info">
             <div>{{item.commentFloor}}楼</div>
@@ -27,6 +27,15 @@
         </div>
       </div>
     </div>
+    <div class="CommentList-pagination">
+      <pagination
+        v-show="Comment"
+        :total="total"
+        :current-page='current'
+        @pagechange="PageClick"
+      >
+      </pagination>
+    </div>
     <div class="comment-editor" ref="editorElem"></div>
     <div class="comment-button">
       <button :disabled="disabled" @click="commentClick" type="text">点我回复呢。。</button>
@@ -37,6 +46,7 @@
 <script>
 
 import E from 'wangeditor'
+import Pagination from '@/page/comment/pagination.vue'
 import { addCommentAPI } from '@/api/comment'
 
 export default {
@@ -51,16 +61,21 @@ export default {
       CommentList: {
         _id: this.ArticleUUID,
         commentContent: ''
-      }
+      },
+      display: 10 // 每页显示条数
     }
+  },
+  components: {
+    Pagination
   },
   props: {
     Comment: Array,
-    ArticleUUID: String
+    ArticleUUID: String,
+    total: Number, // 记录总条数
+    current: Number // 当前的页数
   },
   computed: {
     CommentUserToname: function () {
-      console.log(this.Comment)
       return this.Comment
     }
   },
@@ -84,10 +99,14 @@ export default {
     this.editor = editor
   },
   methods: {
+    PageClick (pageNum, pageSize) {
+      this.$emit('getArticle', pageNum, pageSize)
+    },
     commentClick () {
       this.disabled = true
       let commnetList = this.CommentList
       commnetList.commentContent = this.editor.txt.getJSON()
+      console.log(this.commentContent)
       if (this.commentContent.length < 6) {
         alert('评论不能少于6个字符')
         this.disabled = false
@@ -102,6 +121,7 @@ export default {
             return
           }
           this.editor.txt.clear()
+          this.commentContent = ''
           window.scrollTo(0, 0)
           alert(data.data)
           this.$emit('getArticle')
@@ -214,5 +234,12 @@ export default {
   }
   .article-articleContent-operation {
     padding-bottom: 20px;
+  }
+  .CommentList-pagination {
+    height: 60px;
+    margin-top: 40px;
+  }
+  .hljs {
+    background-color: #eeeeee;
   }
 </style>
