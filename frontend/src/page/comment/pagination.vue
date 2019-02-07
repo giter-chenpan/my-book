@@ -110,5 +110,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.pagination * {
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 2px 5px;
+  color: #666;
+  font-weight: bold;
+  float: left;
+  background-color: #ffffff;
+  margin: 5px;
+}
+.active {
+  background-color: #409EFF !important;
+}
+.active > a {
+  color: #ffffff;
+  background-color: #409EFF;
+}
 </style>
