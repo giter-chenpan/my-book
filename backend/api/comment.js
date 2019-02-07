@@ -1,4 +1,5 @@
 let { getToken } = require('../utils/token')
+let { addArticleImgOPEN } = require('../utils/IMG')
 let CommentModel = require('../mongodb/model/comment')
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
           }
           let userid = JSON.parse(msg.data).userid
           let commentPid = data._id
-          let commentContent = data.commentContent
+          let commentContent = addArticleImgOPEN(JSON.stringify(data.commentContent))
           let obj = {
             commentUser: userid,
             commentPid: commentPid,
