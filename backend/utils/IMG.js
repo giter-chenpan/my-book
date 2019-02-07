@@ -74,6 +74,7 @@ module.exports = {
               res.send({ code: 400, data: err })
               return
             }
+            userModel()
             res.send({ code: 200, data: name + extName })
           })
         } else {

@@ -18,9 +18,11 @@ app.post('/api/toemail', toEmail())
 app.get('/api/ifemail', ifEmail())
 
 let { LoadArticleIMG, GetImg, LoadUserImg, GetUserImg, GetArticleImg } = require('./utils/IMG')
+let { LoadUserImgProps } = require('./api/user')
 app.post('/api/loadimg', LoadArticleIMG()) // 上传文章封面图
 app.get('/api/getimg', GetImg()) // 得到文章封面图
 app.post('/api/loaduserimg', LoadUserImg()) // 上传用户头像
+app.get('/api/loaduserimg', LoadUserImgProps()) // 上传用户头像获取子接口
 app.get('/api/getuserimg', GetUserImg()) // 得到用户头像
 app.get('/api/getarticleimg', GetArticleImg())
 

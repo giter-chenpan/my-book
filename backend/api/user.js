@@ -97,7 +97,7 @@ module.exports = {
   UpdatePwd () {
     return (req, res) => {
       let data = req.body
-      let token = req.headers.ticani9
+      let token = req.headers.tiancai9
       getToken(token)
         .then(msg => {
           if (msg.code !== 200) {
@@ -111,6 +111,28 @@ module.exports = {
               return
             }
             res.send({ code: 200, data: '恭喜您！修改密码成功' })
+          })
+        })
+    }
+  },
+  // 修改头像存入数据库
+  LoadUserImgProps () {
+    return (req, res) => {
+      let data = req.query
+      let token = req.headers.tiancai9
+      getToken(token)
+        .then(msg => {
+          if (msg.code !== 200) {
+            res.send({ code: 400, data: '身份验证失效，请重新登入' })
+            return
+          }
+          let user = JSON.parse(msg.data)
+          userModel.UpdateUser({ userid: user.userid }, { userImg: data.updateImg }, (err) => {
+            if (err) {
+              res.send({ code: 400, data: '修改头像失败，请重试' })
+              return
+            }
+            res.send({ code: 200, data: '恭喜您！修改头像成功' })
           })
         })
     }
