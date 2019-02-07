@@ -97,7 +97,7 @@ module.exports = {
   },
   GetUserImg () {
     return (req, res) => {
-      userModel.FindUser({ userid: req.query.userid }, (err, docs) => {
+      userModel.FindUser({ username: req.query.username }, (err, docs) => {
         if (err) {
           res.send({ code: 400, data: err })
           return
