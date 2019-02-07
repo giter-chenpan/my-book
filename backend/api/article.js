@@ -1,5 +1,6 @@
 let ArticleModel = require('../mongodb/model/article')
 let { getToken } = require('../utils/token')
+let { addArticleImgOPEN } = require('../utils/IMG')
 
 module.exports = {
   NewArticle () {
@@ -14,8 +15,10 @@ module.exports = {
           }
           let user = JSON.parse(msg.data)
           data['articleUser'] = user.userid
+          data.articleContent = addArticleImgOPEN(data.articleContent) // 处理传入的base64文件
           ArticleModel.NewArticle(data, err => {
             if (err) {
+              console.log(err + '创建文章失败，请稍后重试')
               res.send({ code: 400, data: '创建文章失败，请稍后重试' })
               return
             }
@@ -69,6 +72,8 @@ module.exports = {
       let data = req.query
       let pageNum = data.pageNum
       let pageSize = data.pageSize
+      pageNum = Number(pageNum)
+      pageSize = Number(pageSize)
       ArticleModel.OneFindArticle(pageNum, pageSize, { _id: data._id }, (err, docs, total) => {
         if (err || docs.length === 0 || typeof docs === 'string') {
           res.send({ code: 400, data: docs, total: total })
