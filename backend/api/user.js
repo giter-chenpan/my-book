@@ -44,6 +44,20 @@ module.exports = {
       })
     }
   },
+  // 根据用户id返回用户昵称
+  getUserName () {
+    return (req, res) => {
+      let userid = req.query.userid
+      userModel.FindUser({ userid: userid }, (err, docs) => {
+        if (err) {
+          res.send({ code: 400, data: userid })
+          return
+        }
+        let username = docs[0]._doc.username
+        res.send({ code: 200, data: username })
+      })
+    }
+  },
   // 获取用户信息
   getUser () {
     return (req, res) => {

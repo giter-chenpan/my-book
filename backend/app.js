@@ -25,11 +25,12 @@ app.get('/api/getuserimg', GetUserImg()) // 得到用户头像
 app.get('/api/getarticleimg', GetArticleImg())
 
 // 用户
-let { NewUser, LoginUser, UpdatePwd, getUser } = require('./api/user')
+let { NewUser, LoginUser, UpdatePwd, getUser, getUserName } = require('./api/user')
 app.post('/api/newuser', NewUser())
 app.post('/api/loginuser', LoginUser())
 app.post('/api/updatepwd', UpdatePwd())
 app.post('/api/getuser', getUser())
+app.get('/api/getusername', getUserName())
 
 // 文章
 let { NewArticle, UpdateArticle, FindArticle, OneFindArticle, FindArticleType, SeeArticle } = require('./api/article')
