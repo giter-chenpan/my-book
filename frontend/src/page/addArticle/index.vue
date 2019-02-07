@@ -102,7 +102,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .addAritcle {
     padding-top: 60px;
     width: 100%;

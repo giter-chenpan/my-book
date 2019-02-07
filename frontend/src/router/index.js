@@ -63,6 +63,16 @@ let routerList = [
       title: '邮箱发送',
       power: '邮箱发送'
     }
+  },
+  {
+    path: '/home/user',
+    name: 'User',
+    component: () =>
+      import('@/page/user'),
+    meta: {
+      title: '个人中心',
+      power: '个人中心'
+    }
   }
 ]
 

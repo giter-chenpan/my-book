@@ -40,6 +40,9 @@ export default {
       registerInfo: {}
     }
   },
+  mounted () {
+    document.documentElement.scrollTop = document.body.scrollTop = 0
+  },
   methods: {
     RegisterClick () {
       let registerInfo = this.registerInfo
@@ -79,7 +82,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body {
     background-color: #fff;
   }

@@ -32,7 +32,7 @@ export function getArticleAPI (ArticleUUID, pageNum, pageSize) {
   })
 }
 
-export function loadArticleImgAPI (formData, path) {
+export function loadArticleImgAPI (formData) {
   return axios.post(process.env.BASE_API + '/api/loadimg', formData)
 }
 

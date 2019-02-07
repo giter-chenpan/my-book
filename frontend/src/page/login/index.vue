@@ -30,11 +30,11 @@ export default {
     }
   },
   mounted () {
+    document.documentElement.scrollTop = document.body.scrollTop = 0
   },
   methods: {
     LoginClick () {
       let loginInfo = this.loginInfo
-      console.log(loginInfo.userid)
       if (loginInfo.userid === undefined || loginInfo.userpwd === undefined) {
         alert('请填写完登录信息')
         return
@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body {
     background-color: #fff;
     overflow: hidden;

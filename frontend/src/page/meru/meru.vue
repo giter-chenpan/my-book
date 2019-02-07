@@ -1,8 +1,8 @@
 <template>
   <div class="meru">
-    <div class="meru-logo">
+    <router-link tag="div" to="/home/index" class="meru-logo">
       9
-    </div>
+    </router-link>
     <div class="meru-router">
       <router-link to="/home/index" class="meru-router-a">
         <a>首页</a>
@@ -14,7 +14,7 @@
         <a>登入</a>
       </router-link>
       <div v-else class="meru-router-user">
-        <div class="meru-router-user-name">{{loginStatus.username}}</div>
+        <router-link tag="div" to="/home/user" class="meru-router-user-name">{{loginStatus.username}}</router-link>
         <router-link class="meru-router-user-addartilce" tag="div" to="/home/addarticle">发表文章</router-link>
       </div>
     </div>
@@ -82,5 +82,8 @@ export default {
   }
   .meru-router-user-addartilce {
     float: left;
+  }
+  .meru-logo {
+    cursor: pointer;
   }
 </style>

@@ -110,7 +110,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .pagination * {
   white-space: nowrap;
   text-decoration: none;

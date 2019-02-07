@@ -36,13 +36,12 @@ export default {
   },
   watch: {
     buttonString (e) {
-      console.log(e)
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   body {
     overflow: hidden;
   }
