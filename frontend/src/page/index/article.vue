@@ -102,6 +102,7 @@ export default {
           }
           let ArticleList = data.data
           for (let i = 0; i < ArticleList.length; i++) {
+            this.descriptionString = ''
             let d = new Date()
             ArticleList[i].articleTime = substractDate(d, ArticleList[i].articleTime)
             // 对传入的富文本数据进行处理
@@ -124,15 +125,17 @@ export default {
       for (let i = 0; i < obj.length; i++) {
         let tag = obj[i].tag
         if (tag) {
-          if (obj[i].attrs.length !== 0) {
-            if (tag === 'img') {
-              this.descriptionString += '图片'
-            } else {
-              this.descriptionString += obj[i].attrs[0].name + '="' + obj[i].attrs[0].value
-            }
-            this.GetDescription(obj[i].children)
+          if (tag === 'pre' || tag === 'code') {
+            this.descriptionString += '【代码片段】'
           } else {
-            this.GetDescription(obj[i].children)
+            if (obj[i].attrs.length !== 0) {
+              if (tag === 'img') {
+                this.descriptionString += '【图片】'
+              }
+              this.GetDescription(obj[i].children)
+            } else {
+              this.GetDescription(obj[i].children)
+            }
           }
         } else {
           this.descriptionString += obj[0]
