@@ -55,6 +55,7 @@ export default {
       url: process.env.BASE_API,
       ArticleList: {},
       descriptionString: '',
+      code: '',
       DianZan: require('@/assets/acticleIMG/dianzan.png'),
       ShouCang: require('@/assets/acticleIMG/shoucang.png')
     }
@@ -120,19 +121,40 @@ export default {
         })
     },
     GetDescription (obj) {
-      for (var i = 0; i < obj.length; i++) {
-        var tag = obj[i].tag
+      for (let i = 0; i < obj.length; i++) {
+        let tag = obj[i].tag
         if (tag) {
-          if (obj[i].attrs.length !== 0) {
-            if (tag === 'img') {
-              this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '=" ' + process.env.BASE_API + '/api/getarticleimg?img=' + obj[i].attrs[0].value + '" >'
-            } else {
-              this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
-            }
-            this.GetDescription(obj[i].children)
-          } else {
+          if (tag === 'code') {
             this.descriptionString += '<' + tag + '>'
-            this.GetDescription(obj[i].children)
+            for (let j = 0; j < obj[i].children.length; j++) {
+              if (typeof obj[i].children[j] === 'object') {
+                this.descriptionString += '<' + obj[i].children[j].tag + '>'
+              } else {
+                let codeText = obj[i].children[j]
+                let nubmer = ''
+                for (let k = 0; k < codeText.length; k++) {
+                  if (codeText[k] === '/' && codeText[k + 1] === '/') {
+                    nubmer = k
+                  }
+                }
+                if (nubmer) {
+                  codeText = codeText.substring(0, nubmer) + '<span style="color: #31a354;">' + codeText.substring(nubmer, codeText.length) + '</span>'
+                }
+                this.descriptionString += codeText
+              }
+            }
+          } else {
+            if (obj[i].attrs.length !== 0) {
+              if (tag === 'img') {
+                this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '=" ' + process.env.BASE_API + '/api/getarticleimg?img=' + obj[i].attrs[0].value + '" >'
+              } else {
+                this.descriptionString += '<' + tag + ' ' + obj[i].attrs[0].name + '="' + obj[i].attrs[0].value + '" >'
+              }
+              this.GetDescription(obj[i].children)
+            } else {
+              this.descriptionString += '<' + tag + '>'
+              this.GetDescription(obj[i].children)
+            }
           }
           this.descriptionString += '</' + tag + '>'
         } else {
